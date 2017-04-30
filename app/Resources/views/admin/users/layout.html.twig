@@ -1,0 +1,23 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    Administration utilisateurs
+{% endblock %}
+
+{% block body %}
+
+    <i id="menuTopInfo">usersMenuItem</i>
+
+    <nav id="nav-left">
+        <ul>
+            <li><a href="{{ path('admin_users') }}" id="utilisateurs"><span class="mark"><span class="glyphicon glyphicon-chevron-right"></span></span> Utilisateurs</a></li>
+            <li><a href="#" id="ajouter"><span class="mark"><span class="glyphicon glyphicon-chevron-right"></span></span> Ajouter</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        {% block admin_body %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

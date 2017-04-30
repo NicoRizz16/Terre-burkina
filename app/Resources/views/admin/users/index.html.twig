@@ -1,0 +1,11 @@
+{% extends "admin/users/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">utilisateurs</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25">{{ message }}</div>
+    {% endfor %}
+
+{% endblock %}

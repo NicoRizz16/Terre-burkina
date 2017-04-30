@@ -12,11 +12,12 @@
 
     {# ============= STYLES ============= #}
     {% block stylesheets %}
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 
         {% stylesheets filter='cssrewrite, ?scssphp'
-        'css/visitor/style.css'
-        output='css/visitor/compiled/app.css'%}
+        'css/admin/style.css'
+        output='css/admin/compiled/app.css'%}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
     {% endblock %}
@@ -25,21 +26,47 @@
 
 <body>
 
-    {% block body %}
-    {% endblock %}
+    <div class="container-fluid">
 
-    <footer>
-        <p>© Copyright Terre Burkina {{ 'now'|date('Y') }}</p>
-    </footer>
+        {# MENU #}
+        <header>
+            <nav id="nav-top">
+                <div id="nav-top-left">
+                    <a href="{{ path('homepage') }}"><span class="glyphicon glyphicon-home"></span></a>
+                </div>
+                <div id="nav-top-right">
+                    <ul>
+                        <li><a href="{{ path('admin_board') }}" title="Tableau de bord" id="boardMenuItem"><span class="glyphicon glyphicon-th"></span></a></li>
+                        <li><a href="#" id="sponsorMenuItem">Parrains</a></li>
+                        <li><a href="#" id="childMenuItem">Filleuls</a></li>
+                        <li><a href="#" id="siteMenuItem" title="Gestion du site"><span class="glyphicon glyphicon-folder-open"></span></a></li>
+                        <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><span class="glyphicon glyphicon-user"></span></a></li>
+                        <li><a href="#" id="accountingMenuItem" title="Comptabilité"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
+                        <li><a href="#" id="journalMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
+                        {% if is_granted('ROLE_COORDINATOR') %}
+                        <li><a href="#" id="coordinationMenuItem">Coordination</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        {# CORPS #}
+        {% block body %}
+        {% endblock %}
+    </div>
 
     {# ============= SCRIPTS ============= #}
     {% block javascripts %}
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         {% javascripts filter='?jsqueeze'
-        'js/visitor/main.js'
-        output='js/visitor/compiled/app.js' %}
+        'js/admin/main.js'
+        output='js/admin/compiled/app.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock %}
