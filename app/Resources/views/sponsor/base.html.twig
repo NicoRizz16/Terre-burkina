@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
         {% stylesheets filter='cssrewrite, ?scssphp'
-        'css/visitor/style.css'
-        output='css/visitor/compiled/app.css'%}
+        'css/sponsor/style.css'
+        output='css/sponsor/compiled/app.css'%}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
     {% endblock %}
@@ -24,6 +24,33 @@
 </head>
 
 <body>
+
+    <header>
+        <div id="titleBlock">
+            <img src="{{ abs_url ~ asset('img/logo.png') }}" alt="logo" id="logo"/>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Espace Fasoma</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">Documents</a></li>
+                    <li><a href="#">Messagerie</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Mon compte
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Mes informations</a></li>
+                            <li><a href="#">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ path('homepage') }}">Retour au site</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
     {% block body %}
     {% endblock %}
@@ -38,8 +65,8 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
         {% javascripts filter='?jsqueeze'
-        'js/visitor/main.js'
-        output='js/visitor/compiled/app.js' %}
+        'js/sponsor/main.js'
+        output='js/sponsor/compiled/app.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock %}
