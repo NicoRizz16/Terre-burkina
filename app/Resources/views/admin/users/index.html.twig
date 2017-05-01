@@ -92,17 +92,33 @@
                 <td>
                     <div class="btn-group">
                         {% if user.enabled %}
-                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Activé <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_toggle_state', {'id' : user.id}) }}">Désactiver</a></li>
-                            </ul>
+                            {% if not ('ROLE_SUPER_ADMIN' in user.roles) %}
+                                {% if is_granted('ROLE_SUPER_ADMIN')
+                                or (not ('ROLE_ADMIN' in user.roles)) %}
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Activé <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_users_toggle_state', {'id' : user.id}) }}">Désactiver</a></li>
+                                </ul>
+                                {% else %}
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Activé</button>
+                                {% endif %}
+                            {% endif %}
                         {% else %}
-                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Désactivé <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_toggle_state', {'id' : user.id}) }}">Activer</a></li>
-                            </ul>
+                            {% if not ('ROLE_SUPER_ADMIN' in user.roles) %}
+                                {% if is_granted('ROLE_SUPER_ADMIN')
+                                or (not ('ROLE_ADMIN' in user.roles)) %}
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Désactivé <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_users_toggle_state', {'id' : user.id}) }}">Activer</a></li>
+                                </ul>
+                                {% else %}
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Désactivé</button>
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
                     </div>
                 </td>

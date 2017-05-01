@@ -55,6 +55,14 @@ class UsersController extends Controller
      */
     public function toggleStateAction(User $user)
     {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        // Les ADMIN ne sont modifiables que par les SUPER_ADMIN, le SUPER_ADMIN n'est pas modifiable
+        if(($user->hasRole('ROLE_ADMIN') && !$currentUser->hasRole('ROLE_SUPER_ADMIN')) ||
+            $user->hasRole(('ROLE_SUPER_ADMIN'))){
+            $this->addFlash('error', 'Vous ne pouvez pas changer l\'état d\'activation de l\'utilisateur "'.$user->getUsername().'".');
+            return $this->redirectToRoute('admin_users');
+        }
+
         $user->setEnabled(!$user->isEnabled());
         $message = $user->isEnabled() ? "activé." : "désactivé.";
 
