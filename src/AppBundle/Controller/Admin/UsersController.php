@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Form\CreateUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,7 +101,61 @@ class UsersController extends Controller
         }
         $em->persist($user);
         $em->flush();
-        $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien changé de rôle.');
+        $this->addFlash('info', 'Le nouveau rôle de l\'utilisateur "'.$user->getUsername().'" a bien été enregistré.');
         return $this->redirectToRoute('admin_users');
+    }
+
+    /**
+     * @Route("/ajouter", name="admin_users_add")
+     */
+    public function addAction(Request $request)
+    {
+        $form = $this->createForm(CreateUserType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = $form->getData();
+
+            $successfullyRegistered = $this->register($post['email'], $post['username'], $post['role'], $post['password']);
+            if($successfullyRegistered){
+                // L'utilisateur est bien enregistré
+                $this->addFlash('info', 'L\'utilisateur "'.$post['username'].'" a bien été enregistré.');
+                // Envois du mail avec les données de connexion si demandé
+                if($post['send_mail']){
+                    $sender = $this->get('send.account_data');
+                    $sender->sendAccountData($post['email'], $post['username'], $post['password']);
+                }
+            } else {
+                // L'utilisateur existe déjà
+                $this->addFlash('error', 'Ce nom d\'utilisateur ou cette adresse e-mail est déjà utilisée.');
+            }
+
+            return $this->redirectToRoute('admin_users');
+        }
+
+        return $this->render('admin/users/add.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    private function register($email, $username, $role, $password)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+
+        $email_exist = $userManager->findUserBy(array('emailCanonical' => strtolower($email)));
+        $username_exist = $userManager->findUserBy(array('usernameCanonical' => strtolower($username)));
+        if($email_exist || $username_exist){
+            return false;
+        }
+        $user = $userManager->createUser();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setEmailCanonical(strtolower($email));
+        $user->setEnabled(1);
+        $user->setPlainPassword($password);
+        $user->setRoles(array($role));
+        $userManager->updateUser($user);
+
+        return true;
     }
 }
