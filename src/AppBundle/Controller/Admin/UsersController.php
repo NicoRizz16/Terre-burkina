@@ -14,9 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/admin/users")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class UsersController extends Controller
 {
@@ -50,7 +52,7 @@ class UsersController extends Controller
     /**
      * @Route("/basculer-etat/{id}", name="admin_users_toggle_state", requirements={"id": "\d+"})
      */
-    public function toggleStateAction(Request $request, User $user)
+    public function toggleStateAction(User $user)
     {
         $user->setEnabled(!$user->isEnabled());
         $message = $user->isEnabled() ? "activé." : "désactivé.";
@@ -58,6 +60,47 @@ class UsersController extends Controller
         $this->getDoctrine()->getManager()->flush();
         $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" est maintenant '.$message);
 
+        return $this->redirectToRoute('admin_users');
+    }
+
+    // NUMEROTATION ROLES
+    // ======================
+    // ROLE_ADMIN = 0
+    // ROLE_MODERATOR = 1
+    // ROLE_COORDINATOR = 2
+    // ROLE_SPONSOR = 3
+    /**
+     * @Route("definir-role/{id}/{role}", name="admin_users_role", requirements={"id": "\d+", "role": "[0-4]"})
+     */
+    public function setRoleAction(User $user, $role)
+    {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        // Les ADMIN ne sont modifiables que par les SUPER_ADMIN, le SUPER_ADMIN n'a pas un rôle modifiable
+        if(($user->hasRole('ROLE_ADMIN') && !$currentUser->hasRole('ROLE_SUPER_ADMIN')) ||
+            $user->hasRole(('ROLE_SUPER_ADMIN'))){
+            $this->addFlash('error', 'Vous ne pouvez pas modifier le rôle de l\'utilisateur "'.$user->getUsername().'".');
+            return $this->redirectToRoute('admin_users');
+        }
+
+       $em = $this->getDoctrine()->getManager();
+        switch ($role){
+            case 0:
+                $user->setRoles(array('ROLE_ADMIN'));
+                break;
+            case 1:
+                $user->setRoles(array('ROLE_MODERATOR'));
+                break;
+            case 2:
+                $user->setRoles(array('ROLE_COORDINATOR'));
+                break;
+            case 3:
+                $user->setRoles(array('ROLE_SPONSOR'));
+                break;
+        }
+        $em->persist($user);
+        $em->flush();
+        $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien changé de rôle.');
         return $this->redirectToRoute('admin_users');
     }
 }
