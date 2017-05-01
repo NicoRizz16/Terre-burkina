@@ -1,0 +1,20 @@
+{% extends "admin/users/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">utilisateurs</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+        <h1>Supprimer un compte utilisateur</h1>
+        <p>Êtes-vous sûr de vouloir supprimer l'utilisateur "{{ user.username }}" ?</p>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger marginTop25" formnovalidate>Supprimer l'utilisateur</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

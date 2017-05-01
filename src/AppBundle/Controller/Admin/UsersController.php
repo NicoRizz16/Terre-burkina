@@ -87,6 +87,10 @@ class UsersController extends Controller
        $em = $this->getDoctrine()->getManager();
         switch ($role){
             case 0:
+                if(!$currentUser->hasRole('ROLE_SUPER_ADMIN')){
+                    $this->addFlash('error', 'Vous ne pouvez pas accorder le rôle administrateur');
+                    return $this->redirectToRoute('admin_users');
+                }
                 $user->setRoles(array('ROLE_ADMIN'));
                 break;
             case 1:
@@ -157,5 +161,37 @@ class UsersController extends Controller
         $userManager->updateUser($user);
 
         return true;
+    }
+
+    /**
+     * @Route("/supprimer/{id}", name="admin_users_delete", requirements={"id": "\d+"})
+     */
+    public function deleteAction(Request $request, User $user)
+    {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        // Les ADMIN ne sont supprimables que par les SUPER_ADMIN sauf si il s'agit de leur propre compte, le SUPER_ADMIN n'est pas supprimable
+        if(($user->hasRole('ROLE_ADMIN') && !$currentUser->hasRole('ROLE_SUPER_ADMIN') && ($currentUser->getId() != $user->getId())) ||
+            $user->hasRole(('ROLE_SUPER_ADMIN'))){
+            $this->addFlash('error', 'Vous ne pouvez pas supprimer l\'utilisateur "'.$user->getUsername().'".');
+            return $this->redirectToRoute('admin_users');
+        }
+
+        $form = $this->get('form.factory')->create();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien été supprimé.');
+            return $this->redirectToRoute('admin_users');
+        }
+
+        return $this->render('admin/users/delete.html.twig', array(
+            'form' => $form->createView(),
+            'user' => $user
+        ));
+
     }
 }

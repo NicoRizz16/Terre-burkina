@@ -13,15 +13,73 @@
 
     <table class="table table-striped marginTop25">
         <tr>
+            <th>Rôle</th>
             <th>Nom d'utilisateur</th>
             <th>Adresse email</th>
             <th>Dernière connexion</th>
-            <th>Rôle</th>
             <th>Etat</th>
         </tr>
 
         {% for user in usersList %}
             <tr>
+                <td>
+                    <div class="btn-group">
+                        {% if 'ROLE_ADMIN' in user.roles or 'ROLE_SUPER_ADMIN' in user.roles %}
+                            {% if is_granted('ROLE_SUPER_ADMIN') and app.user.id != user.id %}
+                                <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Administrateur <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
+                                    <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
+                                    <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
+                                </ul>
+                            {% else %}
+                                <button type="button" class="btn btn-danger btn-sm">Administrateur</button>
+                            {% endif %}
+                        {% elseif 'ROLE_MODERATOR' in user.roles %}
+                            <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                Modérateur <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
+                            </ul>
+                        {% elseif 'ROLE_SPONSOR' in user.roles %}
+                            <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+                                Parrain <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
+                            </ul>
+                        {% elseif 'ROLE_COORDINATOR' in user.roles %}
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                Coordinateur <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
+                            </ul>
+                        {% else %}
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                Non défini <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
+                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </td>
                 <td>
                     {{ user.username }}
                 </td>
@@ -30,56 +88,6 @@
                 </td>
                 <td>
                     {{ user.lastLogin|date('d/m/Y') }}
-                </td>
-                <td>
-                    <div class="btn-group">
-                        {% if 'ROLE_ADMIN' in user.roles or 'ROLE_SUPER_ADMIN' in user.roles %}
-                            {% if is_granted('ROLE_SUPER_ADMIN') and app.user.id != user.id %}
-                            <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">
-                            Administrateur <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
-                            </ul>
-                            {% else %}
-                            <button type="button" class="btn btn-danger btn-sm">Administrateur</button>
-                            {% endif %}
-                        {% elseif 'ROLE_MODERATOR' in user.roles %}
-                            <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Modérateur <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
-                            </ul>
-                        {% elseif 'ROLE_SPONSOR' in user.roles %}
-                            <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Parrain <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
-                            </ul>
-                        {% elseif 'ROLE_COORDINATOR' in user.roles %}
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Coordinateur <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
-                            </ul>
-                        {% else %}
-                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Non défini <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 0}) }}">Administrateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 1}) }}">Modérateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 2}) }}">Coordinateur</a></li>
-                                <li><a href="{{ path('admin_users_role', {'id': user.id, 'role' : 3}) }}">Parrain</a></li>
-                            </ul>
-                        {% endif %}
-                    </div>
                 </td>
                 <td>
                     <div class="btn-group">
@@ -98,13 +106,16 @@
                         {% endif %}
                     </div>
                 </td>
-                {#
-
                 <td>
-                    <a href="{{ path('admin_blog_post_edit', {'id': post.id}) }}" class="btn btn-primary btn-sm" title="Modifier"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a href="{{ path('admin_blog_post_delete', {'id': post.id}) }}" class="btn btn-danger btn-sm" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+                {% if not ('ROLE_SUPER_ADMIN' in user.roles) %}
+                    {% if is_granted('ROLE_SUPER_ADMIN') or
+                    (('ROLE_ADMIN' in user.roles) and (app.user.id == user.id))
+                    or (not ('ROLE_ADMIN' in user.roles)) %}
+                    <a href="{{ path('admin_users_delete', {'id': user.id}) }}" class="btn btn-danger btn-sm" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+                    {% endif %}
+                {% endif %}
                 </td>
-                #}
+
             </tr>
         {% else %}
             <tr>

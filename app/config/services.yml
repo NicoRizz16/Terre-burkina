@@ -14,3 +14,9 @@ services:
                   - "@mailer"
                   - "@templating"
                   - "%mailer_user%"
+
+  app.form.create_user:
+      class: AppBundle\Form\CreateUserType
+      arguments: ['@security.token_storage']
+      tags:
+          - { name: form.type }
