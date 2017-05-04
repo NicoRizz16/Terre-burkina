@@ -1,0 +1,19 @@
+{% extends "admin/users/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">utilisateurs</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+        <h1>Modifier l'utilisateur "{{ user.username }}"</h1>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary marginTop25 marginBottom30" formnovalidate>Modifier l'utilisateur</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

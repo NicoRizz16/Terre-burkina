@@ -11,6 +11,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\CreateUserType;
+use AppBundle\Form\EditUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Route("/admin/users")
+ * @Route("/admin/utilisateurs")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class UsersController extends Controller
@@ -154,8 +155,8 @@ class UsersController extends Controller
     {
         $userManager = $this->get('fos_user.user_manager');
 
-        $email_exist = $userManager->findUserBy(array('emailCanonical' => strtolower($email)));
-        $username_exist = $userManager->findUserBy(array('usernameCanonical' => strtolower($username)));
+        $email_exist = $userManager->findUserByEmail($email);
+        $username_exist = $userManager->findUserByUsername($username);
         if($email_exist || $username_exist){
             return false;
         }
@@ -200,6 +201,48 @@ class UsersController extends Controller
             'form' => $form->createView(),
             'user' => $user
         ));
+    }
 
+    /**
+     * @Route("/modifier/{id}", name="admin_users_edit", requirements={"id": "\d+"})
+     */
+    public function editAction(Request $request, User $user)
+    {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        // Les ADMIN ne peuvent modifier que leur propre compte ou tous les rôles en dessous d'eux.
+        if(($user->hasRole('ROLE_ADMIN') && !$currentUser->hasRole('ROLE_SUPER_ADMIN') && ($currentUser->getId() != $user->getId())) ||
+            ($user->hasRole('ROLE_SUPER_ADMIN') && ($currentUser->getId() != $user->getId()) )){
+            $this->addFlash('error', 'Vous ne pouvez pas modifier l\'utilisateur "'.$user->getUsername().'".');
+            return $this->redirectToRoute('admin_users');
+        }
+
+        $form = $this->get('form.factory')->create(EditUserType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $userManager = $this->get('fos_user.user_manager');
+            // Vérification que le nom d'utilisateur demandé n'est pas déjà pris par un autre utilisateur
+            $userWithSameUsername = $userManager->findUserByUsername($user->getUsername());
+            if($userWithSameUsername->getId() != $user->getId()){
+                $this->addFlash('error', 'Le nom d\'utilisateur "'.$user->getUsername().'" est déjà utilisé.');
+                return $this->redirectToRoute('admin_users');
+            }
+            // Vérification que l'adresse email demandée n'est pas déjà prise par un autre utilisateur
+            $userWithSameEmail = $userManager->findUserByEmail($user->getEmail());
+            if($userWithSameEmail->getId() != $user->getId()){
+                $this->addFlash('error', 'L\'adresse email "'.$user->getEmail().'" est déjà réservée à un autre utilisateur.');
+                return $this->redirectToRoute('admin_users');
+            }
+            // Mise à jour de l'utilisateur
+            $userManager->updateUser($user);
+            $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien été modifié.');
+            return $this->redirectToRoute('admin_users');
+        }
+
+        return $this->render('admin/users/edit.html.twig', array(
+            'form' => $form->createView(),
+            'user' => $user
+        ));
     }
 }
