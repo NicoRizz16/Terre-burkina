@@ -25,63 +25,63 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="civility", type="string", length=255)
+     * @ORM\Column(name="civility", type="string", length=255, nullable=true)
      */
     private $civility;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_of_birth", type="datetime")
+     * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
      */
     private $dateOfBirth;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="adress", type="text")
+     * @ORM\Column(name="adress", type="text", nullable=true)
      */
     private $adress;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="payment_choice", type="string", length=255)
+     * @ORM\Column(name="payment_choice", type="string", length=255, nullable=true)
      */
     private $paymentChoice;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_payment", type="datetime")
+     * @ORM\Column(name="last_payment", type="datetime", nullable=true)
      */
     private $lastPayment;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_contact", type="datetime")
+     * @ORM\Column(name="last_contact", type="datetime", nullable=true)
      */
     private $lastContact;
 
@@ -104,7 +104,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->setDocumentConsulted(true);
+        $this->setMessageConsulted(true);
     }
 
     /**

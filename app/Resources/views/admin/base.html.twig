@@ -13,6 +13,7 @@
     {# ============= STYLES ============= #}
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 
         {% stylesheets filter='cssrewrite, ?scssphp'
@@ -32,15 +33,15 @@
         <header>
             <nav id="nav-top">
                 <div id="nav-top-left">
-                    <a href="{{ path('homepage') }}"><span class="glyphicon glyphicon-home"></span></a>
+                    <a href="{{ path('homepage') }}" title="Revenir au site"><i class="fa fa-home" aria-hidden="true"></i></a>
                 </div>
                 <div id="nav-top-right">
                     <ul>
                         <li><a href="{{ path('admin_board') }}" title="Tableau de bord" id="boardMenuItem"><span class="glyphicon glyphicon-th"></span></a></li>
-                        <li><a href="#" id="sponsorMenuItem">Parrains</a></li>
-                        <li><a href="#" id="childMenuItem">Filleuls</a></li>
+                        <li><a href="#" id="sponsorMenuItem" title="Parrains"><i class="fa fa-male" aria-hidden="true"></i><i class="fa fa-female" aria-hidden="true"></i></a></li>
+                        <li><a href="#" id="childMenuItem" title="Filleuls"><i class="fa fa-child" aria-hidden="true"></i></a></li>
                         <li><a href="#" id="siteMenuItem" title="Gestion du site"><span class="glyphicon glyphicon-folder-open"></span></a></li>
-                        <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><span class="glyphicon glyphicon-user"></span></a></li>
+                        <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><i class="fa fa-users" aria-hidden="true"></i></a></li>
                         <li><a href="#" id="accountingMenuItem" title="Comptabilité"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
                         <li><a href="#" id="journalMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
                         {% if is_granted('ROLE_COORDINATOR') %}

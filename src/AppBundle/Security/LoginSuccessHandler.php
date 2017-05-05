@@ -35,7 +35,7 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface {
 
         } else if ($this->authorizationChecker->isGranted('ROLE_SPONSOR')) {
             $response = new RedirectResponse($this->router->generate('fasoma_homepage'));
-            
+
         } else if ($this->authorizationChecker->isGranted('ROLE_USER')) {
             $response = new RedirectResponse($this->router->generate('homepage'));
         }

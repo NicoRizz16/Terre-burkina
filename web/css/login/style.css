@@ -1,0 +1,30 @@
+#returnButton {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+#logo {
+    width: 150px;
+}
+
+.marginTop25 {
+    margin-top: 25px;
+}
+
+.submit-login-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+@media (max-width: 768px) {
+    .submit-login-group {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .submit-login-group button {
+        margin-bottom: 10px;
+    }
+}
