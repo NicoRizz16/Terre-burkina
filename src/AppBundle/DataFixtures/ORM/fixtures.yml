@@ -1,0 +1,11 @@
+AppBundle\Entity\User:
+    admin:
+        username: 'admin'
+        plainPassword: 'admin'
+        role: ['ROLE_SUPER_ADMIN']
+        email: 'nicolas.rizzon@gmail.com'
+        enabled: true
+
+AppBundle\Entity\Newsletter:
+    newsletter_{1..25}:
+        email (unique): <email()>

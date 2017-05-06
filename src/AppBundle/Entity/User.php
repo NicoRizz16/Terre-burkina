@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
-    const NUM_ITEMS = 20;
+    const NUM_ITEMS = 10;
 
     /**
      * @ORM\Id

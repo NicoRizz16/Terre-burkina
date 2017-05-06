@@ -77,7 +77,11 @@
         <div id="footerBlock2">
             <div>
                 <a href="#">Contactez-nous</a>
-                <a href="{{ path('fasoma_homepage') }}">Accès à l'espace parrain</a>
+                {% if is_granted('ROLE_MODERATOR') %}
+                    <a href="{{ path('admin_board') }}">Accès à l'espace admin</a>
+                {% else %}
+                    <a href="{{ path('fasoma_homepage') }}">Accès à l'espace parrain</a>
+                {% endif %}
             </div>
             <div>
                 <p>© Copyright Terre Burkina {{ 'now'|date('Y') }}</p>
