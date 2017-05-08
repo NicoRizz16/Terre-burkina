@@ -9,11 +9,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="newsletter")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsletterRepository")
+ * @UniqueEntity("email")
  */
 class Newsletter
 {
@@ -30,6 +33,11 @@ class Newsletter
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez entrer une adresse e-mail.")
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' est invalide.",
+     *     checkMX = true
+     * )
      */
     private $email;
 

@@ -131,3 +131,8 @@ body {
 #contentBody{
     margin-top: 20px;
 }
+
+#newsletterActions {
+    display: flex;
+    justify-content: space-between;
+}
