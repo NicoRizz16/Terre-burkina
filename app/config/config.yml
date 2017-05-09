@@ -84,3 +84,16 @@ assetic:
     use_controller: "%kernel.debug%"
     filters:
       cssrewrite: ~
+
+# VichUploader Configuration
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        photos_child_profile:
+            uri_prefix: uploads/photos/child/profile
+            upload_destination: '%kernel.root_dir%/../web/uploads/photos/child/profile'
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer: vich_uploader.namer_origname
