@@ -6,7 +6,7 @@
  * Time: 09:09
  */
 
-namespace AppBundle\Controller\Admin;
+namespace AppBundle\Controller\Admin\Management;
 
 
 use AppBundle\Entity\Newsletter;

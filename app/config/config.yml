@@ -97,3 +97,18 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
             namer: vich_uploader.namer_origname
+
+        post_image:
+            uri_prefix: uploads/photos/posts
+            upload_destination: '%kernel.root_dir%/../web/uploads/photos/posts'
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer: vich_uploader.namer_origname
+
+
+# Stof Configuration
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true

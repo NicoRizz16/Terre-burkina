@@ -9,3 +9,11 @@ AppBundle\Entity\User:
 AppBundle\Entity\Newsletter:
     newsletter_{1..25}:
         email (unique): <email()>
+
+AppBundle\Entity\Post:
+    post1_{1..15}:
+        creationDate: <dateTimeBetween('-200 days', 'now')>
+        title (unique): <sentence()>
+        content: <text(1000)>
+        author: '@admin'
+        published: <boolean(75)>

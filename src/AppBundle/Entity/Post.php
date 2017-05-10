@@ -30,7 +30,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      */
     private $author;
 
@@ -83,25 +83,10 @@ class Post
     private $published;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
-     */
-    private $categories;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Theme", inversedBy="posts")
-     * @JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
-     */
-    private $theme;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $comments;
-
-    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="post_image", fileNameProperty="imageName")
+     * @Assert\Image()
      *
      * @var File
      */
@@ -126,8 +111,6 @@ class Post
      */
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->creationDate = new \DateTime();
         $this->setPublished(false);
     }
@@ -266,11 +249,11 @@ class Post
     /**
      * Set author
      *
-     * @param \UserBundle\Entity\User $author
+     * @param \AppBundle\Entity\User $author
      *
      * @return Post
      */
-    public function setAuthor(\UserBundle\Entity\User $author = null)
+    public function setAuthor(\AppBundle\Entity\User $author = null)
     {
         $this->author = $author;
 
@@ -280,79 +263,11 @@ class Post
     /**
      * Get author
      *
-     * @return \UserBundle\Entity\User
+     * @return \AppBundle\Entity\User
      */
     public function getAuthor()
     {
         return $this->author;
-    }
-
-    /**
-     * Add category
-     *
-     * @param \AppBundle\Entity\Category $category
-     *
-     * @return Post
-     */
-    public function addCategory(\AppBundle\Entity\Category $category)
-    {
-        $this->categories[] = $category;
-
-        return $this;
-    }
-
-    /**
-     * Remove category
-     *
-     * @param \AppBundle\Entity\Category $category
-     */
-    public function removeCategory(\AppBundle\Entity\Category $category)
-    {
-        $this->categories->removeElement($category);
-    }
-
-    /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
-     * Add comment
-     *
-     * @param \AppBundle\Entity\Comment $comment
-     *
-     * @return Post
-     */
-    public function addComment(\AppBundle\Entity\Comment $comment)
-    {
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \AppBundle\Entity\Comment $comment
-     */
-    public function removeComment(\AppBundle\Entity\Comment $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComments()
-    {
-        return $this->comments;
     }
 
     /**
@@ -429,29 +344,5 @@ class Post
     public function getImageUpdatedAt()
     {
         return $this->imageUpdatedAt;
-    }
-
-    /**
-     * Set theme
-     *
-     * @param \AppBundle\Entity\Theme $theme
-     *
-     * @return Post
-     */
-    public function setTheme(\AppBundle\Entity\Theme $theme = null)
-    {
-        $this->theme = $theme;
-
-        return $this;
-    }
-
-    /**
-     * Get theme
-     *
-     * @return \AppBundle\Entity\Theme
-     */
-    public function getTheme()
-    {
-        return $this->theme;
     }
 }
