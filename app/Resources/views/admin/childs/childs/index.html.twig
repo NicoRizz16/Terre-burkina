@@ -1,0 +1,50 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">childs</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs_add') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+    </div>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <table class="table table-striped marginTop25">
+        <tr>
+            <th>Nom</th>
+        </tr>
+
+        {% for child in childsList %}
+            <tr>
+                <td>
+                   {{ child.firstName }} {{ child.lastName }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>
+                    Aucun filleul enregistré pour le moment...
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if nbPageTotal > 1 %}
+        <div class="text-center">
+            <ul class="pagination">
+                {% for p in range(1, nbPageTotal) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('admin_childs', {'page':p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}
