@@ -76,7 +76,7 @@
         </div>
         <div id="footerBlock2">
             <div>
-                <a href="#">Contactez-nous</a>
+                <a href="{{ path('contact') }}">Contactez-nous</a>
                 {% if is_granted('ROLE_MODERATOR') %}
                     <a href="{{ path('admin_board') }}">Accès à l'espace admin</a>
                 {% else %}

@@ -1,0 +1,15 @@
+<div style="text-align: center">
+    <img src="{{ absolute_url(asset('img/logo.png')) }}" style="width: 150px">
+</div>
+<hr>
+
+<div style="text-align: center">
+    <h1  style="margin-top: 30px">Nouveau message de contact</h1>
+    <p><strong>Civilité :</strong> {{ civility }}</p>
+    <p><strong>Nom :</strong> {{ name }}</p>
+    <p><strong>Email :</strong> {{ email }}</p>
+    <p><strong>Numéro de téléphone :</strong> {{ phone }}</p>
+    <p><strong>Manière dont il nous a connu :</strong> {{ knowUs }}</p>
+    <p><strong>Objet du message :</strong> {{ object }}</p>
+    <p><strong>Message :</strong><br/> {{ message }}</p>
+</div>

@@ -17,3 +17,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # Adresse à laquelle les messages de contact sont envoyés
+    send_contact_mail_to: ~
