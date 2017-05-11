@@ -107,7 +107,7 @@ class BlogController extends Controller
     /**
      * @Route("/supprimer/{id}", name="admin_management_posts_delete", requirements={"id": "\d+"})
      */
-    public function deletePostAction(Request $request, Post $post)
+    public function deleteAction(Request $request, Post $post)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user->hasRole('ROLE_MODERATOR')){

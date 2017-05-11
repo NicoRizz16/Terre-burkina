@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 class Post
 {
     const NUM_ITEMS = 10;
+    const VISITOR_NUM_ITEMS = 5;
 
     /**
      * @var int

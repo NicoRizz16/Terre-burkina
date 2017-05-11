@@ -27,4 +27,20 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
         return new Paginator($query, true);
     }
+
+    public function getPublishedPosts($page, $nbPerPage)
+    {
+        $query = $this->createQueryBuilder('post')
+            ->orderBy('post.creationDate', 'DESC')
+            ->andWhere('post.published = 1')
+            ->getQuery()
+        ;
+
+        $query
+            ->setFirstResult(($page-1)*$nbPerPage)
+            ->setMaxResults($nbPerPage)
+        ;
+
+        return new Paginator($query, true);
+    }
 }

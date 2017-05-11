@@ -1,0 +1,16 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block body %}
+
+    <a href="{{ path('blog') }}"> Retour à la liste </a>
+
+    <h1>{{ post.title }}</h1>
+    <img src="../../{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.imageName }}" />
+    <span>{{ post.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</span>
+
+    <section>
+        {{ post.content|raw }}
+    </section>
+
+{% endblock %}
+
