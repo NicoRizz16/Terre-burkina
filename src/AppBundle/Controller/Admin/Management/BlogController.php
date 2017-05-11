@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin\Management;
 
 
 use AppBundle\Entity\Post;
+use AppBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,5 +48,105 @@ class BlogController extends Controller
             'nbPageTotal' => $nbPageTotal,
             'page' => $page
         ));
+    }
+
+    /**
+     * @Route("/ajouter", name="admin_management_posts_add")
+     */
+    public function addAction(Request $request)
+    {
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post->setAuthor($this->getUser());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'article "'.$post->getTitle().'" a bien été ajouté');
+            return $this->redirectToRoute('admin_management_posts');
+        }
+
+        return $this->render('admin/management/blog/add.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/modifier/{id}", name="admin_management_posts_edit", requirements={"id": "\d+"})
+     */
+    public function editPostAction(Request $request, Post $post)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if($user->hasRole('ROLE_MODERATOR')){
+            if($post->getPublished() || (!$post->getPublished() && ($user->getId() != $post->getAuthor()->getId()))){
+                $this->addFlash('error', 'Vous n\'avez par le droit de modifier cet article.');
+                return $this->redirectToRoute('admin_management_posts');
+            }
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'article "'.$post->getTitle().'" a bien été modifié');
+            return $this->redirectToRoute('admin_management_posts');
+        }
+
+        return $this->render('admin/management/blog/edit.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/supprimer/{id}", name="admin_management_posts_delete", requirements={"id": "\d+"})
+     */
+    public function deletePostAction(Request $request, Post $post)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if($user->hasRole('ROLE_MODERATOR')){
+            if($post->getPublished() || (!$post->getPublished() && ($user->getId() != $post->getAuthor()->getId()))){
+                $this->addFlash('error', 'Vous n\'avez par le droit de supprimer cet article.');
+                return $this->redirectToRoute('admin_management_posts');
+            }
+        }
+
+        $form = $this->get('form.factory')->create();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($post);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'article "'.$post->getTitle().'" a bien été supprimé');
+            return $this->redirectToRoute('admin_management_posts');
+        }
+
+        return $this->render('admin/management/blog/delete.html.twig', array(
+            'form' => $form->createView(),
+            'post' => $post
+        ));
+    }
+
+    /**
+     * @Route("/basculer-statut/{id}", name="admin_management_posts_toggle_published", requirements={"id": "\d+"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function togglePublishedAction(Request $request, Post $post)
+    {
+        $post->setPublished(!$post->getPublished());
+        $message = $post->getPublished() ? "publié." : "en attente de publication.";
+
+        $this->getDoctrine()->getManager()->flush();
+        $this->addFlash('info', 'L\'article "'.$post->getTitle().'" est maintenant '.$message);
+
+        return $this->redirectToRoute('admin_management_posts');
     }
 }
