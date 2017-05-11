@@ -1,0 +1,46 @@
+{% extends "admin/sponsors/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">sponsors</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <table class="table table-striped marginTop25">
+        <tr>
+            <th>Nom</th>
+        </tr>
+
+        {% for sponsor in sponsorsList %}
+            <tr>
+                <td>
+                   {{ sponsor.firstName }} {{ sponsor.lastName }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>
+                    Aucun parrain enregistré pour le moment...
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if nbPageTotal > 1 %}
+        <div class="text-center">
+            <ul class="pagination">
+                {% for p in range(1, nbPageTotal) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('admin_sponsors', {'page':p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}
