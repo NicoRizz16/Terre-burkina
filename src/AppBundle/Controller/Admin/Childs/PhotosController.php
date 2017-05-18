@@ -21,6 +21,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class PhotosController extends Controller
 {
     /**
+     * @Route("/admin/filleuls/{id}/photos", name="admin_childs_photos", requirements={"id": "\d+"})
+     */
+    public function indexAction(Child $child)
+    {
+        $photos = $child->getPhotos();
+
+        return $this->render('admin/childs/childs/view_photos.html.twig', array(
+            'child' => $child,
+            'photos' => $photos
+        ));
+    }
+
+    /**
      * @Route("/admin/filleuls/{id}/photos/ajouter", name="admin_childs_photos_add", requirements={"id": "\d+"})
      */
     public function addAction(Child $child)

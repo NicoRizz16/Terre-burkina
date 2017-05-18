@@ -5,6 +5,10 @@
     <i id="menuChildInfo">photos</i>
 
     <div class="dropzone my-dropzone" id="form_snippet_image" action="{{ path('ajax_snippet_image_send', {'id': child.id}) }}">
+        <div class="dz-message needsclick">
+            <h3>Glissez vos images ici ou cliquez pour sélectionner.</h3>
+            <span class="note">(Limite de <strong>50 images</strong> et chaque image doit faire <strong>moins de 3 MB</strong>)</span>
+        </div>
     </div>
 
 {% endblock %}
@@ -17,6 +21,13 @@
 
         //je définis ma zone de drop grâce à l'ID de ma div citée plus haut.
         Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone("#form_snippet_image", { url: _actionToDropZone });
+        var myDropzone = new Dropzone("#form_snippet_image", {
+            url: _actionToDropZone,
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 3, // MB
+            maxFiles: 50,
+            acceptedFiles: "image/*"
+        });
+
     </script>
 {% endblock %}

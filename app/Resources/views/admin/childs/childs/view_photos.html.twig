@@ -1,0 +1,26 @@
+{% extends "admin/childs/childs/view_layout.html.twig" %}
+
+
+{% block child_view %}
+    <i id="menuChildInfo">photos</i>
+
+    <div class="text-center col-xs-12 marginBottom30">
+        <a href="{{ path('admin_childs_photos_add', {'id': child.id}) }}" class="btn btn-info btn-md"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</a>
+    </div>
+
+    <div class="marginTop25">
+        {% for photo in photos %}
+        <div class="col-xs-6 col-sm-4 col-md-3" style="display: flex; justify-content: center">
+            <div class="thumbnail">
+                <a href="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}">
+                    <img src="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}">
+                </a>
+            </div>
+        </div>
+        {% else %}
+            Pas encore de photos ...
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
