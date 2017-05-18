@@ -11,7 +11,7 @@ body {
     padding-left: 0px;
 }
 
-#menuTopInfo, #menuLeftInfo{
+#menuTopInfo, #menuLeftInfo, #menuChildInfo{
     display: none;
 }
 
@@ -72,7 +72,7 @@ body {
     margin-right: 50px;
 }
 
-.active{
+.activeItem{
     border-bottom: 5px solid #666666;
     border-radius: 4px;
     padding-bottom: 5px;

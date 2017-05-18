@@ -17,3 +17,9 @@ AppBundle\Entity\Post:
         content: <text(1000)>
         author: '@admin'
         published: <boolean(75)>
+
+AppBundle\Entity\Child:
+    child_{1..55}:
+        firstname: <firstName()>
+        lastname: <lastName()>
+        dateOfBirth: <dateTimeBetween('-20 years', 'now')>

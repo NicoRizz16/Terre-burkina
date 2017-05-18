@@ -23,7 +23,7 @@
         {% for child in childsList %}
             <tr>
                 <td>
-                   {{ child.firstName }} {{ child.lastName }}
+                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}">{{ child.firstName }} {{ child.lastName }}</a>
                 </td>
             </tr>
         {% else %}

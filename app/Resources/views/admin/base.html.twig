@@ -18,6 +18,7 @@
 
         {% stylesheets filter='cssrewrite, ?scssphp'
         'css/admin/style.css'
+        'css/admin/dropzone.css'
         output='css/admin/compiled/app.css'%}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
@@ -68,6 +69,7 @@
         {% javascripts filter='?jsqueeze'
         'js/admin/main.js'
         'js/admin/bootstrap-filestyle.js'
+        'js/admin/dropzone.js'
         output='js/admin/compiled/app.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}

@@ -4,7 +4,11 @@
 
 {% block admin_body %}
 
-    <i id="menuLeftInfo">addChild</i>
+    <i id="menuLeftInfo">childs</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
 
     <div class="col-md-7 col-md-offset-2 text-center">
         <h1>Ajouter un filleul</h1>

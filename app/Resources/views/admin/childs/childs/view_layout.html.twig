@@ -1,0 +1,31 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">childs</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="text-center">
+        <h1>{{ child.firstName }} {{ child.lastName }}</h1>
+    </div>
+    <div class="marginTop25">
+        <div class="btn-group btn-group-justified">
+            <a href="#" class="btn btn-primary" id="infos">Informations</a>
+            <a href="{{ path('admin_childs_photos_add', {'id': child.id}) }}" class="btn btn-primary" id="photos">Photos</a>
+            <a href="#" class="btn btn-primary">Nouvelles</a>
+            <a href="#" class="btn btn-primary">Résultats</a>
+            <a href="#" class="btn btn-primary">Groupes</a>
+        </div>
+    </div>
+    <hr>
+    {% block child_view %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

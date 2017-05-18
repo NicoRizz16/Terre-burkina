@@ -73,4 +73,14 @@ class ChildsController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/{id}/infos", name="admin_childs_view_infos", requirements={"id": "\d+"})
+     */
+    public function viewAction(Child $child)
+    {
+        return $this->render('admin/childs/childs/view_infos.html.twig', array(
+            'child' => $child
+        ));
+    }
 }

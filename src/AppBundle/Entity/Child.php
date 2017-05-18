@@ -210,6 +210,11 @@ class Child
      */
     private $profilePhotoUpdatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="child")
+     */
+    private $photos;
+
 
     public function __construct()
     {
@@ -670,5 +675,39 @@ class Child
     public function getProfilePhotoUpdatedAt()
     {
         return $this->profilePhotoUpdatedAt;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     *
+     * @return Child
+     */
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     */
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }
