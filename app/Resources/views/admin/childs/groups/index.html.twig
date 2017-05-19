@@ -1,0 +1,44 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">groups</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs_groups_add') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+    </div>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <table class="table table-striped marginTop25">
+            <tr>
+                <th>Groupes</th>
+            </tr>
+
+            {% for group in groups %}
+                <tr>
+                    <td>
+                        <a href="#">{{ group.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_childs_groups_edit', {'id': group.id }) }}" class="btn btn-primary btn-sm" title="Modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{{ path('admin_childs_groups_delete', {'id': group.id }) }}" class="btn btn-danger btn-sm" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>
+                        Aucun groupe pour le moment...
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

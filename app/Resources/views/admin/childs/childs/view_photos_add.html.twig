@@ -4,10 +4,15 @@
 {% block child_view %}
     <i id="menuChildInfo">photos</i>
 
-    <div class="dropzone my-dropzone" id="form_snippet_image" action="{{ path('ajax_snippet_image_send', {'id': child.id}) }}">
-        <div class="dz-message needsclick">
-            <h3>Glissez vos images ici ou cliquez pour sélectionner.</h3>
-            <span class="note">(Limite de <strong>50 images</strong> et chaque image doit faire <strong>moins de 3 MB</strong>)</span>
+    <div class="text-center col-xs-12 marginBottom30">
+        <a href="{{ path('admin_childs_photos', {'id': child.id}) }}" class="btn btn-info btn-md"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la gallerie</a>
+    </div>
+    <div class="col-xs-12">
+        <div class="dropzone my-dropzone" id="form_snippet_image" action="{{ path('ajax_snippet_image_send', {'id': child.id}) }}">
+            <div class="dz-message needsclick">
+                <h3>Glissez vos images ici ou cliquez pour sélectionner.</h3>
+                <span class="note">(Limite de <strong>50 images</strong> et chaque image doit faire <strong>moins de 3 MB</strong>)</span>
+            </div>
         </div>
     </div>
 

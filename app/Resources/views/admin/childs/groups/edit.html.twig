@@ -1,0 +1,24 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">groups</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs_groups') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+        <h1>Modifier un groupe</h1>
+        <hr>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary marginTop25" formnovalidate>Modifier le groupe</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

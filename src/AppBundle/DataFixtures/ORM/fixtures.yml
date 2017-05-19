@@ -19,7 +19,11 @@ AppBundle\Entity\Post:
         published: <boolean(75)>
 
 AppBundle\Entity\Child:
-    child_{1..55}:
+    child{1..55}:
         firstname: <firstName()>
         lastname: <lastName()>
         dateOfBirth: <dateTimeBetween('-20 years', 'now')>
+
+AppBundle\Entity\ChildGroup:
+    child_group_{1..25}:
+        name (unique): <word()>
