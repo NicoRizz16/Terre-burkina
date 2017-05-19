@@ -8,13 +8,17 @@
         <a href="{{ path('admin_childs_photos_add', {'id': child.id}) }}" class="btn btn-info btn-md"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</a>
     </div>
 
-    <div class="marginTop25">
+    <div class="marginTop25" id="gallery">
         {% for photo in photos %}
-        <div class="col-xs-6 col-sm-4 col-md-3" style="display: flex; justify-content: center">
-            <div class="thumbnail">
+        <div class="col-xs-6 col-sm-4 col-md-3 admin_gallery_thumbnail_container">
+            <div class="thumbnail admin_gallery_thumbnail">
                 <a href="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}">
                     <img src="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}">
                 </a>
+            </div>
+            <div id="{{ photo.id }}">
+                <button class="btn btn-danger btn-xs deletePhotoBtn"><span class="glyphicon glyphicon-trash"></span></button>
+                <button class="btn btn-info btn-xs upPhotoBtn" style="margin-left: 10px;"><span class="glyphicon glyphicon-arrow-up"></span></button>
             </div>
         </div>
         {% else %}
@@ -22,5 +26,56 @@
         {% endfor %}
     </div>
 
+{% endblock %}
 
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(function(){
+
+            $('.deletePhotoBtn').click(function () {
+                var photoID = $(this).parent().attr('id');
+                deletePhoto(photoID);
+                $(this).parent().parent().fadeOut('slow');
+            });
+
+            $('.upPhotoBtn').click(function () {
+                var photoID = $(this).parent().attr('id');
+                upPhoto(photoID);
+                $('#gallery').prepend($(this).parent().parent());
+            });
+
+            function deletePhoto(photoID){
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('ajax_snippet_image_delete') }}',
+                    data: 'photoId=' + photoID
+                })
+                .done(function () {
+
+                })
+                .fail(function () {
+
+                });
+            }
+
+            function upPhoto(photoID){
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('ajax_snippet_image_up') }}',
+                    data: 'photoId=' + photoID
+                })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+            }
+
+        });
+
+    </script>
 {% endblock %}

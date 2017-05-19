@@ -50,10 +50,23 @@ class Photo
     private $updatedAt;
 
     /**
+     * @ORM\Column(name="order_date", type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $order;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Child", inversedBy="photos")
      * @ORM\JoinColumn(name="child_id", referencedColumnName="id")
      */
     private $child;
+
+
+    public function __construct()
+    {
+        $this->setOrder(new \DateTime());
+    }
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -184,5 +197,31 @@ class Photo
     public function getChild()
     {
         return $this->child;
+    }
+
+
+
+    /**
+     * Set order
+     *
+     * @param \DateTime $order
+     *
+     * @return Photo
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \DateTime
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }
