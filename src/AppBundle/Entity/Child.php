@@ -216,6 +216,11 @@ class Child
     private $photos;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\News", mappedBy="child")
+     */
+    private $news;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ChildGroup")
      * @ORM\JoinTable(name="childs_groups",
      *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
@@ -763,5 +768,39 @@ class Child
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Add news
+     *
+     * @param \AppBundle\Entity\News $news
+     *
+     * @return Child
+     */
+    public function addNews(\AppBundle\Entity\News $news)
+    {
+        $this->news[] = $news;
+
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param \AppBundle\Entity\News $news
+     */
+    public function removeNews(\AppBundle\Entity\News $news)
+    {
+        $this->news->removeElement($news);
+    }
+
+    /**
+     * Get news
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNews()
+    {
+        return $this->news;
     }
 }

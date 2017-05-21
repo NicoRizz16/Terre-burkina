@@ -19,10 +19,18 @@ AppBundle\Entity\Post:
         published: <boolean(75)>
 
 AppBundle\Entity\Child:
-    child{1..55}:
+    child_child_{1..55}:
         firstname: <firstName()>
         lastname: <lastName()>
         dateOfBirth: <dateTimeBetween('-20 years', 'now')>
+
+AppBundle\Entity\News:
+    child_news{1..1000}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        title: <sentence()>
+        content: <text(1000)>
+        isValid: <boolean(75)>
+        child: '@child_child_*'
 
 AppBundle\Entity\ChildGroup:
     child_group_{1..25}:

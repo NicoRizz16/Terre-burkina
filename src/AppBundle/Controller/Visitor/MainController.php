@@ -48,7 +48,7 @@ class MainController extends Controller
                         'phone' => $post['phone'],
                         'knowUs' => $post['knowUs'],
                         'object' => $post['object'],
-                        'message' => $post['message']
+                        'message' => nl2br($post['message'])
                         )
                     ),
                     'text/html'

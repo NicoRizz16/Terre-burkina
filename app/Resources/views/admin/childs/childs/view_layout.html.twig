@@ -5,7 +5,7 @@
     <i id="menuLeftInfo">childs</i>
 
     <div class="buttonsBar">
-        <a href="{{ path('admin_childs') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+        <a href="{{ path('admin_childs') }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
     </div>
 
     <div class="text-center">
@@ -15,7 +15,7 @@
         <div class="btn-group btn-group-justified">
             <a href="#" class="btn btn-primary" id="infos">Informations</a>
             <a href="{{ path('admin_childs_photos', {'id': child.id}) }}" class="btn btn-primary" id="photos">Photos</a>
-            <a href="#" class="btn btn-primary">Nouvelles</a>
+            <a href="{{ path('admin_childs_news_child', {'id': child.id}) }}" class="btn btn-primary" id="news">Nouvelles</a>
             <a href="#" class="btn btn-primary">Résultats</a>
             <a href="{{ path('admin_childs_view_groups', {'id': child.id}) }}" class="btn btn-primary" id="childGroups">Groupes</a>
         </div>
