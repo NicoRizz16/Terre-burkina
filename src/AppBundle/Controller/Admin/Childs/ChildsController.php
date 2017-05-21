@@ -10,12 +10,15 @@
 namespace AppBundle\Controller\Admin\Childs;
 
 use AppBundle\Entity\Child;
+use AppBundle\Form\ChildAssignGroupType;
 use AppBundle\Form\ChildType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("/admin/filleuls")
@@ -82,5 +85,73 @@ class ChildsController extends Controller
         return $this->render('admin/childs/childs/view_infos.html.twig', array(
             'child' => $child
         ));
+    }
+
+    /**
+     * @Route("/{id}/groupes", name="admin_childs_view_groups", requirements={"id": "\d+"})
+     */
+    public function groupsAction(Child $child)
+    {
+        return $this->render('admin/childs/childs/view_groups.html.twig', array(
+            'child' => $child
+        ));
+    }
+
+    /**
+     * @Route("/{id}/groupes/assigner", name="admin_childs_view_groups_assign", requirements={"id": "\d+"})
+     */
+    public function assignGroupAction(Request $request, Child $child)
+    {
+        $form = $this->createForm(ChildAssignGroupType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $post = $form->getData();
+
+            $group = $em->getRepository('AppBundle:ChildGroup')->find($post['group']);
+            if(!$group){
+                $this->addFlash('error', 'Le groupe que vous essayez d\'ajouter à ce filleul n\'existe pas.');
+                return $this->redirectToRoute('admin_childs_view_groups', array('id' => $child->getId()));
+            }
+            if($child->hasGroup($group)){
+                $this->addFlash('error', 'Le filleul appartient déjà à ce groupe.');
+                return $this->redirectToRoute('admin_childs_view_groups', array('id' => $child->getId()));
+            }
+
+            $child->addGroup($group);
+            $em->persist($child);
+            $em->flush();
+
+            $this->addFlash('info', 'Le filleul a bien été ajouté au groupe "'.$group->getName().'".');
+            return $this->redirectToRoute('admin_childs_view_groups', array('id' => $child->getId()));
+        }
+
+        return $this->render('admin/childs/childs/view_groups_assign.html.twig', array(
+            'child' => $child,
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/ajax/child/{id}/group/remove", name="ajax_child_group_remove", requirements={"id": "\d+"})
+     */
+    public function ajaxGroupRemoveAction(Request $request, Child $child)
+    {
+        if (!$request->isXmlHttpRequest()){
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $groupID = $request->request->get('groupID');
+
+        $group = $em->getRepository('AppBundle:ChildGroup')->find($groupID);
+
+        $child->removeGroup($group);
+        $em->persist($child);
+        $em->flush();
+
+        return new JsonResponse(array('success' => true));
     }
 }

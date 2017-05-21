@@ -215,6 +215,15 @@ class Child
      */
     private $photos;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="ChildGroup")
+     * @ORM\JoinTable(name="childs_groups",
+     *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     *  )
+     */
+    private $groups;
+
 
     public function __construct()
     {
@@ -224,6 +233,7 @@ class Child
         $this->setIsSponsored(false);
         $this->setSponsorshipStart(new \DateTime());
         $this->setSponsorshipEnd(new \DateTime());
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -709,5 +719,49 @@ class Child
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \AppBundle\Entity\ChildGroup $group
+     *
+     * @return Child
+     */
+    public function addGroup(\AppBundle\Entity\ChildGroup $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \AppBundle\Entity\ChildGroup $group
+     */
+    public function removeGroup(\AppBundle\Entity\ChildGroup $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    public function hasGroup(\AppBundle\Entity\ChildGroup $group)
+    {
+        foreach ($this->groups as $item) {
+            if($item == $group){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

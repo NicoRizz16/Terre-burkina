@@ -12,5 +12,10 @@ namespace AppBundle\Repository;
  */
 class ChildGroupRepository extends \Doctrine\ORM\EntityRepository
 {
-
+    public function getGroupsList()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC')
+            ;
+    }
 }

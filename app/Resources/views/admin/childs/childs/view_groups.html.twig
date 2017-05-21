@@ -1,0 +1,77 @@
+{% extends "admin/childs/childs/view_layout.html.twig" %}
+
+
+{% block child_view %}
+    <i id="menuChildInfo">childGroups</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25 marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25 marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <div class="col-sm-6 col-sm-offset-3">
+        <table class="table table-striped">
+            <tr>
+                <th>Groupes</th>
+            </tr>
+            {% for group in child.groups %}
+                <tr>
+                    <td>
+                        <a href="#">{{ group.name }}</a>
+                    </td>
+                    <td>
+                        <button class="deleteBtn btn btn-danger btn-xs" id="{{ group.id }}"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>
+                        Ce filleul n'appartient à aucun groupe...
+                    </td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td>
+                        <div class="text-center">
+                            <a href="{{ path('admin_childs_view_groups_assign', {'id': child.id}) }}" class="btn btn-info btn-md"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</a>
+                        </div>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(function(){
+
+            $('.deleteBtn').click(function () {
+                var groupID = $(this).attr('id');
+                deleteGroup(groupID);
+                $(this).parent().parent().fadeOut();
+            });
+
+            function deleteGroup(groupID){
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_child_group_remove', {'id': child.id}) }}',
+                    data: 'groupID=' + groupID
+                })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+            }
+
+        });
+
+    </script>
+{% endblock %}
