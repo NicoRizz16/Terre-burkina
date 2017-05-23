@@ -22,3 +22,12 @@
     </div>
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function(){
+            $(":file").filestyle({buttonName: "btn-default", buttonBefore: true, buttonText: "&nbsp;Choisir"})
+        });
+    </script>
+{% endblock %}

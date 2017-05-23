@@ -6,6 +6,15 @@ AppBundle\Entity\User:
         email: 'nicolas.rizzon@gmail.com'
         enabled: true
 
+    sponsor{1..55}:
+        username (unique): <firstName()><lastName()>
+        plainPassword: 'sponsor'
+        role: ['ROLE_SPONSOR']
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 1000)>@gmail.com'
+        enabled: true
+        firstName: <firstName()>
+        lastName: <lastName()>
+
 AppBundle\Entity\Newsletter:
     newsletter_{1..25}:
         email (unique): <email()>
@@ -23,6 +32,28 @@ AppBundle\Entity\Child:
         firstname: <firstName()>
         lastname: <lastName()>
         dateOfBirth: <dateTimeBetween('-20 years', 'now')>
+        adress: <address()>
+        school: <streetName()>
+        class: <numberBetween(1, 6)>
+        phone: <e164PhoneNumber()>
+        sponsorshipStart: <dateTimeBetween('-5 years', 'now')>
+        sponsorshipEnd: <dateTimeBetween('now', '+10 years')>
+        familySituation: <sentence()>
+        sponsor: '@sponsor<current()>'
+        isSponsored: true
+
+    child_child_not_sponsored{1..20}:
+        firstname: <firstName()>
+        lastname: <lastName()>
+        dateOfBirth: <dateTimeBetween('-20 years', 'now')>
+        adress: <address()>
+        school: <streetName()>
+        class: <numberBetween(1, 6)>
+        phone: <e164PhoneNumber()>
+        sponsorshipStart: <dateTimeBetween('-5 years', 'now')>
+        sponsorshipEnd: <dateTimeBetween('now', '+10 years')>
+        familySituation: <sentence()>
+        isSponsored: false
 
 AppBundle\Entity\News:
     child_news{1..1000}:

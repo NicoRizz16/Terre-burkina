@@ -17,13 +17,41 @@
 
     <table class="table table-striped marginTop25">
         <tr>
+            <th></th>
+            <th>Prénom</th>
             <th>Nom</th>
+            <th>Age</th>
+            <th>Début parrainage</th>
+            <th>Fin parrainage</th>
+            <th>Parrain</th>
         </tr>
 
         {% for child in childsList %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}">{{ child.firstName }} {{ child.lastName }}</a>
+                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                </td>
+                <td>
+                    {{ child.firstName }}
+                </td>
+                <td>
+                    {{ child.lastName|upper }}
+                </td>
+                <td>
+                    {{ child.getAge }} ans
+                </td>
+                <td>
+                    {{ child.sponsorshipStart|date('d/m/Y') }}
+                </td>
+                <td>
+                    {{ child.sponsorshipEnd|date('d/m/Y') }}
+                </td>
+                <td>
+                    {% if child.sponsor is not null %}
+                        <a href="#" class="btn btn-success btn-sm">{{ child.sponsor.firstName }} {{ child.sponsor.lastName }}</a>
+                    {% else %}
+                        <a href="#" class="btn btn-danger btn-sm">Non parrainé</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

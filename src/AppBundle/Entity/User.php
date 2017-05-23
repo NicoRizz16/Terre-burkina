@@ -99,6 +99,11 @@ class User extends BaseUser
      */
     private $messageConsulted;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Child", mappedBy="sponsor")
+     */
+    private $childs;
+
 
 
     public function __construct()
@@ -370,5 +375,39 @@ class User extends BaseUser
     public function getMessageConsulted()
     {
         return $this->messageConsulted;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \AppBundle\Entity\Child $child
+     *
+     * @return User
+     */
+    public function addChild(\AppBundle\Entity\Child $child)
+    {
+        $this->childs[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \AppBundle\Entity\Child $child
+     */
+    public function removeChild(\AppBundle\Entity\Child $child)
+    {
+        $this->childs->removeElement($child);
+    }
+
+    /**
+     * Get childs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChilds()
+    {
+        return $this->childs;
     }
 }

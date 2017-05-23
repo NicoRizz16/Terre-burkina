@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Child
 {
-    const NUM_ITEMS = 10;
+    const NUM_ITEMS = 15;
 
     /**
      * @var int
@@ -233,6 +233,12 @@ class Child
      *  )
      */
     private $groups;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="childs")
+     * @ORM\JoinColumn(name="sponsor_id", referencedColumnName="id")
+     */
+    private $sponsor;
 
 
     public function __construct()
@@ -841,5 +847,36 @@ class Child
     public function getResults()
     {
         return $this->results;
+    }
+
+    public function getAge()
+    {
+        $now = new \DateTime();
+        $interval = $this->dateOfBirth->diff($now);
+        return $interval->format('%y');
+    }
+
+    /**
+     * Set sponsor
+     *
+     * @param \AppBundle\Entity\User $sponsor
+     *
+     * @return Child
+     */
+    public function setSponsor(\AppBundle\Entity\User $sponsor = null)
+    {
+        $this->sponsor = $sponsor;
+
+        return $this;
+    }
+
+    /**
+     * Get sponsor
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getSponsor()
+    {
+        return $this->sponsor;
     }
 }
