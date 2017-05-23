@@ -1,0 +1,22 @@
+{% extends "admin/childs/childs/view_layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block child_view %}
+    <i id="menuChildInfo">results</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+
+        <h3>Ajouter une feuille de résultats</h3>
+
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary" formnovalidate>Ajouter</button>
+            <a href="{{ path('admin_childs_results', {'id': child.id}) }}" class="btn btn-warning btn-md">Annuler</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+

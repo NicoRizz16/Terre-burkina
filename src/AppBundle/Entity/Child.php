@@ -221,6 +221,11 @@ class Child
     private $news;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Result", mappedBy="child")
+     */
+    private $results;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ChildGroup")
      * @ORM\JoinTable(name="childs_groups",
      *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
@@ -802,5 +807,39 @@ class Child
     public function getNews()
     {
         return $this->news;
+    }
+
+    /**
+     * Add result
+     *
+     * @param \AppBundle\Entity\Result $result
+     *
+     * @return Child
+     */
+    public function addResult(\AppBundle\Entity\Result $result)
+    {
+        $this->results[] = $result;
+
+        return $this;
+    }
+
+    /**
+     * Remove result
+     *
+     * @param \AppBundle\Entity\Result $result
+     */
+    public function removeResult(\AppBundle\Entity\Result $result)
+    {
+        $this->results->removeElement($result);
+    }
+
+    /**
+     * Get results
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResults()
+    {
+        return $this->results;
     }
 }
