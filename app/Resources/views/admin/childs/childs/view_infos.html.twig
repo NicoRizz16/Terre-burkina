@@ -5,6 +5,82 @@
 <i id="menuChildInfo">infos</i>
 
 <div>
-    Informations sur le filleul
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <div class="col-md-6">
+        <h3>Informations sur le filleul &nbsp;&nbsp;<a href="{{ path('admin_childs_view_infos_edit', {'id': child.id}) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></a></h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Prénom</th>
+                <td>{{ child.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ child.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Date de naissance</th>
+                <td>{{ child.dateOfBirth|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ child.getAge }} ans</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ child.adress }}</td>
+            </tr>
+            <tr>
+                <th>École</th>
+                <td>{{ child.school }}</td>
+            </tr>
+            <tr>
+                <th>Classe</th>
+                <td>{{ child.class }}</td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>{{ child.phone }}</td>
+            </tr>
+            <tr>
+                <th>Situation familiale</th>
+                <td>{{ child.familySituation }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Informations sur le parrainage &nbsp;&nbsp;<a href="{{ path('admin_childs_view_sponsorship_edit', {'id': child.id}) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></a></h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Parrain</th>
+                <td>
+                    {% if child.sponsor is not null %}
+                        <a href="#" class="btn btn-success btn-sm">{{ child.sponsor.fullName }}</a>
+                    {% else %}
+                        <a href="#" class="btn btn-danger btn-sm">Non parrainé</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Date de début</th>
+                <td>{{ child.sponsorshipStart|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Date de fin</th>
+                <td>{{ child.sponsorshipEnd|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Dernière lettre</th>
+                <td>{{ child.lastLetterDate|date('d/m/Y') }}</td>
+            </tr>
+        </table>
+    </div>
+
 </div>
 {% endblock %}

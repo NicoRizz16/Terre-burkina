@@ -44,6 +44,13 @@ class User extends BaseUser
     private $lastName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=255, nullable=true)
+     */
+    private $fullName;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
@@ -147,6 +154,7 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+        $this->setFullName();
 
         return $this;
     }
@@ -171,6 +179,7 @@ class User extends BaseUser
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+        $this->setFullName();
 
         return $this;
     }
@@ -409,5 +418,29 @@ class User extends BaseUser
     public function getChilds()
     {
         return $this->childs;
+    }
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     *
+     * @return User
+     */
+    public function setFullName()
+    {
+        $this->fullName = $this->getFirstName()." ".$this->getLastName();
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
     }
 }

@@ -49,4 +49,13 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, true);
     }
 
+    public function getSponsorsQueryBuilder()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.lastName', 'ASC')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_SPONSOR%')
+            ;
+    }
+
 }

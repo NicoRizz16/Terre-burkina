@@ -1,3 +1,5 @@
+{% set abs_url = app.request.scheme ~'://' ~ app.request.httpHost %}
+
 {% extends "admin/childs/layout.html.twig" %}
 
 {% block admin_body %}
@@ -8,8 +10,17 @@
         <a href="{{ path('admin_childs') }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
     </div>
 
-    <div class="text-center">
-        <h1>{{ child.firstName }} {{ child.lastName }}</h1>
+    <div class="text-center" id="child-photo-title-container">
+        <div>
+            {% if child.profilePhoto is not null %}
+                <img src="{{ abs_url ~ '/SYMFONY/Terre-burkina/web/' ~ vich_uploader_asset(child, 'profilePhoto') }}" alt="{{ child.profilePhotoName }}" class="child-profile_image"/>
+            {% else %}
+                <img src="{{ absolute_url(asset('img/empty_profile.png')) }}" alt="Avatar vide" class="child-profile_image">
+            {% endif %}
+        </div>
+        <div>
+            <h1>{{ child.fullName }}</h1>
+        </div>
     </div>
     <div class="marginTop25">
         <div class="btn-group btn-group-justified">

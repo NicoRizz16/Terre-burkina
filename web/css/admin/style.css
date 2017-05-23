@@ -167,3 +167,21 @@ body {
     padding-bottom: 5px;
     margin-bottom: 20px;
 }
+
+
+/* =====================================================================
+============================= CHILD VIEW LAYOUT ========================
+===================================================================== */
+
+#child-photo-title-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child-profile_image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-right: 20px;
+}

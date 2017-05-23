@@ -12,6 +12,8 @@ namespace AppBundle\Controller\Admin\Childs;
 use AppBundle\Entity\Child;
 use AppBundle\Form\ChildAssignGroupType;
 use AppBundle\Form\ChildType;
+use AppBundle\Form\EditChildInfosType;
+use AppBundle\Form\EditChildSponsorshipType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -84,6 +86,52 @@ class ChildsController extends Controller
     {
         return $this->render('admin/childs/childs/view_infos.html.twig', array(
             'child' => $child
+        ));
+    }
+
+    /**
+     * @Route("/{id}/modifier/infos", name="admin_childs_view_infos_edit", requirements={"id": "\d+"})
+     */
+    public function editInfosAction(Request $request, Child $child)
+    {
+        $form = $this->createForm(EditChildInfosType::class, $child);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($child);
+            $em->flush();
+
+            $this->addFlash('info', 'Les informations sur le filleul "'.$child->getFullName().'" ont bien été enregistrées.');
+            return $this->redirectToRoute('admin_childs_view_infos', array('id' => $child->getId()));
+        }
+
+        return $this->render('admin/childs/childs/view_edit_infos.html.twig', array(
+            'child' => $child,
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/{id}/modifier/parrainage", name="admin_childs_view_sponsorship_edit", requirements={"id": "\d+"})
+     */
+    public function editSponsorshipAction(Request $request, Child $child)
+    {
+        $form = $this->createForm(EditChildSponsorshipType::class, $child);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($child);
+            $em->flush();
+
+            $this->addFlash('info', 'Les informations sur le filleul "'.$child->getFullName().'" ont bien été enregistrées.');
+            return $this->redirectToRoute('admin_childs_view_infos', array('id' => $child->getId()));
+        }
+
+        return $this->render('admin/childs/childs/view_edit_sponsorship.html.twig', array(
+            'child' => $child,
+            'form' => $form->createView()
         ));
     }
 

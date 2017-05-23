@@ -61,6 +61,13 @@ class Child
     private $lastName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=255, nullable=true)
+     */
+    private $fullName;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_of_birth", type="datetime")
@@ -305,6 +312,7 @@ class Child
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+        $this->setFullName();
 
         return $this;
     }
@@ -329,6 +337,7 @@ class Child
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+        $this->setFullName();
 
         return $this;
     }
@@ -761,7 +770,13 @@ class Child
         $this->groups->removeElement($group);
     }
 
-    public function hasGroup(\AppBundle\Entity\ChildGroup $group)
+    /**
+     * Has group
+     *
+     * @param \AppBundle\Entity\ChildGroup $group
+     * @return boolean
+     */
+    public function hasGroup(ChildGroup $group)
     {
         foreach ($this->groups as $item) {
             if($item == $group){
@@ -878,5 +893,29 @@ class Child
     public function getSponsor()
     {
         return $this->sponsor;
+    }
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     *
+     * @return Child
+     */
+    public function setFullName()
+    {
+        $this->fullName = $this->getFirstName()." ".$this->getLastName();
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
     }
 }
