@@ -11,29 +11,29 @@
         <div class="alert alert-danger marginTop25 marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
     {% endfor %}
 
-    <div class="col-sm-6 col-sm-offset-3">
-        <table class="table table-striped">
-            <tr>
-                <th>Groupes</th>
-            </tr>
-            {% for group in child.groups %}
+    {% if child.groups|length > 0 %}
+        <div class="col-sm-6 col-sm-offset-3">
+            <table class="table table-striped">
                 <tr>
-                    <td>
-                        <a href="#">{{ group.name }}</a>
-                    </td>
-                    <td>
-                        <button class="deleteBtn btn btn-danger btn-xs" id="{{ group.id }}"><span class="glyphicon glyphicon-trash"></span></button>
-                    </td>
+                    <th>Groupes</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td>
-                        Ce filleul n'appartient à aucun groupe...
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
+                {% for group in child.groups %}
+                    <tr>
+                        <td>
+                            <a href="#">{{ group.name }}</a>
+                        </td>
+                        <td>
+                            <button class="deleteBtn btn btn-danger btn-xs" id="{{ group.id }}"><span class="glyphicon glyphicon-trash"></span></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="marginTop25 emptyInfo">Aucun groupe</h3>
+        </div>
+    {% endif %}
 
 {% endblock %}
 

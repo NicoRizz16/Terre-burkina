@@ -7,7 +7,7 @@
     <div class="text-center" id="child-photo-title-container">
         <a href="{{ path('admin_childs_groups') }}" class="btn btn-default btn-sm" id="childBackButton"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
         <div>
-            <h2>{{ group.name }}</h2>
+            <h2>{{ group.name|upper }}</h2>
         </div>
     </div>
     <div class="marginTop15">
@@ -22,8 +22,8 @@
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="news">Nouvelles <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Liste</a></li>
-                    <li><a href="#">Ajouter</a></li>
+                    <li><a href="{{ path('admin_childs_news_group', {'id': group.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_childs_news_group_add', {'id': group.id}) }}">Ajouter</a></li>
                 </ul>
             </div>
         </div>

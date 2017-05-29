@@ -12,51 +12,49 @@
             <div class="alert alert-danger marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
         {% endfor %}
 
-        <table class="table table-striped">
-            <tr>
-                <th>Année</th>
-                <th>Trimèstre 1</th>
-                <th>Trimèstre 2</th>
-                <th>Trimèstre 3</th>
-                <th>Annuel</th>
-            </tr>
+        {% if results|length > 0 %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Année</th>
+                    <th>Trimèstre 1</th>
+                    <th>Trimèstre 2</th>
+                    <th>Trimèstre 3</th>
+                    <th>Annuel</th>
+                </tr>
 
-            {% for result in results %}
-                <tr>
-                    <td>
-                        <strong>{{ result.year }}</strong>
-                    </td>
-                    <td>
-                        Moyenne : {{ result.average1 }} / 20<br/>
-                        Rang : {{ result.rank1 }} / {{ result.maxRank }}
-                    </td>
-                    <td>
-                        Moyenne : {{ result.average2 }} / 20<br/>
-                        Rang : {{ result.rank2 }} / {{ result.maxRank }}
-                    </td>
-                    <td>
-                        Moyenne : {{ result.average3 }} / 20<br/>
-                        Rang : {{ result.rank3 }} / {{ result.maxRank }}
-                    </td>
-                    <td>
-                        Moyenne : {{ result.averageYear }} / 20<br/>
-                        Rang : {{ result.rankYear }} / {{ result.maxRank }}
-                    </td>
-                    <td>
-                        <a href="{{ path('admin_childs_result_edit', {'child_id': child.id, 'result_id': result.id}) }}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a href="{{ path('admin_childs_result_delete', {'child_id': child.id, 'result_id': result.id}) }}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        Pas encore de résultats pour ce filleul...
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+                {% for result in results %}
+                    <tr>
+                        <td>
+                            <strong>{{ result.year }}</strong>
+                        </td>
+                        <td>
+                            Moyenne : {{ result.average1 }} / 20<br/>
+                            Rang : {{ result.rank1 }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            Moyenne : {{ result.average2 }} / 20<br/>
+                            Rang : {{ result.rank2 }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            Moyenne : {{ result.average3 }} / 20<br/>
+                            Rang : {{ result.rank3 }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            Moyenne : {{ result.averageYear }} / 20<br/>
+                            Rang : {{ result.rankYear }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_childs_result_edit', {'child_id': child.id, 'result_id': result.id}) }}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="{{ path('admin_childs_result_delete', {'child_id': child.id, 'result_id': result.id}) }}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucun résultat</h3>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
