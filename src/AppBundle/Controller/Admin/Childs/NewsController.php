@@ -243,4 +243,63 @@ class NewsController extends Controller
         ));
     }
 
+    /**
+     * @Route("/coordination", name="admin_childs_news_coordination")
+     */
+    public function coordinationIndexAction()
+    {
+        $newsList = $this->getDoctrine()->getManager()->getRepository('AppBundle:News')->findBy(array('isValid' => false), array('creationDate' => 'ASC'));
+
+        return $this->render('admin/childs/coordination/index.html.twig', array(
+            'newsList' => $newsList
+        ));
+    }
+
+    /**
+     * @Route("/coordination/{id}", name="admin_childs_news_coordination_validate", requirements={"id": "\d+"})
+     */
+    public function coordinationValidationAction(Request $request, News $news)
+    {
+        $form = $this->createForm(NewsType::class, $news);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $news->setContent(nl2br($news->getContent()));
+            $news->setIsValid(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+
+            $this->addFlash('info', 'La nouvelle "'.$news->getTitle().'" a bien été validée.');
+            return $this->redirectToRoute('admin_childs_news_coordination');
+        }
+
+        return $this->render('admin/childs/coordination/validation.html.twig', array(
+            'form' => $form->createView(),
+            'news' => $news
+        ));
+    }
+
+    /**
+     * @Route("/coordination/supprimer/{id}", name="admin_childs_news_coordination_delete", requirements={"id": "\d+"})
+     */
+    public function coordinationDeleteAction(Request $request,  News $news)
+    {
+        $form = $this->get('form.factory')->create();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($news);
+            $em->flush();
+
+            $this->addFlash('info', 'La nouvelle "'.$news->getTitle().'" a bien été supprimée.');
+            return $this->redirectToRoute('admin_childs_news_coordination');
+        }
+
+        return $this->render('admin/childs/coordination/delete.html.twig', array(
+            'form' => $form->createView(),
+            'news' => $news
+        ));
+    }
 }

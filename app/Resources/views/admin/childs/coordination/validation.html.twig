@@ -1,0 +1,32 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">coordination</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs_news_coordination') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+
+        <h3>Validation de la nouvelle destinée au
+            {% if news.group is not null %}
+                groupe "{{ news.group.name }}"
+            {% elseif news.child is not null %}
+                filleul "{{ news.child.fullName }}"
+            {% endif %}
+        </h3>
+
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary" formnovalidate>Valider la nouvelle</button><br/>
+            <a href="{{ path('admin_childs_news_coordination_delete', {'id': news.id}) }}" class="btn btn-danger marginTop15">Supprimer</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

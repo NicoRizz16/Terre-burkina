@@ -55,6 +55,10 @@ AppBundle\Entity\Child:
         familySituation: <sentence()>
         isSponsored: false
 
+AppBundle\Entity\ChildGroup:
+    child_group_{1..25}:
+        name (unique): <word()>
+
 AppBundle\Entity\News:
     child_news{1..1000}:
         creationDate: <dateTimeBetween('-300 days', 'now')>
@@ -63,6 +67,10 @@ AppBundle\Entity\News:
         isValid: <boolean(75)>
         child: '@child_child_*'
 
-AppBundle\Entity\ChildGroup:
-    child_group_{1..25}:
-        name (unique): <word()>
+    group_news{1..300}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        title: <sentence()>
+        content: <text(1000)>
+        isValid: <boolean(75)>
+        group: '@child_group_*'
+

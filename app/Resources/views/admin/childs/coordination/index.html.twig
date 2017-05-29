@@ -1,0 +1,51 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">coordination</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <div class="col-sm-8 col-sm-offset-2">
+        {% if newsList|length > 0 %}
+            <table class="table table-striped marginTop25">
+                <tr>
+                    <th></th>
+                    <th>Date</th>
+                    <th>À l'intention de</th>
+                    <th>Titre</th>
+                </tr>
+                {% for news in newsList %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('admin_childs_news_coordination_validate', {'id': news.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </td>
+                        <td>
+                            {{ news.creationDate|date('d/m/Y') }}
+                        </td>
+                        <td>
+                            {% if news.group is not null %}
+                                Groupe "{{ news.group.name }}"
+                            {% elseif news.child is not null %}
+                                Filleul "{{ news.child.fullName }}"
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ news.title }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucune nouvelle en attente de validation</h3>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
