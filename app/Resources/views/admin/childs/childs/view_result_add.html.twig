@@ -7,12 +7,10 @@
 
     <div class="col-md-7 col-md-offset-2 text-center">
 
-        <h3>Ajouter une feuille de résultats</h3>
-
-        <div class="marginTop25">
+        <div class="marginTop15 marginBottom30">
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary" formnovalidate>Ajouter</button>
+            <button type="submit" class="btn btn-primary" formnovalidate>Ajouter les résultats</button>
             <a href="{{ path('admin_childs_results', {'id': child.id}) }}" class="btn btn-warning btn-md">Annuler</a>
             {{ form_end(form) }}
         </div>

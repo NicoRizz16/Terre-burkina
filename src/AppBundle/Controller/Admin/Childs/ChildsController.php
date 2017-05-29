@@ -90,6 +90,29 @@ class ChildsController extends Controller
     }
 
     /**
+     * @Route("/{id}/supprimer", name="admin_childs_delete", requirements={"id": "\d+"})
+     */
+    public function deleteAction(Request $request, Child $child)
+    {
+        $form = $this->get('form.factory')->create();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($child);
+            $em->flush();
+
+            $this->addFlash('info', 'Le filleul "'.$child->getFullName().'" a bien été supprimé.');
+            return $this->redirectToRoute('admin_childs');
+        }
+
+        return $this->render('admin/childs/childs/delete.html.twig', array(
+            'form' => $form->createView(),
+            'child' => $child
+        ));
+    }
+
+    /**
      * @Route("/{id}/modifier/infos", name="admin_childs_view_infos_edit", requirements={"id": "\d+"})
      */
     public function editInfosAction(Request $request, Child $child)

@@ -28,9 +28,18 @@ body {
     margin-top: 25px;
 }
 
+.marginTop15{
+    margin-top: 15px;
+}
+
 .emptyInfo{
     color: #D9D9D9;
 }
+
+.actionsColumn {
+    min-width: 100px;
+}
+
 
 /* =====================================================================
 ============================= TOP MENU =================================
@@ -174,14 +183,27 @@ body {
 ===================================================================== */
 
 #child-photo-title-container{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .child-profile_image {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     border-radius: 50px;
     margin-right: 20px;
 }
+
+#childBackButton{
+    position: absolute;
+    top: 5px;
+    left: 2px;
+}
+
+#child-view-content{
+    position: relative;
+    padding-bottom: 200px;
+}
+

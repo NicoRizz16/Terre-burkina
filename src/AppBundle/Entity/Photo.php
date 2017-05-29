@@ -62,6 +62,12 @@ class Photo
      */
     private $child;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ChildGroup", inversedBy="photos")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    private $group;
+
 
     public function __construct()
     {
@@ -223,5 +229,29 @@ class Photo
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \AppBundle\Entity\ChildGroup $group
+     *
+     * @return Photo
+     */
+    public function setGroup(\AppBundle\Entity\ChildGroup $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \AppBundle\Entity\ChildGroup
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

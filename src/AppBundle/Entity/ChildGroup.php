@@ -41,6 +41,11 @@ class ChildGroup
      */
     private $news;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="group", cascade={"remove"})
+     */
+    private $photos;
+
 
     /**
      * Get id
@@ -115,5 +120,39 @@ class ChildGroup
     public function getNews()
     {
         return $this->news;
+    }
+
+    /**
+     * Add photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     *
+     * @return ChildGroup
+     */
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     */
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

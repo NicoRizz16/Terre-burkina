@@ -4,10 +4,6 @@
 {% block child_view %}
     <i id="menuChildInfo">news</i>
 
-    <div class="text-center col-xs-12 marginBottom30">
-        <a href="{{ path('admin_childs_news_child_add', {'id': child.id}) }}" class="btn btn-info btn-md"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</a>
-    </div>
-
     <div class="col-sm-8 col-sm-offset-2">
         {% for message in app.session.flashbag.get('info') %}
             <div class="alert alert-info marginTop25 marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
@@ -30,7 +26,7 @@
                     <td>
                         <a href="#">{{ news.title }}</a>
                     </td>
-                    <td>
+                    <td class="actionsColumn">
                         <a href="{{ path('admin_childs_news_child_edit', {'child_id': child.id, 'news_id': news.id}) }}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
                         <a href="{{ path('admin_childs_news_child_delete', {'child_id': child.id, 'news_id': news.id}) }}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>

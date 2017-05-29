@@ -218,17 +218,17 @@ class Child
     private $profilePhotoUpdatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="child")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="child", cascade={"remove"})
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\News", mappedBy="child")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\News", mappedBy="child", cascade={"remove"})
      */
     private $news;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Result", mappedBy="child")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Result", mappedBy="child", cascade={"remove"})
      */
     private $results;
 

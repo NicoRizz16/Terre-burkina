@@ -1,0 +1,22 @@
+{% extends "admin/childs/childs/view_layout.html.twig" %}
+
+
+{% block child_view %}
+    <i id="menuChildInfo">infos</i>
+
+    <div class="col-md-10 col-md-offset-1 text-center">
+
+        <h3>Êtes-vous sûr de vouloir supprimer le filleul "{{ child.fullName }}" ?</h3>
+        <p><strong>Attention !</strong></p>
+        <p>La suppression est irréversible, toutes les informations, photos, nouvelles et résultats scolaires du filleuls seront perdus définitivement.</p>
+
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger" formnovalidate><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+            <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" class="btn btn-warning btn-md">Annuler</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -20,7 +20,7 @@ class ChildAssignGroupType extends AbstractType
             ->add('group', EntityType::class, array(
                 'class' => 'AppBundle\Entity\ChildGroup',
                 'choice_label' => 'name',
-                'label' => 'Nom du groupe :',
+                'label' => 'Choisir un groupe :',
                 'query_builder' => function(ChildGroupRepository $repository){
                     return $repository->getGroupsList();
                 },

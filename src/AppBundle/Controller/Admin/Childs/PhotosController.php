@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin\Childs;
 
 
 use AppBundle\Entity\Child;
+use AppBundle\Entity\ChildGroup;
 use AppBundle\Entity\Photo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -105,6 +106,54 @@ class PhotosController extends Controller
         $photo = new Photo();
         $photo->setImageFile($file);
         $photo->setChild($child);
+
+        $em->persist($photo);
+        $em->flush();
+
+        //infos sur le document envoyé
+        return new JsonResponse(array('success' => true));
+    }
+
+    /**
+     * @Route("/admin/filleuls/groupe/{id}/photos", name="admin_childs_group_photos", requirements={"id": "\d+"})
+     */
+    public function indexGroupAction(ChildGroup $childGroup)
+    {
+        $photos = $this->getDoctrine()->getManager()->getRepository('AppBundle:Photo')->findBy(array('group' => $childGroup), array('order' => 'DESC'));
+
+        return $this->render('admin/childs/groups/view_photos.html.twig', array(
+            'group' => $childGroup,
+            'photos' => $photos
+        ));
+    }
+
+    /**
+     * @Route("/admin/filleuls/groupe/{id}/photos/ajouter", name="admin_childs_group_photos_add", requirements={"id": "\d+"})
+     */
+    public function addGroupAction(ChildGroup $childGroup)
+    {
+        return $this->render('admin/childs/groups/view_photos_add.html.twig', array(
+            'group' => $childGroup
+        ));
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/ajax/group/snippet/image/send/{id}", name="ajax_group_snippet_image_send", requirements={"id": "\d+"})
+     */
+    public function ajaxGroupSnippetImageSendAction(Request $request, ChildGroup $childGroup)
+    {
+        if (!$request->isXmlHttpRequest()){
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $file = $request->files->get('file');
+
+        $photo = new Photo();
+        $photo->setImageFile($file);
+        $photo->setGroup($childGroup);
 
         $em->persist($photo);
         $em->flush();

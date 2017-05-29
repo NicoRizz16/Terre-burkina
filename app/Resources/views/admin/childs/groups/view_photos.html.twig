@@ -1,15 +1,15 @@
-{% extends "admin/childs/childs/view_layout.html.twig" %}
+{% extends "admin/childs/groups/view_layout.html.twig" %}
 
 
-{% block child_view %}
+{% block group_view %}
     <i id="menuChildInfo">photos</i>
 
     <div class="marginTop25" id="gallery">
         {% for photo in photos %}
         <div class="col-xs-6 col-sm-4 col-md-3 admin_gallery_thumbnail_container">
             <div class="thumbnail admin_gallery_thumbnail">
-                <a href="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}">
-                    <img src="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}">
+                <a href="../../../../../{{ vich_uploader_asset(photo, 'imageFile') }}">
+                    <img src="../../../../../{{ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}">
                 </a>
             </div>
             <div id="{{ photo.id }}">
@@ -19,7 +19,7 @@
         </div>
         {% else %}
             <div class="text-center">
-                <h3 class="marginTop25 emptyInfo">Pas encore de photos sur ce filleul...</h3>
+                <h3 class="marginTop25 emptyInfo">Pas encore de photos sur ce groupe...</h3>
             </div>
         {% endfor %}
     </div>

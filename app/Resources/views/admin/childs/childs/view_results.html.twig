@@ -4,10 +4,6 @@
 {% block child_view %}
     <i id="menuChildInfo">results</i>
 
-    <div class="text-center col-xs-12 marginBottom30">
-        <a href="{{ path('admin_childs_result_add', {'id': child.id}) }}" class="btn btn-info btn-md"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</a>
-    </div>
-
     <div class="col-sm-10 col-sm-offset-1">
         {% for message in app.session.flashbag.get('info') %}
             <div class="alert alert-info marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>

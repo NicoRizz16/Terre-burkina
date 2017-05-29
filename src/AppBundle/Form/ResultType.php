@@ -17,7 +17,7 @@ class ResultType extends AbstractType
     {
         $builder
             ->add('year', IntegerType::class, array(
-                'label' => 'Année :'
+                'label' => 'Année des résultats :'
             ))
             ->add('average1', NumberType::class, array(
                 'label' => 'Moyenne 1er trimèstre (/ 20) :'

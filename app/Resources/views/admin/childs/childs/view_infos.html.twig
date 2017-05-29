@@ -63,7 +63,7 @@
                     {% if child.sponsor is not null %}
                         <a href="#" class="btn btn-success btn-sm">{{ child.sponsor.fullName }}</a>
                     {% else %}
-                        <a href="#" class="btn btn-danger btn-sm">Non parrainé</a>
+                        <a href="#" class="btn btn-warning btn-sm">Non parrainé</a>
                     {% endif %}
                 </td>
             </tr>
@@ -80,6 +80,10 @@
                 <td>{{ child.lastLetterDate|date('d/m/Y') }}</td>
             </tr>
         </table>
+    </div>
+
+    <div class="col-md-12 text-center">
+        <a href="{{ path('admin_childs_delete', {'id': child.id}) }}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer le filleul</a>
     </div>
 
 </div>

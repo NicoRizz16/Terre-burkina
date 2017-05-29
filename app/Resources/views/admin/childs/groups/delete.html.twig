@@ -10,9 +10,10 @@
         <a href="{{ path('admin_childs_groups') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
     </div>
 
-    <div class="col-md-7 col-md-offset-2 text-center">
-        <h1>Supprimer un groupe</h1>
-        <p>Êtes-vous sûr de vouloir supprimer le groupe "{{ childGroup.name }}" ?</p>
+    <div class="col-md-10 col-md-offset-1 text-center">
+        <h1>Êtes-vous sûr de vouloir supprimer le groupe "{{ childGroup.name }}" ?</h1>
+        <p><strong>Attention !</strong></p>
+        <p>La suppression est irréversible, toutes les photos et nouvelles associées au groupe seront perdues définitivement.</p>
         <div class="marginTop25">
             {{ form_start(form) }}
             {{ form_widget(form) }}
