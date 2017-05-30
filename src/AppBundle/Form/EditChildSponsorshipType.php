@@ -21,6 +21,7 @@ class EditChildSponsorshipType extends AbstractType
                 'class' => 'AppBundle\Entity\User',
                 'choice_label' => 'fullName',
                 'label' => 'Nom du parrain :',
+                'placeholder' => 'Aucun',
                 'query_builder' => function(UserRepository $repository){
                     return $repository->getSponsorsQueryBuilder();
                 },

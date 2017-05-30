@@ -111,6 +111,15 @@ class User extends BaseUser
      */
     private $childs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Document", mappedBy="user", cascade={"remove"})
+     */
+    private $documents;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="user", cascade={"remove"})
+     */
+    private $messages;
 
 
     public function __construct()
@@ -442,5 +451,73 @@ class User extends BaseUser
     public function getFullName()
     {
         return $this->fullName;
+    }
+
+    /**
+     * Add document
+     *
+     * @param \AppBundle\Entity\Document $document
+     *
+     * @return User
+     */
+    public function addDocument(\AppBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \AppBundle\Entity\Document $document
+     */
+    public function removeDocument(\AppBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * Add message
+     *
+     * @param \AppBundle\Entity\Message $message
+     *
+     * @return User
+     */
+    public function addMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Remove message
+     *
+     * @param \AppBundle\Entity\Message $message
+     */
+    public function removeMessage(\AppBundle\Entity\Message $message)
+    {
+        $this->messages->removeElement($message);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
