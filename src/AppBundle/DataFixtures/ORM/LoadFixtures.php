@@ -16,6 +16,19 @@ class LoadFixtures implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        Fixtures::load(__DIR__.'/fixtures.yml', $manager);
+        Fixtures::load(
+            __DIR__.'/fixtures.yml',
+            $manager,
+            [
+                'providers' => [$this]
+            ]);
+    }
+
+    public function paymentChoice()
+    {
+        $genera = ["mensuel", "trimestriel", "semestriel", "annuel"];
+
+        $key = array_rand($genera);
+        return $genera[$key];
     }
 }

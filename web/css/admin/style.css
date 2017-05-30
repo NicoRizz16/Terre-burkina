@@ -182,7 +182,7 @@ body {
 ============================= CHILD VIEW LAYOUT ========================
 ===================================================================== */
 
-#child-photo-title-container{
+#child-photo-title-container, #sponsor-title-container{
     position: relative;
     display: flex;
     justify-content: center;
@@ -196,7 +196,7 @@ body {
     margin-right: 20px;
 }
 
-#childBackButton{
+#childBackButton, #sponsorBackButton{
     position: absolute;
     top: 5px;
     left: 2px;

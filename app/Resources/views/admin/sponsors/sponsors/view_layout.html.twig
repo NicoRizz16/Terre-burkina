@@ -1,0 +1,52 @@
+{% set abs_url = app.request.scheme ~'://' ~ app.request.httpHost %}
+
+{% extends "admin/sponsors/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">sponsors</i>
+
+    <div class="text-center" id="sponsor-title-container">
+        <a href="{{ path('admin_sponsors') }}" class="btn btn-default btn-sm" id="sponsorBackButton"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+        <div>
+            <h2>{{ sponsor.fullName }}</h2>
+        </div>
+    </div>
+    <div class="marginTop15">
+        <div class="btn-group btn-group-justified">
+            <a href="{{ path('admin_sponsor_view_infos', {'id': sponsor.id}) }}" class="btn btn-default" id="infos">Informations</a>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="messages">Messages <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_sponsors_messages_sponsor_add', {'id': sponsor.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="documents">Documents <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_sponsors_photos', {'id': sponsor.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_sponsors_photos_add', {'id': sponsor.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="sponsorGroups">Groupes <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_sponsors_view_groups', {'id': child.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_sponsors_view_groups_assign', {'id': child.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div id="sponsor-view-content">
+        {% block sponsor_view %}
+        {% endblock %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

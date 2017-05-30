@@ -13,13 +13,50 @@
 
     <table class="table table-striped marginTop25">
         <tr>
+            <th></th>
             <th>Nom</th>
+            <th>Adresse</th>
+            <th>Mode de versement</th>
+            <th>Dernier versement</th>
+            <th>Dernier contact</th>
+            <th>Filleuls</th>
         </tr>
 
         {% for sponsor in sponsorsList %}
             <tr>
                 <td>
-                   {{ sponsor.firstName }} {{ sponsor.lastName }}
+                    <a href="{{ path('admin_sponsors_view_infos', {'id': sponsor.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                </td>
+                <td>
+                   {{ sponsor.fullName|upper }}
+                </td>
+                <td>
+                    {{ sponsor.adress }}
+                </td>
+                <td>
+                    {{ sponsor.paymentChoice }}
+                </td>
+                <td>
+                    {{ sponsor.lastPayment|date('d/m/Y') }}
+                </td>
+                <td>
+                    {% if sponsor.lastContact is null %}
+                        <button class="btn btn-danger btn-sm">Jamais</button>
+                    {% elseif dayDiff(sponsor.lastContact) >= 365 %}
+                        <button class="btn btn-danger btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
+                    {% elseif (dayDiff(sponsor.lastContact) > 60 and dayDiff(sponsor.lastContact) < 365) %}
+                        <button class="btn btn-warning btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
+                    {% else %}
+                        <button class="btn btn-success btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
+                    {% endif %}
+                </td>
+                <td>
+                    {% for child in sponsor.childs %}
+                        <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" class="btn btn-info btn-sm">{{ child.fullName }}</a>
+                        {% if not loop.last %} - {% endif %}
+                    {% else %}
+                        <button class="btn btn-default btn-sm">Aucun</button>
+                    {% endfor %}
                 </td>
             </tr>
         {% else %}

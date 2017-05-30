@@ -49,4 +49,18 @@ class SponsorsController extends Controller
         ));
     }
 
+    /**
+     * @Route("/{id}/infos", name="admin_sponsors_view_infos", requirements={"id": "\d+"})
+     */
+    public function viewAction(User $user)
+    {
+        if(!$user->hasRole('ROLE_SPONSOR')){
+            throw new NotFoundHttpException('Le parrain que vous souhaitez visualiser n\'existe pas.');
+        }
+
+        return $this->render('admin/sponsors/sponsors/view_infos.html.twig', array(
+            'sponsor' => $user
+        ));
+    }
+
 }

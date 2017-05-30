@@ -1,0 +1,18 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+
+{% block sponsor_view %}
+<i id="menuChildInfo">infos</i>
+
+<div>
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    infos
+
+</div>
+{% endblock %}

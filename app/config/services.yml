@@ -18,6 +18,11 @@ services:
       tags:
           - { name: twig.extension }
 
+  app.twig_extension.time_diff:
+      class: AppBundle\Twig\TimeDiffExtension
+      tags:
+          - { name: twig.extension }
+
   send.account_data:
       class: AppBundle\Utils\sendAccountData
       arguments:
