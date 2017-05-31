@@ -10,6 +10,7 @@
 namespace AppBundle\Controller\Admin\Sponsors;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\EditSponsorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,6 +61,32 @@ class SponsorsController extends Controller
 
         return $this->render('admin/sponsors/sponsors/view_infos.html.twig', array(
             'sponsor' => $user
+        ));
+    }
+
+    /**
+     * @Route("/{id}/modifier/infos", name="admin_sponsors_view_infos_edit", requirements={"id": "\d+"})
+     */
+    public function editInfosAction(Request $request, User $user)
+    {
+        if(!$user->hasRole('ROLE_SPONSOR')){
+            throw new NotFoundHttpException('Le parrain dont vous souhaitez modifier les informations n\'existe pas.');
+        }
+
+        $form = $this->createForm(EditSponsorType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+
+            $this->addFlash('info', 'Les informations sur le parrain "'.$user->getFullName().'" ont bien été enregistrées.');
+            return $this->redirectToRoute('admin_sponsors_view_infos', array('id' => $user->getId()));
+        }
+
+        return $this->render('admin/sponsors/sponsors/view_edit_infos.html.twig', array(
+            'sponsor' => $user,
+            'form' => $form->createView()
         ));
     }
 

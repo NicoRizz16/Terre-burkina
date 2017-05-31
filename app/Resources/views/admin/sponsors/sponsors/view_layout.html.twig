@@ -14,26 +14,26 @@
     </div>
     <div class="marginTop15">
         <div class="btn-group btn-group-justified">
-            <a href="{{ path('admin_sponsor_view_infos', {'id': sponsor.id}) }}" class="btn btn-default" id="infos">Informations</a>
+            <a href="{{ path('admin_sponsors_view_infos', {'id': sponsor.id}) }}" class="btn btn-default" id="infos">Informations</a>
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="messages">Messages <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) }}">Liste</a></li>
-                    <li><a href="{{ path('admin_sponsors_messages_sponsor_add', {'id': sponsor.id}) }}">Ajouter</a></li>
+                    <li><a href="{# path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) #}">Liste</a></li>
+                    <li><a href="{# path('admin_sponsors_messages_sponsor_add', {'id': sponsor.id}) #}">Ajouter</a></li>
                 </ul>
             </div>
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="documents">Documents <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ path('admin_sponsors_photos', {'id': sponsor.id}) }}">Liste</a></li>
-                    <li><a href="{{ path('admin_sponsors_photos_add', {'id': sponsor.id}) }}">Ajouter</a></li>
+                    <li><a href="{# path('admin_sponsors_photos', {'id': sponsor.id}) #}">Liste</a></li>
+                    <li><a href="{# path('admin_sponsors_photos_add', {'id': sponsor.id}) #}">Ajouter</a></li>
                 </ul>
             </div>
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="sponsorGroups">Groupes <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ path('admin_sponsors_view_groups', {'id': child.id}) }}">Liste</a></li>
-                    <li><a href="{{ path('admin_sponsors_view_groups_assign', {'id': child.id}) }}">Ajouter</a></li>
+                    <li><a href="{# path('admin_sponsors_view_groups', {'id': child.id}) #}">Liste</a></li>
+                    <li><a href="{# path('admin_sponsors_view_groups_assign', {'id': child.id}) #}">Ajouter</a></li>
                 </ul>
             </div>
         </div>

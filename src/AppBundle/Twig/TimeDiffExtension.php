@@ -26,12 +26,25 @@ class TimeDiffExtension extends \Twig_Extension
         if($interval->format('%Y') != 0){
             $an = ($interval->format('%y') > 1) ? "ans" : "an";
             return $interval->format('%y')." ".$an;
-        }
-        if($interval->format('%m') != 0){
+
+        } elseif($interval->format('%m') != 0){
             return $interval->format('%m mois');
+
         } else {
-            $jour = ($interval->format('%a') > 1) ? "jours" : "jour";
-            return $interval->format('%a')." ".$jour;
+            switch ($interval->format('%a')){
+                case 0 :
+                    return "Aujourd'hui";
+                    break;
+                case 1 :
+                    return "Hier";
+                    break;
+                case 2 :
+                    return "Avant-hier";
+                    break;
+                default:
+                    return $interval->format('%a')." jours";
+                    break;
+            }
         }
     }
 

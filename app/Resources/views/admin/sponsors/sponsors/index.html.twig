@@ -14,6 +14,7 @@
     <table class="table table-striped marginTop25">
         <tr>
             <th></th>
+            <th>Préom</th>
             <th>Nom</th>
             <th>Adresse</th>
             <th>Mode de versement</th>
@@ -28,13 +29,16 @@
                     <a href="{{ path('admin_sponsors_view_infos', {'id': sponsor.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 </td>
                 <td>
-                   {{ sponsor.fullName|upper }}
+                    {{ sponsor.firstName|capitalize }}
+                </td>
+                <td>
+                    {{ sponsor.lastName|upper }}
                 </td>
                 <td>
                     {{ sponsor.adress }}
                 </td>
                 <td>
-                    {{ sponsor.paymentChoice }}
+                    {{ sponsor.paymentChoice|capitalize }}
                 </td>
                 <td>
                     {{ sponsor.lastPayment|date('d/m/Y') }}

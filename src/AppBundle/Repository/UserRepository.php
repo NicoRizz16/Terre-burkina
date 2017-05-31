@@ -34,7 +34,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.roles LIKE :roles')
             ->setParameter('roles', '%ROLE_SPONSOR%')
-            ->orderBy('u.username', 'ASC')
+            ->orderBy('u.lastName', 'ASC')
             ->getQuery()
             ;
 
