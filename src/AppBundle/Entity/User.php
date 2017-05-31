@@ -121,6 +121,15 @@ class User extends BaseUser
      */
     private $messages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="SponsorGroup")
+     * @ORM\JoinTable(name="sponsors_groups",
+     *      joinColumns={@ORM\JoinColumn(name="sponsor_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     *  )
+     */
+    private $sponsorGroups;
+
 
     public function __construct()
     {
@@ -519,5 +528,55 @@ class User extends BaseUser
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * Add sponsorGroup
+     *
+     * @param \AppBundle\Entity\SponsorGroup $sponsorGroup
+     *
+     * @return User
+     */
+    public function addSponsorGroup(\AppBundle\Entity\SponsorGroup $sponsorGroup)
+    {
+        $this->sponsorGroups[] = $sponsorGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsorGroup
+     *
+     * @param \AppBundle\Entity\SponsorGroup $sponsorGroup
+     */
+    public function removeSponsorGroup(\AppBundle\Entity\SponsorGroup $sponsorGroup)
+    {
+        $this->sponsorGroups->removeElement($sponsorGroup);
+    }
+
+    /**
+     * Get sponsorGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSponsorGroups()
+    {
+        return $this->sponsorGroups;
+    }
+
+    /**
+     * Has group
+     *
+     * @param \AppBundle\Entity\SponsorGroup $group
+     * @return boolean
+     */
+    public function hasSponsorGroup(SponsorGroup $group)
+    {
+        foreach ($this->sponsorGroups as $item) {
+            if($item == $group){
+                return true;
+            }
+        }
+        return false;
     }
 }

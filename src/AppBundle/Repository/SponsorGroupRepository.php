@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class SponsorGroupRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getGroupsList()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.name', 'ASC')
+            ;
+    }
 }

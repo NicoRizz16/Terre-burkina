@@ -11,11 +11,14 @@ namespace AppBundle\Controller\Admin\Sponsors;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\EditSponsorType;
+use AppBundle\Form\SponsorAssignGroupType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("/admin/parrains")
@@ -88,6 +91,78 @@ class SponsorsController extends Controller
             'sponsor' => $user,
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @Route("/{id}/groupes", name="admin_sponsors_view_groups", requirements={"id": "\d+"})
+     */
+    public function groupsAction(User $user)
+    {
+        if(!$user->hasRole('ROLE_SPONSOR')){
+            throw new NotFoundHttpException('Le parrain dont vous souhaitez consulter les groupes n\'existe pas.');
+        }
+
+        return $this->render('admin/sponsors/sponsors/view_groups.html.twig', array(
+            'sponsor' => $user
+        ));
+    }
+
+    /**
+     * @Route("/{id}/groupes/assigner", name="admin_sponsors_view_groups_assign", requirements={"id": "\d+"})
+     */
+    public function assignGroupAction(Request $request, User $user)
+    {
+        $form = $this->createForm(SponsorAssignGroupType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $post = $form->getData();
+
+            $group = $em->getRepository('AppBundle:SponsorGroup')->find($post['group']);
+            if(!$group){
+                $this->addFlash('error', 'Le groupe que vous essayez d\'ajouter à ce parrain n\'existe pas.');
+                return $this->redirectToRoute('admin_sponsors_view_groups', array('id' => $user->getId()));
+            }
+            if($user->hasSponsorGroup($group)){
+                $this->addFlash('error', 'Le parrain appartient déjà à ce groupe.');
+                return $this->redirectToRoute('admin_sponsors_view_groups', array('id' => $user->getId()));
+            }
+
+            $user->addSponsorGroup($group);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('info', 'Le parrain a bien été ajouté au groupe "'.$group->getName().'".');
+            return $this->redirectToRoute('admin_sponsors_view_groups', array('id' => $user->getId()));
+        }
+
+        return $this->render('admin/sponsors/sponsors/view_groups_assign.html.twig', array(
+            'sponsor' => $user,
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/ajax/sponsor/{id}/group/remove", name="ajax_sponsor_group_remove", requirements={"id": "\d+"})
+     */
+    public function ajaxGroupRemoveAction(Request $request, User $user)
+    {
+        if (!$request->isXmlHttpRequest()){
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $groupID = $request->request->get('groupID');
+
+        $group = $em->getRepository('AppBundle:SponsorGroup')->find($groupID);
+
+        $user->removeSponsorGroup($group);
+        $em->persist($user);
+        $em->flush();
+
+        return new JsonResponse(array('success' => true));
     }
 
 }
