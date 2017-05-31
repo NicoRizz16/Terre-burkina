@@ -27,7 +27,7 @@ class Document
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="sponsor_file", fileNameProperty="fileName", size="fileSize")
+     * @Vich\UploadableField(mapping="sponsor_file", fileNameProperty="fileName", size="fileSize", originalName="originalName")
      *
      * @var File
      */
@@ -39,6 +39,13 @@ class Document
      * @var string
      */
     private $fileName;
+
+    /**
+     * @ORM\Column(name="original_name", type="string", length=255)
+     *
+     * @var string
+     */
+    private $originalName;
 
     /**
      * @ORM\Column(name="file_size", type="integer", nullable=true)
@@ -230,6 +237,7 @@ class Document
     public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
+        $user->addDocument($this);
 
         return $this;
     }
@@ -266,5 +274,29 @@ class Document
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set originalName
+     *
+     * @param string $originalName
+     *
+     * @return Document
+     */
+    public function setOriginalName($originalName)
+    {
+        $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    /**
+     * Get originalName
+     *
+     * @return string
+     */
+    public function getOriginalName()
+    {
+        return $this->originalName;
     }
 }

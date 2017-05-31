@@ -1,0 +1,36 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+
+{% block sponsor_view %}
+    <i id="menuChildInfo">documents</i>
+
+    <div class="col-xs-12">
+        <div class="dropzone my-dropzone" id="form_snippet_document" action="{{ path('ajax_snippet_document_send', {'id': sponsor.id}) }}">
+            <div class="dz-message needsclick">
+                <h3>Glissez vos documents ici ou cliquez pour sélectionner.</h3>
+                <span class="note">(Limite de <strong>10 documents</strong> et chaque document doit faire <strong>moins de 10 MB</strong>)</span>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        //je récupère l'action où sera traité l'upload en PHP
+        var _actionToDropZone = $("#form_snippet_document").attr('action');
+
+        //je définis ma zone de drop grâce à l'ID de ma div citée plus haut.
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("#form_snippet_document", {
+            url: _actionToDropZone,
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 10, // MB
+            maxFiles: 10
+        });
+
+    </script>
+{% endblock %}

@@ -179,6 +179,37 @@ body {
 
 
 /* =====================================================================
+============================= DOCUMENTS ==================================
+===================================================================== */
+.document_preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.document_preview_link{
+    display: block;
+    padding: 8px;
+    height: 130px;
+    width: 110px;
+    text-align: center;
+    overflow: scroll;
+    border-radius: 5px;
+    word-wrap: break-word;
+    margin-bottom: 5px;
+    background-color: #999999;
+    text-decoration: none;
+    color: white;
+}
+
+.document_preview_link:hover{
+    text-decoration: none;
+    background-color: #CCCCCC;
+    color: white;
+}
+
+/* =====================================================================
 ============================= CHILD VIEW LAYOUT ========================
 ===================================================================== */
 
