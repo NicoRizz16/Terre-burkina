@@ -6,7 +6,7 @@ AppBundle\Entity\User:
         email: 'nicolas.rizzon@gmail.com'
         enabled: true
 
-    sponsor{1..55}:
+    sponsor_sponsor{1..55}:
         username (unique): <firstName()><lastName()>
         plainPassword: 'sponsor'
         role: ['ROLE_SPONSOR']
@@ -43,7 +43,7 @@ AppBundle\Entity\Child:
         sponsorshipStart: <dateTimeBetween('-5 years', 'now')>
         sponsorshipEnd: <dateTimeBetween('now', '+10 years')>
         familySituation: <sentence()>
-        sponsor: '@sponsor<current()>'
+        sponsor: '@sponsor_sponsor<current()>'
         isSponsored: true
 
     child_child_not_sponsored{1..20}:
@@ -82,3 +82,19 @@ AppBundle\Entity\News:
         isValid: <boolean(75)>
         group: '@child_group_*'
 
+AppBundle\Entity\Message:
+    sponsor_message_{1..1000}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        object: <sentence()>
+        content: <text(1000)>
+        isSenderAdmin: <boolean(50)>
+        isNotificationAdmin: <boolean(50)>
+        user: '@sponsor_sponsor*'
+
+    group_message_{1..1000}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        object: <sentence()>
+        content: <text(1000)>
+        isSenderAdmin: true
+        isNotificationAdmin: <boolean(50)>
+        group: '@sponsor_group_*'

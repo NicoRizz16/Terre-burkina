@@ -18,7 +18,7 @@
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="messages">Messages <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{# path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) #}">Liste</a></li>
+                    <li><a href="{{ path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) }}">Liste</a></li>
                     <li><a href="{# path('admin_sponsors_messages_sponsor_add', {'id': sponsor.id}) #}">Ajouter</a></li>
                 </ul>
             </div>

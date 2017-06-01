@@ -136,6 +136,7 @@ class User extends BaseUser
         parent::__construct();
         $this->setDocumentConsulted(true);
         $this->setMessageConsulted(true);
+        $this->sponsorGroups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

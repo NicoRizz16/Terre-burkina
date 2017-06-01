@@ -1,0 +1,61 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+
+{% block sponsor_view %}
+    <i id="menuChildInfo">messages</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25 marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25 marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    {% if messages|length > 0 %}
+        <div class="col-sm-12" id="messagesContainer">
+            <div class="row">
+                {% for message in messages %}
+                    <div class="col-xs-10 {% if message.isSenderAdmin %}pull-right{% else %}pull-left{% endif %}">
+                        <div class="panel {% if message.isSenderAdmin %}panel-primary{% else %}panel-default{% endif %}">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    {{ message.object }}
+                                    <span class="messageInfos">
+                                        &nbsp;&nbsp;(
+                                        {% if message.isSenderAdmin %}
+                                                {% if message.group is not null %}Groupe "{{ message.group.name }}" {% else %} Admin {% endif %}
+                                        {% else %}
+                                            {{ sponsor.firstName|capitalize }} {{ sponsor.lastName|capitalize }}
+                                        {% endif %}
+                                         le
+                                        {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }} à {{ message.creationDate|date('h') }}h{{ message.creationDate|date('i') }}
+                                    )</span>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ message.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="marginTop25 emptyInfo">Aucun message</h3>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(function(){
+            $("#messagesContainer").scrollTop($("#messagesContainer")[0].scrollHeight);
+        });
+
+    </script>
+{% endblock %}

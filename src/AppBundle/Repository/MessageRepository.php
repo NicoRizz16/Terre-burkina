@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\SponsorGroup;
+use AppBundle\Entity\User;
 
 /**
  * MessageRepository
@@ -10,4 +12,27 @@ namespace AppBundle\Repository;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getUserMessages(User $user)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->leftjoin('m.user', 'u', 'WITH')
+            ->where('u.id = :userID')
+            ->setParameter('userID', $user->getId())
+            ->leftjoin('m.group', 'g', 'WITH')
+        ;
+
+        foreach ($user->getSponsorGroups() as $group) {
+            $query
+                ->orWhere('g.id = '.$group->getId())
+            ;
+        }
+
+        $query
+            ->orderBy('m.creationDate', 'ASC')
+            ->setFirstResult(0)
+            ->setMaxResults(30)
+        ;
+
+        return $query->getQuery()->getResult();
+    }
 }
