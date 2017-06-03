@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin\Sponsors;
 
 
 use AppBundle\Entity\Message;
+use AppBundle\Entity\SponsorGroup;
 use AppBundle\Form\MessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\User;
@@ -118,6 +119,91 @@ class MessagesController extends Controller
         return $this->render('admin/sponsors/sponsors/view_messages_delete.html.twig', array(
             'form' => $form->createView(),
             'sponsor' => $user,
+            'message' => $message
+        ));
+    }
+
+    /**
+     * @Route("/groupe/{id}", name="admin_sponsors_messages_group", requirements={"id": "\d+"})
+     */
+    public function groupIndexAction(Request $request, SponsorGroup $group)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $messages = $em->getRepository('AppBundle:Message')->getGroupMessages($group);
+
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setGroup($group);
+            $message->setIsSenderAdmin(true);
+            $message->setIsNotificationAdmin(false);
+            $em->persist($message);
+            $em->flush();
+
+            $this->addFlash('info', 'Le message a bien été envoyé au groupe.');
+            return $this->redirectToRoute('admin_sponsors_messages_group', array('id' => $group->getId()));
+        } elseif($form->isSubmitted() && !$form->isValid()){
+            $this->addFlash('error', 'Le message n\'a pas été enregistré car le formulaire contient une ou plusieurs erreurs.');
+        }
+
+        return $this->render('admin/sponsors/groups/view_messages.html.twig', array(
+            'form' => $form->createView(),
+            'group' => $group,
+            'messages' => $messages
+        ));
+    }
+
+
+    /**
+     * @Route("/groupe/{group_id}/modifier/{message_id}", name="admin_sponsors_messages_group_edit", requirements={"group_id": "\d+", "message_id": "\d+"})
+     * @ParamConverter("group", class="AppBundle:SponsorGroup", options={"id" = "group_id"})
+     * @ParamConverter("message", class="AppBundle:Message", options={"id" = "message_id"})
+     */
+    public function groupEditAction(Request $request, SponsorGroup $group, Message $message)
+    {
+        $form = $this->createForm(MessageType::class, $message);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($message);
+            $em->flush();
+
+            $this->addFlash('info', 'Le message a bien été modifié.');
+            return $this->redirectToRoute('admin_sponsors_messages_group', array('id' => $group->getId()));
+        }
+
+        return $this->render('admin/sponsors/groups/view_messages_edit.html.twig', array(
+            'form' => $form->createView(),
+            'group' => $group,
+            'message' => $message
+        ));
+    }
+
+    /**
+     * @Route("/groupe/{group_id}/supprimer/{message_id}", name="admin_sponsors_messages_group_delete", requirements={"group_id": "\d+", "message_id": "\d+"})
+     * @ParamConverter("group", class="AppBundle:SponsorGroup", options={"id" = "group_id"})
+     * @ParamConverter("message", class="AppBundle:Message", options={"id" = "message_id"})
+     */
+    public function groupDeleteAction(Request $request, SponsorGroup $group, Message $message)
+    {
+        $form = $this->get('form.factory')->create();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($message);
+            $em->flush();
+
+            $this->addFlash('info', 'Le message a bien été supprimé.');
+            return $this->redirectToRoute('admin_sponsors_messages_group', array('id' => $group->getId()));
+        }
+
+        return $this->render('admin/sponsors/groups/view_messages_delete.html.twig', array(
+            'form' => $form->createView(),
+            'group' => $group,
             'message' => $message
         ));
     }

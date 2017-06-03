@@ -1,0 +1,77 @@
+{% extends "admin/sponsors/groups/view_layout.html.twig" %}
+
+
+{% block group_view %}
+    <i id="menuChildInfo">documents</i>
+
+    <div class="marginTop25" id="gallery">
+        {% for document in documents %}
+            <div class="col-xs-12 col-sm-6 col-md-4 document_preview">
+                <a href="../../../../{{ vich_uploader_asset(document, 'file') }}" class="document_preview_link">
+                    {{ document.originalName }}
+                </a>
+                <div id="{{ document.id }}">
+                    <button class="btn btn-danger btn-xs deleteDocumentBtn"><span class="glyphicon glyphicon-trash"></span></button>
+                    <button class="btn btn-info btn-xs upDocumentBtn" style="margin-left: 10px;"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucun document</h3>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(function(){
+
+            $('.deleteDocumentBtn').click(function () {
+                var documentID = $(this).parent().attr('id');
+                deleteDocument(documentID);
+                $(this).parent().parent().fadeOut('slow');
+            });
+
+            $('.upDocumentBtn').click(function () {
+                var documentID = $(this).parent().attr('id');
+                upDocument(documentID);
+                $('#gallery').prepend($(this).parent().parent());
+            });
+
+            function deleteDocument(documentID){
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('ajax_snippet_document_delete') }}',
+                    data: 'documentId=' + documentID
+                })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+            }
+
+            function upDocument(documentID){
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('ajax_snippet_document_up') }}',
+                    data: 'documentId=' + documentID
+                })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+            }
+
+        });
+
+    </script>
+{% endblock %}

@@ -35,4 +35,17 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getGroupMessages(SponsorGroup $group)
+    {
+        return $this->createQueryBuilder('m')
+            ->leftjoin('m.group', 'g', 'WITH')
+            ->where('g.id = :groupID')
+            ->setParameter('groupID', $group->getId())
+            ->orderBy('m.creationDate', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(30)
+            ->getQuery()
+            ->getResult();
+    }
 }

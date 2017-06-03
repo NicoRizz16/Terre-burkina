@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin\Sponsors;
 
 
 use AppBundle\Entity\Document;
+use AppBundle\Entity\SponsorGroup;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -124,33 +125,33 @@ class DocumentsController extends Controller
     }
 
     /**
-     * @Route("/admin/filleuls/groupe/{id}/photos", name="admin_childs_group_photos", requirements={"id": "\d+"})
+     * @Route("/admin/groupe/{id}/documents", name="admin_sponsors_group_documents", requirements={"id": "\d+"})
      */
-    public function indexGroupAction(ChildGroup $childGroup)
+    public function groupIndexAction(SponsorGroup $group)
     {
-        $photos = $this->getDoctrine()->getManager()->getRepository('AppBundle:Photo')->findBy(array('group' => $childGroup), array('order' => 'DESC'));
+        $documents = $this->getDoctrine()->getManager()->getRepository('AppBundle:Document')->findBy(array('group' => $group), array('order' => 'DESC'));
 
-        return $this->render('admin/childs/groups/view_photos.html.twig', array(
-            'group' => $childGroup,
-            'photos' => $photos
+        return $this->render('admin/sponsors/groups/view_documents.html.twig', array(
+            'group' => $group,
+            'documents' => $documents
         ));
     }
 
     /**
-     * @Route("/admin/filleuls/groupe/{id}/photos/ajouter", name="admin_childs_group_photos_add", requirements={"id": "\d+"})
+     * @Route("/admin/groupe/{id}/documents/ajouter", name="admin_sponsors_group_documents_add", requirements={"id": "\d+"})
      */
-    public function addGroupAction(ChildGroup $childGroup)
+    public function groupAddAction(SponsorGroup $group)
     {
-        return $this->render('admin/childs/groups/view_photos_add.html.twig', array(
-            'group' => $childGroup
+        return $this->render('admin/sponsors/groups/view_documents_add.html.twig', array(
+            'group' => $group
         ));
     }
 
     /**
      * @Method({"GET", "POST"})
-     * @Route("/ajax/group/snippet/image/send/{id}", name="ajax_group_snippet_image_send", requirements={"id": "\d+"})
+     * @Route("/ajax/group/snippet/document/send/{id}", name="ajax_group_snippet_document_send", requirements={"id": "\d+"})
      */
-    public function ajaxGroupSnippetImageSendAction(Request $request, ChildGroup $childGroup)
+    public function ajaxGroupSnippetDocumentSendAction(Request $request, SponsorGroup $group)
     {
         if (!$request->isXmlHttpRequest()){
             return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
@@ -160,14 +161,17 @@ class DocumentsController extends Controller
 
         $file = $request->files->get('file');
 
-        $photo = new Photo();
-        $photo->setImageFile($file);
-        $photo->setGroup($childGroup);
+        $document = new Document();
+        $document->setOriginalName($file->getClientOriginalName());
+        $document->setFile($file);
+        $document->setGroup($group);
 
-        $em->persist($photo);
+        $em->persist($document);
         $em->flush();
 
         //infos sur le document envoyé
         return new JsonResponse(array('success' => true));
     }
+
+
 }

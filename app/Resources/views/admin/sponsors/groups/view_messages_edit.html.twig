@@ -1,8 +1,8 @@
-{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+{% extends "admin/sponsors/groups/view_layout.html.twig" %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-{% block sponsor_view %}
+{% block group_view %}
     <i id="menuChildInfo">messages</i>
 
     <div class="col-md-7 col-md-offset-2 text-center">
@@ -13,7 +13,7 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <button type="submit" class="btn btn-primary" formnovalidate>Enregistrer</button>
-            <a href="{{ path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) }}" class="btn btn-warning btn-md">Annuler</a>
+            <a href="{{ path('admin_sponsors_messages_group', {'id': group.id}) }}" class="btn btn-warning btn-md">Annuler</a>
             {{ form_end(form) }}
         </div>
     </div>

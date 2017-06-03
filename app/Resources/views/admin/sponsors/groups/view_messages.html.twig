@@ -1,8 +1,8 @@
-{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+{% extends "admin/sponsors/groups/view_layout.html.twig" %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-{% block sponsor_view %}
+{% block group_view %}
     <i id="menuChildInfo">messages</i>
 
     {% for message in app.session.flashbag.get('info') %}
@@ -22,20 +22,12 @@
                                 <h3 class="panel-title">
                                     {{ message.object }}
                                     <span class="messageInfos">
-                                        &nbsp;&nbsp;(
-                                        {% if message.isSenderAdmin %}
-                                                {% if message.group is not null %}Groupe "{{ message.group.name }}" {% else %} Admin {% endif %}
-                                        {% else %}
-                                            {{ sponsor.firstName|capitalize }} {{ sponsor.lastName|capitalize }}
-                                        {% endif %}
-                                         le
-                                        {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }} à {{ message.creationDate|date('H') }}h{{ message.creationDate|date('i') }}
-                                    )</span>
-                                    {% if message.isSenderAdmin and (message.group is null) %}
                                         &nbsp;&nbsp;
-                                        <a href="{{ path('admin_sponsors_messages_sponsor_edit', {'message_id': message.id, 'sponsor_id': sponsor.id}) }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a href="{{ path('admin_sponsors_messages_sponsor_delete', {'message_id': message.id, 'sponsor_id': sponsor.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-                                    {% endif %}
+                                        (Le {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }} à {{ message.creationDate|date('H') }}h{{ message.creationDate|date('i') }})
+                                    </span>
+                                    &nbsp;
+                                    <a href="{{ path('admin_sponsors_messages_group_edit', {'message_id': message.id, 'group_id': group.id}) }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a href="{{ path('admin_sponsors_messages_group_delete', {'message_id': message.id, 'group_id': group.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
                                 </h3>
                             </div>
                             <div class="panel-body">
