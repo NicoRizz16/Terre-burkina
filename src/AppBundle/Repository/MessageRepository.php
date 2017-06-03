@@ -28,7 +28,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $query
-            ->orderBy('m.creationDate', 'ASC')
+            ->orderBy('m.creationDate', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(30)
         ;

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Message
@@ -32,6 +33,13 @@ class Message
      * @var string
      *
      * @ORM\Column(name="object", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "L'objet du message doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "L'objet du message doit faire moins de {{ limit }} caractères"
+     * )
      */
     private $object;
 
@@ -39,6 +47,13 @@ class Message
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 10000,
+     *      minMessage = "Le message doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "Le message doit faire moins de {{ limit }} caractères."
+     * )
      */
     private $content;
 
@@ -68,6 +83,10 @@ class Message
      */
     private $group;
 
+    public function __construct()
+    {
+        $this->setCreationDate(new \DateTime());
+    }
 
     /**
      * Get id

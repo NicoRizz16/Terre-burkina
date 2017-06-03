@@ -1,0 +1,21 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block sponsor_view %}
+    <i id="menuChildInfo">messages</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+
+        <h3>Supprimer le message "{{ message.object }}" ?</h3>
+
+        <div class="marginTop25 marginBottom30">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger" formnovalidate>Supprimer</button>
+            <a href="{{ path('admin_sponsors_messages_sponsor', {'id': sponsor.id}) }}" class="btn btn-warning btn-md">Annuler</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

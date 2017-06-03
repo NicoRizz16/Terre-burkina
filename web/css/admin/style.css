@@ -214,19 +214,27 @@ body {
 ============================= MESSAGES =================================
 ===================================================================== */
 #messagesContainer{
-    height: 400px;
+    height: 430px;
     overflow: scroll;
     border: 1px solid #cccccc;
     -webkit-box-shadow: inset 0px 0px 15px -7px rgba(0,0,0,0.61);
     -moz-box-shadow: inset 0px 0px 15px -7px rgba(0,0,0,0.61);
     box-shadow: inset 0px 0px 15px -7px rgba(0,0,0,0.61);
+    margin-bottom: 20px;
+    background-color: #e6e6e6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
 }
 
-.messageInfos{
+.messageInfos {
     font-size: 0.8em;
-
 }
-                                                                                                                                                                                  <p>{{ message.content }}</p> </div>
+
+#writeMessageBlock{
+    display: none;
+}
+
 
 /* =====================================================================
 ============================= CHILD VIEW LAYOUT ========================

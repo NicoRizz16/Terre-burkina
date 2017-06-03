@@ -1,5 +1,6 @@
 {% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
 
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block sponsor_view %}
     <i id="menuChildInfo">messages</i>
@@ -14,7 +15,7 @@
     {% if messages|length > 0 %}
         <div class="col-sm-12" id="messagesContainer">
             <div class="row">
-                {% for message in messages %}
+                {% for message in messages|reverse %}
                     <div class="col-xs-10 {% if message.isSenderAdmin %}pull-right{% else %}pull-left{% endif %}">
                         <div class="panel {% if message.isSenderAdmin %}panel-primary{% else %}panel-default{% endif %}">
                             <div class="panel-heading">
@@ -28,16 +29,30 @@
                                             {{ sponsor.firstName|capitalize }} {{ sponsor.lastName|capitalize }}
                                         {% endif %}
                                          le
-                                        {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }} à {{ message.creationDate|date('h') }}h{{ message.creationDate|date('i') }}
+                                        {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }} à {{ message.creationDate|date('H') }}h{{ message.creationDate|date('i') }}
                                     )</span>
+                                    {% if message.isSenderAdmin and (message.group is null) %}
+                                        &nbsp;&nbsp;
+                                        <a href="{{ path('admin_sponsors_messages_sponsor_edit', {'message_id': message.id, 'sponsor_id': sponsor.id}) }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a href="{{ path('admin_sponsors_messages_sponsor_delete', {'message_id': message.id, 'sponsor_id': sponsor.id}) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+                                    {% endif %}
                                 </h3>
                             </div>
                             <div class="panel-body">
-                                <p>{{ message.content }}</p>
+                                <p>{{ message.content|nl2br }}</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button class="form-control btn btn-default btn-md marginBottom30" id="writeMessage">Ecrire un message</button>
+            <div id="writeMessageBlock">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-info form-control marginBottom30" formnovalidate><span class="glyphicon glyphicon-send"></span> &nbsp;&nbsp;Envoyer</button>
+                {{ form_end(form) }}
             </div>
         </div>
     {% else %}
@@ -54,7 +69,15 @@
     <script>
 
         $(function(){
+
             $("#messagesContainer").scrollTop($("#messagesContainer")[0].scrollHeight);
+
+            $("#writeMessage").click(function (e){
+                $("#writeMessageBlock").css('display', "block");
+                $(this).css('display', "none");
+
+                $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+            });
         });
 
     </script>
