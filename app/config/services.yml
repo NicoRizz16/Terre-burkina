@@ -36,7 +36,21 @@ services:
       tags:
           - { name: form.type }
 
-
   authentication.handler.login_success_handler:
       class:  AppBundle\Security\LoginSuccessHandler
       arguments:  ['@router', '@security.authorization_checker']
+
+
+  app.sponsor_email_available:
+      class: AppBundle\Validator\SponsorEmailAvailableValidator
+      arguments:
+          - "@doctrine.orm.entity_manager"
+      tags:
+          - { name: validator.constraint_validator }
+
+  app.sponsorshiprequest_listener:
+      class: AppBundle\EventListener\generateRequestToken
+      arguments:
+          - "@fos_user.util.token_generator"
+      tags:
+          - { name: doctrine.event_listener, event: prePersist }

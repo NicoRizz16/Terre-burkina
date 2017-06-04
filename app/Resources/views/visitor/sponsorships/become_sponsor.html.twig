@@ -1,0 +1,40 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+    <div class="text-center col-md-12 marginBottom30">
+        <h2>Demande de parrainage</h2>
+        <hr>
+    </div>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    <div class="col-md-6">
+        <div class="marginTop25">
+            {{ form_row(form.civility) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.dateOfBirth) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="marginTop25">
+            {{ form_row(form.address) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.paymentChoice) }}
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        {{ form_row(form.newsletter) }}
+        <button type="submit" class="btn btn-primary marginTop25" formnovalidate>Je souhaite parrainer un enfant</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+

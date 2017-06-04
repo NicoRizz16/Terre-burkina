@@ -16,8 +16,8 @@
         <div class="col-sm-12" id="messagesContainer">
             <div class="row">
                 {% for message in messages|reverse %}
-                    <div class="col-xs-10 {% if message.isSenderAdmin %}pull-right{% else %}pull-left{% endif %}">
-                        <div class="panel {% if message.isSenderAdmin %}panel-primary{% else %}panel-default{% endif %}">
+                    <div class="col-xs-12">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
                                     {{ message.object }}

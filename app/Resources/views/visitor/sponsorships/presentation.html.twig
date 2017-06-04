@@ -1,0 +1,23 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+    <h1>Présentation</h1>
+    <div class="col-md-9"></div>
+    <div class="col-md-3">
+        <h4>Plus d'informations</h4>
+        {% for message in app.session.flashbag.get('info') %}
+            <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+        {% endfor %}
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary marginTop25" formnovalidate>Obtenir plus d'informations</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+
