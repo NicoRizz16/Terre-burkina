@@ -6,11 +6,13 @@
     <div class="text-center col-md-12 marginBottom30">
         <h2>Demande de parrainage</h2>
         <hr>
+        {% for message in app.session.flashbag.get('info') %}
+            <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+        {% endfor %}
     </div>
-
-    {% for message in app.session.flashbag.get('info') %}
-        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
-    {% endfor %}
 
     {{ form_start(form) }}
     <div class="col-md-6">

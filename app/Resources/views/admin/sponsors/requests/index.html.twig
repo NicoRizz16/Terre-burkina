@@ -1,0 +1,92 @@
+{% extends "admin/sponsors/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">requests</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    {% if sponsorshipRequestsList|length > 0 %}
+        <table class="table table-striped marginTop25">
+            <tr>
+                <th>Type</th>
+                <th>Nom</th>
+                <th>E-mail</th>
+                <th>Date de création</th>
+                <th>Date d'expiration</th>
+                <th>Etat</th>
+            </tr>
+
+            {% for sponsorshipRequest in sponsorshipRequestsList %}
+                <tr>
+                    <td>
+                        {% if sponsorshipRequest.isSponsorshipRequest %}
+                            <button class="btn btn-sm btn-primary">Parrainage</button>
+                        {% else %}
+                            <button class="btn btn-sm btn-info">Informations</button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ sponsorshipRequest.firstName|capitalize }} {{ sponsorshipRequest.lastName|upper }}
+                    </td>
+                    <td>
+                        {{ sponsorshipRequest.email }}
+                    </td>
+                    <td>
+                        {{ sponsorshipRequest.requestedAt|date('d/m/Y') }}
+                    </td>
+                    <td>
+                        {% if "now"|date('Ymd') < sponsorshipRequest.expirationDate|date('Ymd') %}
+                            <button class="btn btn-sm btn-success">{{ sponsorshipRequest.expirationDate|date('d/m/Y') }}</button>
+                        {% else %}
+                            <button class="btn btn-sm btn-danger">{{ sponsorshipRequest.expirationDate|date('d/m/Y') }}</button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            {% if sponsorshipRequest.isValid %}
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Validée <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_sponsors_requests_toggle_state', {'id': sponsorshipRequest.id}) }}">Mettre en attente</a></li>
+                                </ul>
+                            {% else %}
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    En attente <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_sponsors_requests_toggle_state', {'id': sponsorshipRequest.id}) }}">Valider</a></li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        {% if sponsorshipRequest.isValid %}
+                            <a href="{{ path('sponsorship_request_response', {'token': sponsorshipRequest.token}) }}" class="btn btn-sm btn-default" title="Voir"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        {% endif %}
+
+                        {% if sponsorshipRequest.isSponsorshipRequest %}
+                            <a href="{{ path('admin_sponsors_requests_edit', {'id': sponsorshipRequest.id}) }}" class="btn btn-sm btn-primary" title="Modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                        {% endif %}
+
+                        <a href="{{ path('admin_sponsors_requests_delete', {'id': sponsorshipRequest.id}) }}" class="btn btn-sm btn-danger" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+
+                        {% if sponsorshipRequest.isValid and sponsorshipRequest.isSponsorshipRequest %}
+                            <a href="{{ path('admin_sponsors_requests_create_user', {'id': sponsorshipRequest.id}) }}" class="btn btn-warning btn-sm" title="Créer un compte"><span class="glyphicon glyphicon-user"></span></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="text-center">
+            <h3 class="marginTop25 emptyInfo">Aucune demande</h3>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

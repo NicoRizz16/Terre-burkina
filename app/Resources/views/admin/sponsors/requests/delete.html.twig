@@ -1,0 +1,23 @@
+{% extends "admin/sponsors/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">requests</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_sponsors_requests') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+        <h3>Êtes-vous sûr de vouloir supprimer la demande de "{{ sponsorshipRequest.firstName }} {{ sponsorshipRequest.lastName }}" ?</h3>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger marginTop25 marginBottom30" formnovalidate>Supprimer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -918,4 +918,52 @@ class Child
     {
         return $this->fullName;
     }
+
+    /**
+     * Set child
+     *
+     * @param \AppBundle\Entity\SponsorshipRequest $child
+     *
+     * @return Child
+     */
+    public function setChild(\AppBundle\Entity\SponsorshipRequest $child = null)
+    {
+        $this->child = $child;
+
+        return $this;
+    }
+
+    /**
+     * Get child
+     *
+     * @return \AppBundle\Entity\SponsorshipRequest
+     */
+    public function getChild()
+    {
+        return $this->child;
+    }
+
+    /**
+     * Set sponsorshipRequest
+     *
+     * @param \AppBundle\Entity\SponsorshipRequest $sponsorshipRequest
+     *
+     * @return Child
+     */
+    public function setSponsorshipRequest(\AppBundle\Entity\SponsorshipRequest $sponsorshipRequest = null)
+    {
+        $this->sponsorshipRequest = $sponsorshipRequest;
+
+        return $this;
+    }
+
+    /**
+     * Get sponsorshipRequest
+     *
+     * @return \AppBundle\Entity\SponsorshipRequest
+     */
+    public function getSponsorshipRequest()
+    {
+        return $this->sponsorshipRequest;
+    }
 }

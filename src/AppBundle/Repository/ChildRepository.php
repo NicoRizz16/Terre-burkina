@@ -29,4 +29,11 @@ class ChildRepository extends \Doctrine\ORM\EntityRepository
         // On retourne l'objet Paginator correspondant à la requête construite
         return new Paginator($query, true);
     }
+
+    public function getOrphanChildsQueryBuilder()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.sponsor IS NULL')
+            ->orderBy('c.fullName', 'ASC');
+    }
 }

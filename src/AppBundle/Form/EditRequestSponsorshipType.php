@@ -2,7 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Repository\ChildRepository;
 use AppBundle\Validator\SponsorEmailAvailable;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -19,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RequestSponsorshipType extends AbstractType
+class EditRequestSponsorshipType extends AbstractType
 {
 
     /**
@@ -74,18 +76,6 @@ class RequestSponsorshipType extends AbstractType
                     )),
                     new NotBlank(array(
                         'message' => 'Vous devez indiquer un nom'
-                    ))
-                )
-            ))
-            ->add('email', EmailType::class, array(
-                'label' => 'Adresse e-mail',
-                'constraints' => array(
-                    new Email(array(
-                        'message' => 'Vous devez entrer une adresse email valide.',
-                        'checkMX' => true
-                    )),
-                    new NotBlank(array(
-                        'message' => 'Vous devez indiquer une adresse email'
                     ))
                 )
             ))
@@ -158,10 +148,15 @@ class RequestSponsorshipType extends AbstractType
                     ))
                 )
             ))
-            ->add('newsletter', CheckboxType::class, array(
-                'label' => 'Recevoir les actualités de l\'association',
-                'required' => false,
-                'data' => true
+            ->add('child', EntityType::class, array(
+                'class' => 'AppBundle\Entity\Child',
+                'choice_label' => 'fullName',
+                'label' => 'Choix du filleul',
+                'placeholder' => 'choisir',
+                'query_builder' => function(ChildRepository $repository){
+                    return $repository->getOrphanChildsQueryBuilder();
+                },
+                'choice_value' => 'id'
             ))
         ;
 
