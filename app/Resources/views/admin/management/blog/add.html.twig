@@ -18,17 +18,17 @@
     <i id="menuLeftInfo">blog</i>
 
     <div class="buttonsBar">
-        <a href="{{ path('admin_management_posts') }}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+        <a href="{{ path('admin_management_posts') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
     </div>
 
-    <div class="col-md-7 col-md-offset-2">
+    <div class="col-md-10 col-md-offset-1">
         <h1 class="text-center">Ajouter un article</h1>
         <hr>
         <div class="marginTop25">
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <div class="text-center">
-                <button type="submit" class="btn btn-primary marginTop25 " formnovalidate>Enregistrer</button>
+                <button type="submit" class="btn btn-primary marginTop25 marginBottom30" formnovalidate>Enregistrer</button>
             </div>
             {{ form_end(form) }}
         </div>

@@ -1,0 +1,875 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+
+/**
+ * Letter
+ *
+ * @ORM\Table(name="letter")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LetterRepository")
+ * @Vich\Uploadable
+ */
+class Letter
+{
+    const NUM_ITEMS = 10;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creationDate", type="datetime")
+     * @Assert\NotBlank()
+     */
+    private $creationDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="summary", type="text", nullable=true)
+     */
+    private $summary;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
+     */
+    private $content;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module1Content", type="text", nullable=true)
+     */
+    private $module1Content;
+
+    /**
+     * @Vich\UploadableField(mapping="letter_module_photo", fileNameProperty="module1PhotoName")
+     *
+     * @var File
+     * @Assert\Image()
+     */
+    private $module1Photo;
+
+    /**
+     * @ORM\Column(name="module_1_photo_name", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $module1PhotoName;
+
+    /**
+     * @ORM\Column(name="module_1_photo_updated_at", type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $module1PhotoUpdatedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module2Content", type="text", nullable=true)
+     */
+    private $module2Content;
+
+    /**
+     * @Vich\UploadableField(mapping="letter_module_photo", fileNameProperty="module2PhotoName")
+     *
+     * @var File
+     * @Assert\Image()
+     */
+    private $module2Photo;
+
+    /**
+     * @ORM\Column(name="module_2_photo_name", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $module2PhotoName;
+
+    /**
+     * @ORM\Column(name="module_2_photo_updated_at", type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $module2PhotoUpdatedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module3Content", type="text", nullable=true)
+     */
+    private $module3Content;
+
+    /**
+     * @Vich\UploadableField(mapping="letter_module_photo", fileNameProperty="module3PhotoName")
+     *
+     * @var File
+     * @Assert\Image()
+     */
+    private $module3Photo;
+
+    /**
+     * @ORM\Column(name="module_3_photo_name", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $module3PhotoName;
+
+    /**
+     * @ORM\Column(name="module_3_photo_updated_at", type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $module3PhotoUpdatedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module4Content", type="text", nullable=true)
+     */
+    private $module4Content;
+
+    /**
+     * @Vich\UploadableField(mapping="letter_module_photo", fileNameProperty="module4PhotoName")
+     *
+     * @var File
+     * @Assert\Image()
+     */
+    private $module4Photo;
+
+    /**
+     * @ORM\Column(name="module_4_photo_name", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $module4PhotoName;
+
+    /**
+     * @ORM\Column(name="module_4_photo_updated_at", type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $module4PhotoUpdatedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module5Content", type="text", nullable=true)
+     */
+    private $module5Content;
+
+    /**
+     * @Vich\UploadableField(mapping="letter_module_photo", fileNameProperty="module5PhotoName")
+     *
+     * @var File
+     * @Assert\Image()
+     */
+    private $module5Photo;
+
+    /**
+     * @ORM\Column(name="module_5_photo_name", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $module5PhotoName;
+
+    /**
+     * @ORM\Column(name="module_5_photo_updated_at", type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $module5PhotoUpdatedAt;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isPublished", type="boolean")
+     */
+    private $isPublished;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $author;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->creationDate = new \DateTime();
+        $this->setisPublished(false);
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Letter
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Set dateUrl
+     *
+     * @param string $dateUrl
+     *
+     * @return Letter
+     */
+    public function setDateUrl($dateUrl)
+    {
+        $this->dateUrl = $dateUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get dateUrl
+     *
+     * @return string
+     */
+    public function getDateUrl()
+    {
+        return $this->dateUrl;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param string $summary
+     *
+     * @return Letter
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Letter
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set module1Content
+     *
+     * @param string $module1Content
+     *
+     * @return Letter
+     */
+    public function setModule1Content($module1Content)
+    {
+        $this->module1Content = $module1Content;
+
+        return $this;
+    }
+
+    /**
+     * Get module1Content
+     *
+     * @return string
+     */
+    public function getModule1Content()
+    {
+        return $this->module1Content;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo
+     *
+     * @return Letter
+     */
+    public function setModule1Photo(File $photo = null)
+    {
+        $this->module1Photo = $photo;
+
+        if ($photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->module1PhotoUpdatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get module1Photo
+     *
+     * @return File
+     */
+    public function getModule1Photo()
+    {
+        return $this->module1Photo;
+    }
+
+    /**
+     * Set module2Content
+     *
+     * @param string $module2Content
+     *
+     * @return Letter
+     */
+    public function setModule2Content($module2Content)
+    {
+        $this->module2Content = $module2Content;
+
+        return $this;
+    }
+
+    /**
+     * Get module2Content
+     *
+     * @return string
+     */
+    public function getModule2Content()
+    {
+        return $this->module2Content;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo
+     *
+     * @return Letter
+     */
+    public function setModule2Photo(File $photo = null)
+    {
+        $this->module2Photo = $photo;
+
+        if ($photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->module2PhotoUpdatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get module2Photo
+     *
+     * @return File
+     */
+    public function getModule2Photo()
+    {
+        return $this->module2Photo;
+    }
+
+    /**
+     * Set module3Content
+     *
+     * @param string $module3Content
+     *
+     * @return Letter
+     */
+    public function setModule3Content($module3Content)
+    {
+        $this->module3Content = $module3Content;
+
+        return $this;
+    }
+
+    /**
+     * Get module3Content
+     *
+     * @return string
+     */
+    public function getModule3Content()
+    {
+        return $this->module3Content;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo
+     *
+     * @return Letter
+     */
+    public function setModule3Photo(File $photo = null)
+    {
+        $this->module3Photo = $photo;
+
+        if ($photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->module3PhotoUpdatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get module3Photo
+     *
+     * @return File
+     */
+    public function getModule3Photo()
+    {
+        return $this->module3Photo;
+    }
+
+    /**
+     * Set module4Content
+     *
+     * @param string $module4Content
+     *
+     * @return Letter
+     */
+    public function setModule4Content($module4Content)
+    {
+        $this->module4Content = $module4Content;
+
+        return $this;
+    }
+
+    /**
+     * Get module4Content
+     *
+     * @return string
+     */
+    public function getModule4Content()
+    {
+        return $this->module4Content;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo
+     *
+     * @return Letter
+     */
+    public function setModule4Photo(File $photo = null)
+    {
+        $this->module4Photo = $photo;
+
+        if ($photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->module4PhotoUpdatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get module4Photo
+     *
+     * @return File
+     */
+    public function getModule4Photo()
+    {
+        return $this->module4Photo;
+    }
+
+    /**
+     * Set module5Content
+     *
+     * @param string $module5Content
+     *
+     * @return Letter
+     */
+    public function setModule5Content($module5Content)
+    {
+        $this->module5Content = $module5Content;
+
+        return $this;
+    }
+
+    /**
+     * Get module5Content
+     *
+     * @return string
+     */
+    public function getModule5Content()
+    {
+        return $this->module5Content;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photo
+     *
+     * @return Letter
+     */
+    public function setModule5Photo(File $photo = null)
+    {
+        $this->module5Photo = $photo;
+
+        if ($photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->module5PhotoUpdatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get module5Photo
+     *
+     * @return File
+     */
+    public function getModule5Photo()
+    {
+        return $this->module5Photo;
+    }
+
+    /**
+     * Set isPublished
+     *
+     * @param boolean $isPublished
+     *
+     * @return Letter
+     */
+    public function setIsPublished($isPublished)
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublished
+     *
+     * @return bool
+     */
+    public function getIsPublished()
+    {
+        return $this->isPublished;
+    }
+
+    /**
+     * Set module1PhotoName
+     *
+     * @param string $module1PhotoName
+     *
+     * @return Letter
+     */
+    public function setModule1PhotoName($module1PhotoName)
+    {
+        $this->module1PhotoName = $module1PhotoName;
+
+        return $this;
+    }
+
+    /**
+     * Get module1PhotoName
+     *
+     * @return string
+     */
+    public function getModule1PhotoName()
+    {
+        return $this->module1PhotoName;
+    }
+
+    /**
+     * Set module1PhotoUpdatedAt
+     *
+     * @param \DateTime $module1PhotoUpdatedAt
+     *
+     * @return Letter
+     */
+    public function setModule1PhotoUpdatedAt($module1PhotoUpdatedAt)
+    {
+        $this->module1PhotoUpdatedAt = $module1PhotoUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get module1PhotoUpdatedAt
+     *
+     * @return \DateTime
+     */
+    public function getModule1PhotoUpdatedAt()
+    {
+        return $this->module1PhotoUpdatedAt;
+    }
+
+    /**
+     * Set module2PhotoName
+     *
+     * @param string $module2PhotoName
+     *
+     * @return Letter
+     */
+    public function setModule2PhotoName($module2PhotoName)
+    {
+        $this->module2PhotoName = $module2PhotoName;
+
+        return $this;
+    }
+
+    /**
+     * Get module2PhotoName
+     *
+     * @return string
+     */
+    public function getModule2PhotoName()
+    {
+        return $this->module2PhotoName;
+    }
+
+    /**
+     * Set module2PhotoUpdatedAt
+     *
+     * @param \DateTime $module2PhotoUpdatedAt
+     *
+     * @return Letter
+     */
+    public function setModule2PhotoUpdatedAt($module2PhotoUpdatedAt)
+    {
+        $this->module2PhotoUpdatedAt = $module2PhotoUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get module2PhotoUpdatedAt
+     *
+     * @return \DateTime
+     */
+    public function getModule2PhotoUpdatedAt()
+    {
+        return $this->module2PhotoUpdatedAt;
+    }
+
+    /**
+     * Set module3PhotoName
+     *
+     * @param string $module3PhotoName
+     *
+     * @return Letter
+     */
+    public function setModule3PhotoName($module3PhotoName)
+    {
+        $this->module3PhotoName = $module3PhotoName;
+
+        return $this;
+    }
+
+    /**
+     * Get module3PhotoName
+     *
+     * @return string
+     */
+    public function getModule3PhotoName()
+    {
+        return $this->module3PhotoName;
+    }
+
+    /**
+     * Set module3PhotoUpdatedAt
+     *
+     * @param \DateTime $module3PhotoUpdatedAt
+     *
+     * @return Letter
+     */
+    public function setModule3PhotoUpdatedAt($module3PhotoUpdatedAt)
+    {
+        $this->module3PhotoUpdatedAt = $module3PhotoUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get module3PhotoUpdatedAt
+     *
+     * @return \DateTime
+     */
+    public function getModule3PhotoUpdatedAt()
+    {
+        return $this->module3PhotoUpdatedAt;
+    }
+
+    /**
+     * Set module4PhotoName
+     *
+     * @param string $module4PhotoName
+     *
+     * @return Letter
+     */
+    public function setModule4PhotoName($module4PhotoName)
+    {
+        $this->module4PhotoName = $module4PhotoName;
+
+        return $this;
+    }
+
+    /**
+     * Get module4PhotoName
+     *
+     * @return string
+     */
+    public function getModule4PhotoName()
+    {
+        return $this->module4PhotoName;
+    }
+
+    /**
+     * Set module4PhotoUpdatedAt
+     *
+     * @param \DateTime $module4PhotoUpdatedAt
+     *
+     * @return Letter
+     */
+    public function setModule4PhotoUpdatedAt($module4PhotoUpdatedAt)
+    {
+        $this->module4PhotoUpdatedAt = $module4PhotoUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get module4PhotoUpdatedAt
+     *
+     * @return \DateTime
+     */
+    public function getModule4PhotoUpdatedAt()
+    {
+        return $this->module4PhotoUpdatedAt;
+    }
+
+    /**
+     * Set module5PhotoName
+     *
+     * @param string $module5PhotoName
+     *
+     * @return Letter
+     */
+    public function setModule5PhotoName($module5PhotoName)
+    {
+        $this->module5PhotoName = $module5PhotoName;
+
+        return $this;
+    }
+
+    /**
+     * Get module5PhotoName
+     *
+     * @return string
+     */
+    public function getModule5PhotoName()
+    {
+        return $this->module5PhotoName;
+    }
+
+    /**
+     * Set module5PhotoUpdatedAt
+     *
+     * @param \DateTime $module5PhotoUpdatedAt
+     *
+     * @return Letter
+     */
+    public function setModule5PhotoUpdatedAt($module5PhotoUpdatedAt)
+    {
+        $this->module5PhotoUpdatedAt = $module5PhotoUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get module5PhotoUpdatedAt
+     *
+     * @return \DateTime
+     */
+    public function getModule5PhotoUpdatedAt()
+    {
+        return $this->module5PhotoUpdatedAt;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \AppBundle\Entity\User $author
+     *
+     * @return Letter
+     */
+    public function setAuthor(\AppBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+}

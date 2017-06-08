@@ -122,6 +122,14 @@ vich_uploader:
             delete_on_remove:   true
             namer: vich_uploader.namer_origname
 
+        letter_module_photo:
+            uri_prefix: uploads/photos/letters
+            upload_destination: '%kernel.root_dir%/../web/uploads/photos/letters'
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer: vich_uploader.namer_origname
+
 
 # Stof Configuration
 stof_doctrine_extensions:

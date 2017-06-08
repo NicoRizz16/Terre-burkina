@@ -112,7 +112,7 @@ class BlogController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user->hasRole('ROLE_MODERATOR')){
             if($post->getPublished() || (!$post->getPublished() && ($user->getId() != $post->getAuthor()->getId()))){
-                $this->addFlash('error', 'Vous n\'avez par le droit de supprimer cet article.');
+                $this->addFlash('error', 'Vous n\'avez pas le droit de supprimer cet article.');
                 return $this->redirectToRoute('admin_management_posts');
             }
         }
