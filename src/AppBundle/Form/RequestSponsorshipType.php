@@ -105,9 +105,6 @@ class RequestSponsorshipType extends AbstractType
             ))
             ->add('address', TextareaType::class, array(
                 'label' => 'Adresse',
-                'attr' => array(
-                    'rows' => 8
-                ),
                 'constraints' => array(
                     new Length(array(
                         'min' => 3,

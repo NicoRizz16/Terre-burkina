@@ -24,6 +24,7 @@ class RequestInfoType extends AbstractType
         $builder
             ->add('firstName', TextType::class, array(
                 'label' => 'Prénom :',
+                'attr' => array('placeholder' => 'Prénom'),
                 'constraints' => array(
                     new Length(array(
                         'min' => 2,

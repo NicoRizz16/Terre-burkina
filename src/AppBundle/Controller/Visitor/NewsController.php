@@ -57,4 +57,26 @@ class NewsController extends Controller
             'post' => $post
         ));
     }
+
+    /**
+     * @Route("/lettre/{id}", name="letter")
+     */
+    public function letterAction($id = null)
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Letter');
+
+        if($id){
+            $letter = $repository->find($id);
+        } else {
+            $letter = $repository->getLastLetter();
+        }
+        $previousLetter = $repository->getPreviousLetter($letter->getCreationDate());
+        $nextLetter = $repository->getNextLetter($letter->getCreationDate());
+
+        return $this->render('visitor/news/letter.html.twig', array(
+            'letter' => $letter,
+            'previousLetter' => $previousLetter,
+            'nextLetter' => $nextLetter,
+        ));
+    }
 }

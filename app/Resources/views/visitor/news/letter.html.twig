@@ -1,0 +1,19 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block body %}
+
+    {% if previousLetter is not null %}
+    <a href="{{ path('letter', {'id': previousLetter.id}) }}"><span class="glyphicon glyphicon-chevron-left"></span> Lettre précédente</a>
+    {% endif %}
+    {% if nextLetter is not null %}
+        <a href="{{ path('letter', {'id': nextLetter.id}) }}">Lettre suivante <span class="glyphicon glyphicon-chevron-right"></span></a>
+    {% endif %}
+    <h1>{{ letter.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</h1>
+    <img src="../../{{ vich_uploader_asset(letter, 'module1Photo') }}" alt="{{ letter.module1PhotoName }}" />
+
+    <section>
+        {{ letter.content|raw }}
+    </section>
+
+{% endblock %}
+

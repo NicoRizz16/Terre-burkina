@@ -26,4 +26,44 @@ class LetterRepository extends \Doctrine\ORM\EntityRepository
 
         return new Paginator($query, true);
     }
+
+    public function getPreviousLetter(\DateTime $date)
+    {
+        $query = $this->createQueryBuilder('l')
+            ->where('l.creationDate < :date')
+            ->setParameter('date', $date)
+            ->andWhere('l.isPublished = true')
+            ->orderBy('l.creationDate', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(1)
+        ;
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
+    public function getNextLetter(\DateTime $date)
+    {
+        $query = $this->createQueryBuilder('l')
+            ->where('l.creationDate > :date')
+            ->setParameter('date', $date)
+            ->andWhere('l.isPublished = true')
+            ->orderBy('l.creationDate', 'ASC')
+            ->setFirstResult(0)
+            ->setMaxResults(1)
+        ;
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
+    public function getLastLetter()
+    {
+        $query = $this->createQueryBuilder('l')
+            ->andWhere('l.isPublished = true')
+            ->orderBy('l.creationDate', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(1)
+        ;
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
 }
