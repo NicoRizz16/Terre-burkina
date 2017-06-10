@@ -48,7 +48,7 @@
                     </li>
                     <li class="nav-item dropdown btn-group">
                         <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Les parrainages</a>
-                        <div class="dropdown-menu dropdown" aria-labelledby="sponsorshipDropdown">
+                        <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
                             <a class="dropdown-item" href="{{ path('sponsorship_presentation') }}">Présentation</a>
                             <a class="dropdown-item">Système scolaire</a>
                             <a class="dropdown-item">Photos</a>
@@ -63,7 +63,7 @@
                     </li>
                     <li class="nav-item dropdown btn-group">
                         <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actualités</a>
-                        <div class="dropdown-menu dropdown" aria-labelledby="sponsorshipDropdown">
+                        <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
                             <a class="dropdown-item" href="{{ path('blog') }}">Blog</a>
                             <a class="dropdown-item" href="{{ path('letter') }}">L'arbre à palabre</a>
                         </div>
@@ -76,29 +76,134 @@
         </div>
     </nav>
 
+
     <main>
         {% block body %}
         {% endblock %}
     </main>
 
-    <footer>
-        <div id="footerBlock1">
 
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only brown darken-3">
+
+        <!--Call to action-->
+        <div class="call-to-action">
+            <ul>
+                <li>
+                    <h3 class="h3-responsive">S'inscrire à la newsletter</h3>
+                </li>
+                <br/>
+                {{ render(controller('AppBundle:Visitor/Main:newsletter')) }}
+            </ul>
         </div>
-        <div id="footerBlock2">
-            <div>
-                <a href="{{ path('contact') }}">Contactez-nous</a>
-                {% if is_granted('ROLE_MODERATOR') %}
-                    <a href="{{ path('admin_board') }}">Accès à l'espace admin</a>
-                {% else %}
-                    <a href="{{ path('fasoma_homepage') }}">Accès à l'espace parrain</a>
-                {% endif %}
-            </div>
-            <div>
-                <p>© Copyright Terre Burkina {{ 'now'|date('Y') }}</p>
+        <!--/.Call to action-->
+
+        <hr>
+
+        <!--Footer Links-->
+        <div class="container-fluid">
+            <div class="row text-center">
+
+                <!--First column-->
+                <div class="col-md-3 offset-md-1">
+                    <h5 class="title">Terre burkina</h5>
+                    <p>Sed efficitur rhoncus turpis, et aliquam orci maximus nec. Nunc ultrices mollis odio, hendrerit malesuada lacus ornare vitae. Suspendisse nisi dolor, posuere at diam eu, placerat egestas purus.</p>
+                </div>
+                <!--/.First column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Second column-->
+                <div class="col-md-2 offset-md-1">
+                    <h5 class="title">Informations</h5>
+                    <ul>
+                        <li>
+                            Adresse
+                        </li>
+                        <li>
+                            Téléphone
+                        </li>
+                        <li>
+                            E-mail
+                        </li>
+                        <li><a href="{{ path('contact') }}" class="btn btn-md btn-ins">Contactez-nous</a></li>
+                    </ul>
+                </div>
+                <!--/.Second column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Third column-->
+                <div class="col-md-2">
+                    <h5 class="title">Connexion</h5>
+                    <ul>
+                        <li>
+                            {% if is_granted('ROLE_MODERATOR') %}
+                                <a href="{{ path('admin_board') }}" class="btn btn-md btn-ins">Espace admin</a>
+                            {% else %}
+                                <a href="{{ path('fasoma_homepage') }}" class="btn btn-md btn-ins">Espace parrain</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Third column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Fourth column-->
+                <div class="col-md-2">
+                    <h5 class="title">Liens</h5>
+                    <ul>
+                        <li><a href="#!">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <!--/.Fourth column-->
+
             </div>
         </div>
+        <!--/.Footer Links-->
+
+
+        <hr>
+
+        <!--Social buttons-->
+        <div class="social-section">
+            <ul>
+                <li><a class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a></li>
+            </ul>
+        </div>
+        <!--/.Social buttons-->
+
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © Copyright Terre Burkina {{ 'now'|date('Y') }}
+            </div>
+        </div>
+        <!--/.Copyright-->
+
     </footer>
+    <!--/.Footer-->
+
+
+    <!-- NewsletterModal -->
+    <div class="modal fade" id="newsletterModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="newsletterModalTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="newsletterModalBody"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-brown" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     {# ============= SCRIPTS ============= #}
     {% block javascripts %}

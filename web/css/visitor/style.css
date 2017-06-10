@@ -1,16 +1,10 @@
 body{
-    background-color: #8d6e63;
-}
-
-.container-fluid {
-    padding-left: 0px;
-    padding-right: 0px;
+    background-color: #8d6e63; /* MDBOOSTRAP brown lighten-1 */
 }
 
 /* =============================================================== */
 /* =========================== HEADER ============================ */
 /* =============================================================== */
-/**/
 nav{
     margin-bottom: 20px;
 }
@@ -37,6 +31,19 @@ nav{
     text-align: center;
 }
 
-.form-group{
-    margin-top: 25px;
+
+/* =============================================================== */
+/* ============================= FOOTER ========================= */
+/* =============================================================== */
+#newsletterForm label {
+    color: white;
+}
+
+#newsletter_email{
+    color: white;
+}
+
+#newsletter_email:focus{
+    color: white;
+    border-color: white;
 }

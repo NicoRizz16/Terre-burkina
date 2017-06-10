@@ -23,8 +23,7 @@ class RequestInfoType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, array(
-                'label' => 'Prénom :',
-                'attr' => array('placeholder' => 'Prénom'),
+                'label' => 'Prénom',
                 'constraints' => array(
                     new Length(array(
                         'min' => 2,
@@ -38,7 +37,7 @@ class RequestInfoType extends AbstractType
                 )
             ))
             ->add('lastName', TextType::class, array(
-                'label' => 'Nom :',
+                'label' => 'Nom',
                 'constraints' => array(
                     new Length(array(
                         'min' => 2,
@@ -52,7 +51,7 @@ class RequestInfoType extends AbstractType
                 )
             ))
             ->add('email', EmailType::class, array(
-                'label' => 'Adresse e-mail :',
+                'label' => 'Adresse e-mail',
                 'constraints' => array(
                     new Email(array(
                         'message' => 'Vous devez entrer une adresse email valide.',

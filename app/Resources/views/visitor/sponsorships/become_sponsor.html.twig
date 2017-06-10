@@ -11,6 +11,13 @@
                     <h1 class="h1-responsive">Demande de parrainage</h1>
                 </div>
                 <hr>
+                {% for message in app.session.flashbag.get('info') %}
+                    <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+                {% endfor %}
+                {% for message in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+                {% endfor %}
+
                 {{ form_start(form) }}
 
                 {{ form_row(form.civility) }}
@@ -51,16 +58,6 @@
                 {{ form_end(form) }}
             </div>
         </div>
-    </div>
-
-    <div class="text-center col-md-12 marginBottom30">
-
-        {% for message in app.session.flashbag.get('info') %}
-            <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
-        {% endfor %}
-        {% for message in app.session.flashbag.get('error') %}
-            <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
-        {% endfor %}
     </div>
 
 </div>

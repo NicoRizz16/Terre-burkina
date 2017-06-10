@@ -11,8 +11,11 @@ namespace AppBundle\Controller\Visitor;
 
 use AppBundle\Entity\Newsletter;
 use AppBundle\Form\ContactType;
+use AppBundle\Form\NewsletterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
@@ -74,5 +77,48 @@ class MainController extends Controller
         return $this->render('visitor/main/contact.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @Route("/newsletter", name="newsletter")
+     */
+    public function newsletterAction()
+    {
+        // Création du formulaire de la newsletter
+        $newsletter = new Newsletter();
+        $form = $this->createForm(NewsletterType::class, $newsletter, array(
+            'action' => $this->generateUrl('ajax_newsletter')
+        ));
+        return $this->render('visitor/main/_newsletter_form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+    /**
+     * @Route("/ajax/newsletter", name="ajax_newsletter")
+     * @Method("POST")
+     */
+    public function ajaxNewsletterAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()){
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+        $newsletter = new Newsletter();
+        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $em = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
+        if ($form->isValid()){
+            $newsletterRepository = $em->getRepository('AppBundle:Newsletter');
+            $isNewsletter = $newsletterRepository->findOneBy(array('email' => $newsletter->getEmail()));
+            if(!$isNewsletter){ // Enregistrement de l'email indiqué si il n'est pas déjà enregistré
+                $em->persist($newsletter);
+                $em->flush();
+            }
+            $title = "Inscription à la newsletter réussie";
+            $body = "Vous êtes maintenant inscrit à la newsletter !";
+        } else { // Si le formulaire n'est pas valide
+            $title = "Echec de l'inscription à la newsletter";
+            $body = "L'adresse email indiquée n'est pas valide ou est déjà inscrite à la newsletter.";
+        }
+        return new JsonResponse(array('title' => $title, 'body' =>$body), 200);
     }
 }

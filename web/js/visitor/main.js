@@ -8,4 +8,33 @@ $(document).ready(function() {
 
     $('.mdb-select').material_select();
 
+    /*********************
+     *     Newsletter    *
+     *********************/
+    // Modal newsletter cachée par défaut
+    $('#newsletterModal').modal({ show: false});
+
+    // TTT AJAX form newsletter
+    $("body").on("submit", "#newsletterForm", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $(this).serialize()
+        })
+            .done(function (data, textStatus, errorThrown) {
+                if (data['title'] !== 'undefined' && data['body'] !== 'undefined') {
+                    $('#newsletterModalTitle').html(data['title']);
+                    $('#newsletterModalBody').html(data['body']);
+                    $('#newsletterModal').modal('show');
+                    $('#input_newsletter').val("");
+                } else {
+                    alert(errorThrown);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            });
+    });
+
 });
