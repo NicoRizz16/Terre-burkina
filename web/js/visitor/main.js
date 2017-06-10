@@ -27,7 +27,7 @@ $(document).ready(function() {
                     $('#newsletterModalTitle').html(data['title']);
                     $('#newsletterModalBody').html(data['body']);
                     $('#newsletterModal').modal('show');
-                    $('#input_newsletter').val("");
+                    $('#newsletter_email').val("");
                 } else {
                     alert(errorThrown);
                 }
