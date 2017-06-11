@@ -25,7 +25,12 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('visitor/main/index.html.twig');
+        // Récupération des 3 derniers articles
+        $lastPosts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Post')->findBy(array('published' => true), array('creationDate' => 'DESC'), 3, 0);
+
+        return $this->render('visitor/main/index.html.twig', array(
+            'lastPosts' => $lastPosts
+        ));
     }
 
     /**

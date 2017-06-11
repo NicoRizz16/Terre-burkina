@@ -218,6 +218,11 @@
         output='js/visitor/compiled/app.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
+
+        <script>
+            new WOW().init();
+        </script>
+
     {% endblock %}
 
 </body>
