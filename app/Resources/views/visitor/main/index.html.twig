@@ -166,7 +166,7 @@
                                 {% else %}
                                     <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" class="img-fluid" alt="Photo vide">
                                 {% endif %}
-                                <a>
+                                <a href="{{ path('blog_view', {'slug': post.slug}) }}">
                                     <div class="mask"></div>
                                 </a>
                             </div>

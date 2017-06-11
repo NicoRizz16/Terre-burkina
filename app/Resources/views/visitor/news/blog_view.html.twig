@@ -2,15 +2,67 @@
 
 {% block body %}
 
-    <a href="{{ path('blog') }}"> Retour à la liste </a>
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{{ path('blog') }}" title="Retour à la liste" class="btn btn-sm btn-brown"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        </div>
+                        <!--Post column-->
+                        <div class="col-md-10 push-md-1">
 
-    <h1>{{ post.title }}</h1>
-    <img src="../../{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.imageName }}" />
-    <span>{{ post.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</span>
+                            <!--Section: Post-->
+                            <section class="section section-blog-fw">
 
-    <section>
-        {{ post.content|raw }}
-    </section>
+                                <!--First row-->
+                                <div class="row">
+
+                                    <div class="col-md-12 wow fadeInUp">
+
+                                        <!--Featured image-->
+                                        {% if post.imageFile is not null %}
+                                            <img src="../../{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.imageName }}" class="img-fluid">
+                                        {% else %}
+                                            <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" alt="Photo vide" class="img-fluid">
+                                        {% endif %}
+
+                                        <!--Post data-->
+                                        <div class="jumbotron wow fadeInUp" data-wow-delay="0.2s">
+                                            <h2>{{ post.title }}</h2>
+                                            <p>{{ post.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</p>
+                                        </div>
+                                        <!--/Post data-->
+
+                                        <!--Post text-->
+                                        <div class="post-text">
+                                            {{ post.content|raw }}
+                                        </div>
+                                        <!--/Post text-->
+
+                                        <hr>
+
+                                        <div class="text-center">
+                                            <h3 class="h3-responsive">Voulez-vous partager ?</h3>
+                                            <!--Facebook-->
+                                            <a href="https://www.facebook.com/mdbootstrap" target="_blank" class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!--/First row-->
+
+                            </section>
+                            <!--/Section: Post-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
