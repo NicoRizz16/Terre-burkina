@@ -32,13 +32,12 @@
 {# ===========================================================
 ===========================  MENU ==========================
 ============================================================ #}
-
     <nav class="navbar navbar-toggleable-md navbar-light white">
         <div class="container">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="#" class="navbar-brand">
+            <a href="{{ path('homepage') }}" class="navbar-brand">
                 <img src="{{ abs_url ~ asset('img/logo.png') }}" class="logo"/>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
@@ -76,6 +75,8 @@
         </div>
     </nav>
 
+    {% block carousel %}
+    {% endblock %}
 
     <main>
         {% block body %}
