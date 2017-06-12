@@ -43,4 +43,16 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
         return new Paginator($query, true);
     }
+
+    public function getPublishedPostsLike($search)
+    {
+        return $this->createQueryBuilder('post')
+            ->andWhere('post.published = 1')
+            ->andWhere('post.title LIKE :search')
+            ->setParameter('search',  '%'.$search.'%')
+            ->orderBy('post.creationDate', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

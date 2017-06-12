@@ -10,7 +10,9 @@
 namespace AppBundle\Controller\Visitor;
 
 use AppBundle\Entity\Post;
+use AppBundle\Form\BlogSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -19,7 +21,7 @@ class NewsController extends Controller
     /**
      * @Route("/blog/{page}", name="blog", requirements={"page": "\d*"})
      */
-    public function blogIndexAction($page = 1)
+    public function blogIndexAction(Request $request, $page = 1)
     {
         if($page<1){
             throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
@@ -27,19 +29,30 @@ class NewsController extends Controller
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Post');
 
-        // Récupération de la liste des articles pour la page demandée
-        $nbPerPage = Post::VISITOR_NUM_ITEMS;
-        $listPosts = $repository->getPublishedPosts($page, $nbPerPage);
-        $nbPageTotal = ceil(count($listPosts)/$nbPerPage);
+        $searchForm = $this->createForm(BlogSearchType::class);
+        $searchForm->handleRequest($request);
+        if($searchForm->isSubmitted()){
+            $post = $searchForm->getData();
+            $search = $post['search'];
+            $listPosts = $repository->getPublishedPostsLike($search);
+            $nbPageTotal = 1;
 
-        if($page>$nbPageTotal && $page != 1){
-            throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+        } else {
+            // Récupération de la liste des articles pour la page demandée
+            $nbPerPage = Post::VISITOR_NUM_ITEMS;
+            $listPosts = $repository->getPublishedPosts($page, $nbPerPage);
+            $nbPageTotal = ceil(count($listPosts)/$nbPerPage);
+
+            if($page>$nbPageTotal && $page != 1){
+                throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+            }
         }
 
         return $this->render('visitor/news/blog_index.html.twig', array(
             'listPosts' => $listPosts,
             'nbPageTotal' => $nbPageTotal,
-            'page' => $page
+            'page' => $page,
+            'searchForm' => $searchForm->createView()
         ));
     }
 
@@ -53,8 +66,12 @@ class NewsController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        // Récupération des 3 derniers articles
+        $lastPosts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Post')->findBy(array('published' => true), array('creationDate' => 'DESC'), 3, 0);
+
         return $this->render('visitor/news/blog_view.html.twig', array(
-            'post' => $post
+            'post' => $post,
+            'lastPosts' => $lastPosts
         ));
     }
 

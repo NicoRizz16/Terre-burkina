@@ -64,5 +64,64 @@
         </div>
     </div>
 
+    <div class="container">
+
+        <div class="divider-new white-text" id="homepageDivider">
+            <h2 class="h2-responsive wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">Derniers articles</h2>
+        </div>
+
+        <section id="lastPosts">
+            <div class="row">
+
+                {% for post in lastPosts %}
+                    <div class="col-md-4">
+                        <!--Card-->
+                        <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                {% if post.imageFile is not null %}
+                                    <img src="../../{{ vich_uploader_asset(post, 'imageFile') }}" class="img-fluid" alt="{{ post.imageName }}">
+                                {% else %}
+                                    <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" class="img-fluid" alt="Photo vide">
+                                {% endif %}
+                                <a href="{{ path('blog_view', {'slug': post.slug}) }}">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+                            <!--/.Card image-->
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title">{{ post.title }}</h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                {% else %}
+                    <div class="col-md-6 push-md-3">
+                        <!--Card-->
+                        <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title">Aucun article pour le moment</h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                {% endfor %}
+
+            </div>
+        </section>
+
+    </div>
+
 {% endblock %}
 
