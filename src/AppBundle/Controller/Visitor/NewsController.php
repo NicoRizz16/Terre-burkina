@@ -87,8 +87,8 @@ class NewsController extends Controller
         } else {
             $letter = $repository->getLastLetter();
         }
-        $previousLetter = $repository->getPreviousLetter($letter->getCreationDate());
-        $nextLetter = $repository->getNextLetter($letter->getCreationDate());
+        $previousLetter = $letter ? $repository->getPreviousLetter($letter->getCreationDate()) : null;
+        $nextLetter = $letter ? $repository->getNextLetter($letter->getCreationDate()) : null;
 
         return $this->render('visitor/news/letter.html.twig', array(
             'letter' => $letter,

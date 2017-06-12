@@ -14,6 +14,20 @@ $(document).ready(function() {
     $("#"+topMenuInfo).addClass("active");
 
 
+    // Lettre d'actualité responsive
+    if($(window).width() < 768){
+        $('#letterSummaryBlock').after($('#letterContentBlock'));
+    }
+    $(window).resize(function(){
+        if(($(window).width()) < 768){
+            $('#letterSummaryBlock').after($('#letterContentBlock'));
+        } else{
+            $('#letterContentContainer').prepend($('#letterContentBlock'));
+        }
+    });
+
+
+
     /*********************
      *     Newsletter    *
      *********************/
