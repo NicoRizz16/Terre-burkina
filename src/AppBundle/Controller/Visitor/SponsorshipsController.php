@@ -49,6 +49,34 @@ class SponsorshipsController extends Controller
     }
 
     /**
+     * @Route("/galerie", name="sponsorship_gallery")
+     */
+    public function galleryAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $sponsorshipRequest = new SponsorshipRequest();
+        $form = $this->createForm(RequestInfoType::class, $sponsorshipRequest);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->manageNewsletterSubscription($sponsorshipRequest);
+            $sponsorshipRequest->setIsSponsorshipRequest(false);
+            $em->persist($sponsorshipRequest);
+            $em->flush();
+            $this->addFlash('info', 'Votre demande d\'informations a bien été prise en compte, nous vous recontacterons au plus vite.');
+            return $this->redirectToRoute('sponsorship_presentation');
+        }
+
+        $photos = $em->getRepository('AppBundle:Gallery')->findBy(array(), array('order' => 'DESC'));
+
+        return $this->render('visitor/sponsorships/gallery.html.twig', array(
+            'form' => $form->createView(),
+            'photos' => $photos
+        ));
+    }
+
+    /**
      * @Route("/devenir-parrain", name="sponsorship_request")
      */
     public function becomeSponsorAction(Request $request)

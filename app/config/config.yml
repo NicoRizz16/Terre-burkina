@@ -39,6 +39,9 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 
+    globals:
+        file_base_url: '%file_base_url%'
+
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -125,6 +128,14 @@ vich_uploader:
         letter_module_photo:
             uri_prefix: uploads/photos/letters
             upload_destination: '%kernel.root_dir%/../web/uploads/photos/letters'
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer: vich_uploader.namer_origname
+
+        gallery_photo:
+            uri_prefix: uploads/photos/gallery
+            upload_destination: '%kernel.root_dir%/../web/uploads/photos/gallery'
             inject_on_load:     true
             delete_on_update:   true
             delete_on_remove:   true

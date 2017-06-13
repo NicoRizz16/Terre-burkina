@@ -10,15 +10,30 @@
     <div class="row">
         <div class="col-md-8">
             <div class="jumbotron">
-                <h1 class="h1-responsive">Présentation</h1>
+                <h1 class="h1-responsive">Galerie photo</h1>
                 <hr>
 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum ipsum neque, eget consequat felis convallis et. Nam tempor quis ligula quis tristique. Fusce gravida tempor nulla eget dignissim. Donec vitae condimentum sapien. Nam facilisis lectus sit amet efficitur semper. Sed egestas turpis ut ante tincidunt efficitur. In sed aliquam mauris. Cras ac sem ut est condimentum fringilla. Suspendisse in nisi velit. Aliquam erat volutpat. Sed tempor vel enim in volutpat. Sed at orci ipsum.
+                <div class="row">
+                    {% for photo in photos %}
+                        <div class="col-md-4 col-sm-6">
+                            <!--Card-->
+                            <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
 
-                Pellentesque lobortis fringilla tempor. Fusce imperdiet sem sapien, id molestie libero commodo eu. Morbi eget urna id orci auctor commodo sed in nisi. Maecenas scelerisque sem nec neque tempus, sed pellentesque ligula tempus. Curabitur auctor metus sed dolor condimentum, non facilisis sem pellentesque. Pellentesque vulputate, leo id efficitur tincidunt, orci sem laoreet erat, ut commodo ex sem vel justo. Donec a erat ut augue efficitur fringilla. Integer tincidunt, ex sed venenatis luctus, dolor nisi pellentesque orci, non placerat risus magna nec elit. Nam at est ipsum. Curabitur sapien nisl, posuere ac blandit id, sodales quis metus. Integer bibendum eros orci, ut dignissim lacus hendrerit ac. Praesent suscipit consequat mollis. Nam lobortis viverra viverra. Duis ornare efficitur posuere. In hac habitasse platea dictumst. Aliquam erat volutpat.
+                                <!--Card image-->
+                                <div class="view overlay hm-white-slight">
+                                    <img src="{{ file_base_url ~ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}" class="img-fluid" />
+                                    <a href="{{ file_base_url ~ vich_uploader_asset(photo, 'imageFile') }}">
+                                        <div class="mask"></div>
+                                    </a>
+                                </div>
+                                <!--/.Card image-->
 
-                Sed efficitur rhoncus turpis, et aliquam orci maximus nec. Nunc ultrices mollis odio, hendrerit malesuada lacus ornare vitae. Suspendisse nisi dolor, posuere at diam eu, placerat egestas purus. Vivamus hendrerit efficitur metus quis iaculis. Nunc finibus congue felis, vel molestie nisi rhoncus in. Integer at urna ornare, tincidunt ligula eget, mollis quam. Fusce maximus lectus vitae mi facilisis, eget consequat risus eleifend. Integer hendrerit luctus orci id porttitor. Vestibulum euismod, ligula consequat tincidunt egestas, dolor ante finibus libero, ut ullamcorper est tortor eget ante. Ut ut mattis augue. Mauris suscipit tincidunt orci nec posuere.
+                            </div>
+                            <!--/.Card-->
 
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="col-md-4">
@@ -77,9 +92,9 @@
                 </div>
             </div>
 
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
 
 

@@ -1,6 +1,7 @@
 {% extends 'visitor/base.html.twig' %}
 
 {% block body %}
+    <i id="topMenuInfo">news</i>
 
     <div class="container-fluid">
         <br>
@@ -24,7 +25,7 @@
 
                                         <!--Featured image-->
                                         {% if post.imageFile is not null %}
-                                            <img src="../../{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.imageName }}" class="img-fluid">
+                                            <img src="{{ file_base_url ~ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.imageName }}" class="img-fluid">
                                         {% else %}
                                             <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" alt="Photo vide" class="img-fluid">
                                         {% endif %}
