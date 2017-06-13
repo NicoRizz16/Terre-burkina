@@ -21,7 +21,7 @@
 
                                 <!--Card image-->
                                 <div class="view overlay hm-white-slight">
-                                    <img src="{{ file_base_url ~ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}" class="img-fluid" />
+                                    <img src="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" alt="{{ photo.imageName }}" class="img-fluid" />
                                     <a href="{{ file_base_url ~ vich_uploader_asset(photo, 'imageFile') }}">
                                         <div class="mask"></div>
                                     </a>

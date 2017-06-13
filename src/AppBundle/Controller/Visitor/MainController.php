@@ -34,6 +34,22 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/association", name="association")
+     */
+    public function associationAction()
+    {
+        return $this->render('visitor/main/association.html.twig');
+    }
+
+    /**
+     * @Route("/maison-de-luc", name="maison_de_luc")
+     */
+    public function maisonDeLucAction()
+    {
+        return $this->render('visitor/main/maison_de_luc.html.twig');
+    }
+
+    /**
      * @Route("/contact", name="contact")
      */
     public function contactAction(Request $request)

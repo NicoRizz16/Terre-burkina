@@ -27,7 +27,7 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('civility', ChoiceType::class, array(
-                'label' => 'Civilité :',
+                'label' => 'Civilité',
                 'choices' => array(
                     'M.' => 'M.',
                     'Mme' => 'Mme',
@@ -49,7 +49,7 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('name', TextType::class, array(
-                'label' => 'Nom :',
+                'label' => 'Nom',
                 'constraints' => array(
                     new Length(array(
                         'min' => 2,
@@ -60,7 +60,7 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('email', EmailType::class, array(
-                'label' => 'Adresse e-mail :',
+                'label' => 'Adresse e-mail',
                 'constraints' => array(
                     new Email(array(
                         'message' => 'Vous devez entrer une adresse email valide.',
@@ -72,7 +72,7 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('phone', TextType::class, array(
-                'label' => 'Téléphone :',
+                'label' => 'Téléphone',
                 'constraints' => array(
                     new Length(array(
                         'min' => 2,
@@ -83,7 +83,7 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('knowUs', TextType::class, array(
-                'label' => 'Manière dont vous nous avez connu :',
+                'label' => 'Manière dont vous nous avez connu',
                 'constraints' => array(
                     new Length(array(
                         'min' => 2,
@@ -94,7 +94,7 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('object', TextType::class, array(
-                'label' => 'Objet :',
+                'label' => 'Objet',
                 'constraints' => array(
                     new NotBlank(array(
                         'message' => 'Vous devez indiquer un objet'
@@ -108,10 +108,10 @@ class ContactType extends AbstractType
                 )
             ))
             ->add('message', TextareaType::class, array(
-                'label' => 'Votre message :',
+                'label' => 'Votre message',
                 'constraints' => array(
                     new NotBlank(array(
-                        'message' => 'Vous devez indiquer un objet'
+                        'message' => 'Vous devez indiquer un message'
                     )),
                     new Length(array(
                         'min' => 10,
