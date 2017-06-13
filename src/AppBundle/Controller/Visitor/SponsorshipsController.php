@@ -49,6 +49,32 @@ class SponsorshipsController extends Controller
     }
 
     /**
+     * @Route("/systeme-scolaire", name="sponsorship_school_system")
+     */
+    public function schoolSystemAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $sponsorshipRequest = new SponsorshipRequest();
+        $form = $this->createForm(RequestInfoType::class, $sponsorshipRequest);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->manageNewsletterSubscription($sponsorshipRequest);
+            $sponsorshipRequest->setIsSponsorshipRequest(false);
+            $em->persist($sponsorshipRequest);
+            $em->flush();
+            $this->addFlash('info', 'Votre demande d\'informations a bien été prise en compte, nous vous recontacterons au plus vite.');
+            return $this->redirectToRoute('sponsorship_presentation');
+        }
+
+        return $this->render('visitor/sponsorships/school_system.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+
+    /**
      * @Route("/galerie", name="sponsorship_gallery")
      */
     public function galleryAction(Request $request)
