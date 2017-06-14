@@ -45,6 +45,7 @@
                         <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><i class="fa fa-users" aria-hidden="true"></i></a></li>
                         <li><a href="#" id="accountingMenuItem" title="Comptabilité"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
                         <li><a href="#" id="journalMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}" title="Déconnexion" style="color: #cc0000;"><span class="glyphicon glyphicon-log-out"></span></a></li>
                         {% if is_granted('ROLE_COORDINATOR') %}
                         <li><a href="#" id="coordinationMenuItem">Coordination</a></li>
                         {% endif %}
