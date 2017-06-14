@@ -9,7 +9,9 @@
 namespace AppBundle\Controller\Admin\Management;
 
 
+use AppBundle\Entity\Action;
 use AppBundle\Entity\Gallery;
+use AppBundle\Form\ActionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -106,6 +108,122 @@ class SiteContentController extends Controller
         $em->flush();
 
         //infos sur le document envoyé
+        return new JsonResponse(array('success' => true));
+    }
+
+
+    /**
+     * @Route("/actions/{page}", name="admin_management_actions", requirements={"page": "\d*"})
+     */
+    public function actionsIndexAction($page = 1)
+    {
+        if($page<1){
+            throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
+        }
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Action');
+
+        // Récupération de la liste des articles pour la page demandée
+        $nbPerPage = Action::NUM_ITEMS;
+        $actionsList = $repository->getActions($page, $nbPerPage);
+        $nbPageTotal = ceil(count($actionsList)/$nbPerPage);
+
+        if($page>$nbPageTotal && $page != 1){
+            throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+        }
+
+        return $this->render('admin/management/action/index.html.twig', array(
+            'actionsList' => $actionsList,
+            'nbPageTotal' => $nbPageTotal,
+            'page' => $page
+        ));
+    }
+
+    /**
+     * @Route("/actions/ajouter", name="admin_management_actions_add")
+     */
+    public function actionsAddAction(Request $request)
+    {
+        $action = new Action();
+        $form = $this->createForm(ActionType::class, $action);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($action);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'action "'.$action->getTitle().'" a bien été ajoutée.');
+            return $this->redirectToRoute('admin_management_actions');
+        }
+
+        return $this->render('admin/management/action/add.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/actions/modifier/{id}", name="admin_management_actions_edit", requirements={"id": "\d+"})
+     */
+    public function actionsEditAction(Request $request, Action $action)
+    {
+        $form = $this->createForm(ActionType::class, $action);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($action);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'action "'.$action->getTitle().'" a bien été modifiée.');
+            return $this->redirectToRoute('admin_management_actions');
+        }
+
+        return $this->render('admin/management/action/edit.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/actions/supprimer/{id}", name="admin_management_actions_delete", requirements={"id": "\d+"})
+     */
+    public function actionsDeleteAction(Request $request, Action $action)
+    {
+        $form = $this->get('form.factory')->create();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($action);
+            $em->flush();
+
+            $this->addFlash('info', 'L\'action "'.$action->getTitle().'" a bien été supprimée.');
+            return $this->redirectToRoute('admin_management_actions');
+        }
+
+        return $this->render('admin/management/action/delete.html.twig', array(
+            'form' => $form->createView(),
+            'action' => $action
+        ));
+    }
+
+    /**
+     * @Method({"GET"})
+     * @Route("/ajax/action/up", name="ajax_action_up")
+     */
+    public function ajaxActionUpAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()){
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $actionID = $request->query->get('actionId');
+
+        $action = $em->getRepository('AppBundle:Action')->find($actionID);
+        $action->setPriority(new \DateTime());
+        $em->flush();
+
         return new JsonResponse(array('success' => true));
     }
 }

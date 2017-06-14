@@ -42,6 +42,17 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/nos-actions", name="nos_actions")
+     */
+    public function nosActionsAction()
+    {
+        $listActions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Action')->findBy(array(), array('priority' => 'DESC'));
+        return $this->render('visitor/main/nos_actions.html.twig', array(
+            'listActions' => $listActions
+        ));
+    }
+
+    /**
      * @Route("/maison-de-luc", name="maison_de_luc")
      */
     public function maisonDeLucAction()
