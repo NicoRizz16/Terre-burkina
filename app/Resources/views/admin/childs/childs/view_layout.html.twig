@@ -10,10 +10,7 @@
         <a href="{{ path('admin_childs') }}" class="btn btn-default btn-sm" id="childBackButton"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
         <div>
             {% if child.profilePhoto is not null %}
-                {#  =================================================
-                   URL A MODIFIER LORS DU PASSAGE DU SITE EN PROD
-                ================================================= #}
-                <img src="{{ abs_url ~ '/SYMFONY/Terre-burkina/web/' ~ vich_uploader_asset(child, 'profilePhoto') }}" alt="{{ child.profilePhotoName }}" class="child-profile_image"/>
+                <img src="{{ absolute_url(asset(vich_uploader_asset(child, 'profilePhoto'))) }}" alt="{{ child.profilePhotoName }}" class="child-profile_image"/>
             {% else %}
                 <img src="{{ absolute_url(asset('img/empty_profile.png')) }}" alt="Avatar vide" class="child-profile_image">
             {% endif %}

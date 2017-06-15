@@ -1,12 +1,13 @@
-/* =============================================================== */
-/* =========================== HEADER ============================ */
-/* =============================================================== */
-
-#titleBlock {
-    display: flex;
-    justify-content: center;
+#topMenuInfo{
+    display: none;
 }
 
-#logo {
+.logo {
     width: 150px;
+}
+
+@media screen and (max-width: 991px){
+    .indexChildName{
+        text-align: center;
+    }
 }

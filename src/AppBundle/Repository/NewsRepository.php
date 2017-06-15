@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
@@ -54,5 +55,26 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
 
         // On retourne l'objet Paginator correspondant à la requête construite
         return new Paginator($query, true);
+    }
+
+    public function getUserChildsLastNews(User $user)
+    {
+        $query = $this->createQueryBuilder('n');
+
+        foreach ($user->getChilds() as $child){
+            $query->orWhere('n.child = '.$child->getId());
+
+            foreach ($child->getGroups() as $group){
+                $query->orWhere('n.group = '.$group->getId());
+            }
+        }
+
+        $query
+            ->setFirstResult(0)
+            ->setMaxResults(3)
+            ->orderBy('n.creationDate', 'DESC')
+        ;
+
+        return $query->getQuery()->getResult();
     }
 }
