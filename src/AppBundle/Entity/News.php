@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class News
 {
+    const NUM_ITEMS = 10;
     const NUM_ITEMS_ADMIN = 15;
 
     /**

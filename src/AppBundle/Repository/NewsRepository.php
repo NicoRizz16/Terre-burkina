@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Child;
 use AppBundle\Entity\User;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -41,6 +42,33 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
             ->leftjoin('n.group', 'g', 'WITH')
             ->where('g.id = :groupID')
             ->setParameter('groupID', $groupID)
+            ->andWhere('n.isValid = true')
+            ->orderBy('n.creationDate', 'DESC')
+            ->getQuery()
+        ;
+
+        $query
+            // On définit l'annonce à partir de laquelle commencer la liste
+            ->setFirstResult(($page-1)*$nbPerPage)
+            // Ainsi que le nombre d'annonce à afficher sur une page
+            ->setMaxResults($nbPerPage)
+        ;
+
+        // On retourne l'objet Paginator correspondant à la requête construite
+        return new Paginator($query, true);
+    }
+
+    public function getValidNewsPaginateByDate(Child $child, $page, $nbPerPage)
+    {
+        $query = $this->createQueryBuilder('n');
+
+        $query->orWhere('n.child = '.$child->getId());
+
+        foreach ($child->getGroups() as $group){
+            $query->orWhere('n.group = '.$group->getId());
+        }
+
+        $query
             ->andWhere('n.isValid = true')
             ->orderBy('n.creationDate', 'DESC')
             ->getQuery()
