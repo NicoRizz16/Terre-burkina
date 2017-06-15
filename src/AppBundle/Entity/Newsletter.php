@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="newsletter")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsletterRepository")
  * @UniqueEntity("email")

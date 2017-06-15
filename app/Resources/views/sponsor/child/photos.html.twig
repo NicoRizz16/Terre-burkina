@@ -17,8 +17,72 @@
         </div>
         <!--Dropdown ins-->
         <hr>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                {% if photosList is not null %}
+                    <div id="mdb-lightbox-ui"></div>
+
+                    <div class="mdb-lightbox">
+                        {% for photo in photosList %}
+                            <figure class="col-md-4">
+                                <a href="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" data-size="1600x1067">
+                                    <img src="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" alt="{{ photo.imageName }}" class="img-fluid">
+                                </a>
+                            </figure>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Aucune photo</p>
+                {% endif %}
+
+            </div>
+        </div>
+
+        {% if nbPageTotal > 1 %}
+            <br>
+            <!--Pagination-->
+            <nav class="row text-center">
+                <ul class="pagination m-auto">
+                    <li class="page-item {% if not (page > 1) %}disabled{% endif %}">
+                        <a class="page-link" {% if (page > 1) %}href="{{ path('fasoma_child_photos', {'id': child.id, 'page': (page-1)}) }}"{% endif %} aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+
+                    {% for p in range(1, nbPageTotal) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a class="page-link" href="{{ path('fasoma_child_photos', {'id': child.id, 'page': p}) }}">{{ p }} {% if p == page %}<span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                    {% endfor %}
+
+
+                    <li class="page-item {% if not (page < nbPageTotal) %}disabled{% endif %}">
+                        <a class="page-link" {% if (page < nbPageTotal) %}href="{{ path('fasoma_child_photos', {'id': child.id, 'page': (page+1)}) }}"{% endif %} aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--/.Pagination-->
+        {% endif %}
+
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            {% if photosList is not null %}
+                $("#mdb-lightbox-ui").load("{{ absolute_url(asset('mdb-addons/mdb-lightbox-ui.html')) }}");
+            {% endif %}
+        });
+    </script>
 {% endblock %}
 
 

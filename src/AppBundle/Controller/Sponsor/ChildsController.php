@@ -11,6 +11,7 @@ namespace AppBundle\Controller\Sponsor;
 
 use AppBundle\Entity\Child;
 use AppBundle\Entity\News;
+use AppBundle\Entity\Photo;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -69,15 +70,32 @@ class ChildsController extends Controller
 
 
     /**
-     * @Route("/{id}/photos", name="fasoma_child_photos", requirements={"id": "\d+"})
+     * @Route("/{id}/photos/{page}", name="fasoma_child_photos", requirements={"id": "\d+"})
      */
-    public function photosAction(Child $child)
+    public function photosAction(Child $child, $page = 1)
     {
         $user = $this->getUser();
         $this->checkSponsorAccess($user, $child);
 
+        if($page<1){
+            throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
+        }
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Photo');
+
+        $nbPerPage = Photo::NUM_ITEMS;
+        $photosList = $repository->getPhotosPaginateByOrder($child, $page, $nbPerPage);
+        $nbPageTotal = ceil(count($photosList)/$nbPerPage);
+
+        if($page>$nbPageTotal && $page != 1){
+            throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+        }
+
         return $this->render('sponsor/child/photos.html.twig', array(
-            'child' => $child
+            'child' => $child,
+            'photosList' => $photosList,
+            'nbPageTotal' => $nbPageTotal,
+            'page' => $page
         ));
     }
 

@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @Vich\Uploadable
  */
 class Photo
 {
+    const NUM_ITEMS = 12;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
