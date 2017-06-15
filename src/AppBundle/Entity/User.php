@@ -440,6 +440,22 @@ class User extends BaseUser
     }
 
     /**
+     * Has group
+     *
+     * @param \AppBundle\Entity\Child $child
+     * @return boolean
+     */
+    public function hasChild(\AppBundle\Entity\Child $child)
+    {
+        foreach ($this->childs as $item) {
+            if($item == $child){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Set fullName
      *
      * @param string $fullName

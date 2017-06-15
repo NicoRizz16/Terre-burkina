@@ -1,0 +1,44 @@
+{% extends 'sponsor/base.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">childs</i>
+
+    <div class="container-fluid">
+        <div class="row">
+           <div class="col-md-4">
+               <!--Card-->
+               <div class="card">
+
+                   <!--Card content-->
+                   <div class="card-block text-center">
+                       <!--Title-->
+                       <h4 class="card-title">{{ child.fullName }}</h4>
+                   </div>
+                   <!--/.Card content-->
+
+                   <!--Card image-->
+                   <div class="view overlay hm-white-slight">
+                       {% if child.profilePhoto is not null %}
+                           <img src="{{ absolute_url(asset(vich_uploader_asset(child, 'profilePhoto'))) }}" alt="{{ child.profilePhotoName }}" class="img-fluid"/>
+                       {% else %}
+                           <img src="{{ absolute_url(asset('img/empty_profile.png')) }}" alt="Avatar vide" class="img-fluid">
+                       {% endif %}
+                       <a {% if child.profilePhoto is not null %}href="{{ absolute_url(asset(vich_uploader_asset(child, 'profilePhoto'))) }}"{% endif %}>
+                           <div class="mask"></div>
+                       </a>
+                   </div>
+                   <!--/.Card image-->
+
+               </div>
+               <!--/.Card-->
+           </div>
+            <div class="col-md-8">
+                {% block child_view %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

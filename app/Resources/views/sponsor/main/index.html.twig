@@ -54,7 +54,7 @@
                                         {% endif %}
                                     </div>
                                     <div class="col-lg-8 indexChildName">
-                                        <h3 class="h3-responsive">{{ child.fullName }} <br><small class="text-muted">{{ child.age }} ans</small></h3>
+                                        <h3 class="h3-responsive"><a href="{{ path('fasoma_child_infos', {'id': child.id}) }}">{{ child.fullName }}</a> <br><small class="text-muted">{{ child.age }} ans</small></h3>
                                         <ul>
                                             {% if not child.resultsSeen or not child.photosSeen or not child.newsSeen %}
                                                 <ul>
@@ -76,9 +76,9 @@
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <div class="btn-group">
-                                            <a class="btn btn-brown btn-sm">Nouvelles</a>
-                                            <a class="btn btn-brown btn-sm">Photos</a>
-                                            <a class="btn btn-brown btn-sm">Résultats</a>
+                                            <a href="{{ path('fasoma_child_news', {'id': child.id}) }}" class="btn btn-brown btn-sm">Nouvelles</a>
+                                            <a href="{{ path('fasoma_child_photos', {'id': child.id}) }}" class="btn btn-brown btn-sm">Photos</a>
+                                            <a href="{{ path('fasoma_child_results', {'id': child.id}) }}" class="btn btn-brown btn-sm">Résultats</a>
                                         </div>
                                     </div>
                                 </div>
