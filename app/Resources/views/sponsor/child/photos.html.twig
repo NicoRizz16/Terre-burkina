@@ -27,7 +27,7 @@
                     <div class="mdb-lightbox">
                         {% for photo in photosList %}
                             <figure class="col-md-4">
-                                <a href="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" data-size="1600x1067">
+                                <a href="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" data-size="{{ photo.width }}x{{ photo.height }}">
                                     <img src="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" alt="{{ photo.imageName }}" class="img-fluid">
                                 </a>
                             </figure>

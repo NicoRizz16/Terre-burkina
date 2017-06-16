@@ -256,4 +256,14 @@ class Photo
     {
         return $this->group;
     }
+
+    public function getWidth(){
+        list($width, $height, $type, $attr) = getimagesize($this->imageFile);
+        return $width;
+    }
+    public function getHeight(){
+        list($width, $height, $type, $attr) = getimagesize($this->imageFile);
+        return $height;
+    }
+
 }

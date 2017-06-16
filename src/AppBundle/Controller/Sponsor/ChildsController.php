@@ -107,10 +107,15 @@ class ChildsController extends Controller
         $user = $this->getUser();
         $this->checkSponsorAccess($user, $child);
 
+        $resultsList = $this->getDoctrine()->getRepository('AppBundle:Result')->findBy(array(), array('year' => 'DESC'));
+
         return $this->render('sponsor/child/results.html.twig', array(
-            'child' => $child
+            'child' => $child,
+            'resultsList' => $resultsList
         ));
     }
+
+
 
     private function checkSponsorAccess(User $user, Child $child){
         if(!$user->hasRole('ROLE_SPONSOR')){
