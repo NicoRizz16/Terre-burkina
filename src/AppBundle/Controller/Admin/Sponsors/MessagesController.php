@@ -48,6 +48,7 @@ class MessagesController extends Controller
             $message->setUser($user);
             $message->setIsSenderAdmin(true);
             $message->setIsNotificationAdmin(false);
+            $user->setMessageConsulted(false); // Notification de message parrain
             $em->persist($message);
             $em->flush();
 
@@ -56,6 +57,8 @@ class MessagesController extends Controller
         } elseif($form->isSubmitted() && !$form->isValid()){
             $this->addFlash('error', 'Le message n\'a pas été enregistré car le formulaire contient une ou plusieurs erreurs.');
         }
+
+        $this->removeMessagesNotifications($user); // On enlève les notifications admin de messages non lu
 
         return $this->render('admin/sponsors/sponsors/view_messages.html.twig', array(
             'form' => $form->createView(),
@@ -139,6 +142,7 @@ class MessagesController extends Controller
             $message->setGroup($group);
             $message->setIsSenderAdmin(true);
             $message->setIsNotificationAdmin(false);
+            $this->notifyUsersOfGroup($group); // Notifications de nouveau message
             $em->persist($message);
             $em->flush();
 
@@ -206,5 +210,23 @@ class MessagesController extends Controller
             'group' => $group,
             'message' => $message
         ));
+    }
+
+
+    private function notifyUsersOfGroup(SponsorGroup $group){
+        foreach ($group->getUsers() as $user){
+            $user->setMessageConsulted(false);
+        }
+        $this->getDoctrine()->getManager()->flush();
+    }
+
+
+    private function removeMessagesNotifications(User $user){
+        $em = $this->getDoctrine()->getManager();
+        $messages = $em->getRepository('AppBundle:Message')->findBy(array('user' => $user, 'isNotificationAdmin' => true));
+        foreach ($messages as $message){
+            $message->setIsNotificationAdmin(false);
+        }
+        $em->flush();
     }
 }

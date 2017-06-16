@@ -7,4 +7,9 @@ $(document).ready(function() {
     // Item actif du menu
     var topMenuInfo = $("#topMenuInfo").text();
     $("#" + topMenuInfo).addClass("active");
+
+    $("#writeMessage").click(function (e){
+        $("#writeMessageBlock").css('display', "block");
+        $(this).css('display', "none");
+    });
 });
