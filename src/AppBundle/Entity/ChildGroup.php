@@ -46,6 +46,11 @@ class ChildGroup
      */
     private $photos;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Child", mappedBy="groups")
+     */
+    private $childs;
+
 
     /**
      * Get id
@@ -154,5 +159,39 @@ class ChildGroup
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \AppBundle\Entity\Child $child
+     *
+     * @return ChildGroup
+     */
+    public function addChild(\AppBundle\Entity\Child $child)
+    {
+        $this->childs[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \AppBundle\Entity\Child $child
+     */
+    public function removeChild(\AppBundle\Entity\Child $child)
+    {
+        $this->childs->removeElement($child);
+    }
+
+    /**
+     * Get childs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChilds()
+    {
+        return $this->childs;
     }
 }

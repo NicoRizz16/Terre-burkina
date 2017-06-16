@@ -37,7 +37,7 @@ class NewsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $news->setIsValid(true);
             $news->setChild($child);
-            $news->setContent(nl2br($news->getContent()));
+            $news->getChild()->setNewsSeen(false); // Notification de nouvelles
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
@@ -118,7 +118,6 @@ class NewsController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $news->setContent(nl2br($news->getContent()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
             $em->flush();
@@ -146,7 +145,7 @@ class NewsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $news->setIsValid(true);
             $news->setGroup($childGroup);
-            $news->setContent(nl2br($news->getContent()));
+            $this->notifyChildsOfGroup($childGroup); // Notification de nouvelles
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
@@ -227,7 +226,6 @@ class NewsController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $news->setContent(nl2br($news->getContent()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
             $em->flush();
@@ -264,8 +262,8 @@ class NewsController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $news->setContent(nl2br($news->getContent()));
             $news->setIsValid(true);
+            $news->getChild()->setNewsSeen(false); // Notification de nouvelles
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
             $em->flush();
@@ -301,5 +299,12 @@ class NewsController extends Controller
             'form' => $form->createView(),
             'news' => $news
         ));
+    }
+
+    private function notifyChildsOfGroup(ChildGroup $childGroup){
+        foreach ($childGroup->getChilds() as $child){
+            $child->setNewsSeen(false);
+        }
+        $this->getDoctrine()->getManager()->flush();
     }
 }

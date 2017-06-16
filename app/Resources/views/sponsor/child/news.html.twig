@@ -19,7 +19,7 @@
         <hr>
         {% for news in newsList %}
             <h3 class="h3-responsive">{{ news.title }} <br><small class="text-muted">{{ news.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</small></h3>
-            {{ news.content|raw }}
+            {{ news.content|nl2br|raw }}
             {% if not loop.last %}
                 <hr>
             {% endif %}

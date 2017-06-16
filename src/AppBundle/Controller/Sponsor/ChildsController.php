@@ -50,15 +50,18 @@ class ChildsController extends Controller
             throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
         }
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:News');
+        $em = $this->getDoctrine()->getManager();
 
         $nbPerPage = News::NUM_ITEMS;
-        $newsList = $repository->getValidNewsPaginateByDate($child, $page, $nbPerPage);
+        $newsList = $em->getRepository('AppBundle:News')->getValidNewsPaginateByDate($child, $page, $nbPerPage);
         $nbPageTotal = ceil(count($newsList)/$nbPerPage);
 
         if($page>$nbPageTotal && $page != 1){
             throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
         }
+
+        $child->setNewsSeen(true);
+        $em->flush();
 
         return $this->render('sponsor/child/news.html.twig', array(
             'child' => $child,
@@ -80,16 +83,18 @@ class ChildsController extends Controller
         if($page<1){
             throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
         }
-
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Photo');
+        $em = $this->getDoctrine()->getManager();
 
         $nbPerPage = Photo::NUM_ITEMS;
-        $photosList = $repository->getPhotosPaginateByOrder($child, $page, $nbPerPage);
+        $photosList = $em->getRepository('AppBundle:Photo')->getPhotosPaginateByOrder($child, $page, $nbPerPage);
         $nbPageTotal = ceil(count($photosList)/$nbPerPage);
 
         if($page>$nbPageTotal && $page != 1){
             throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
         }
+
+        $child->setPhotosSeen(true);
+        $em->flush();
 
         return $this->render('sponsor/child/photos.html.twig', array(
             'child' => $child,
@@ -107,7 +112,12 @@ class ChildsController extends Controller
         $user = $this->getUser();
         $this->checkSponsorAccess($user, $child);
 
-        $resultsList = $this->getDoctrine()->getRepository('AppBundle:Result')->findBy(array(), array('year' => 'DESC'));
+        $em = $this->getDoctrine()->getManager();
+
+        $resultsList = $em->getRepository('AppBundle:Result')->findBy(array(), array('year' => 'DESC'));
+
+        $child->setResultsSeen(true);
+        $em->flush();
 
         return $this->render('sponsor/child/results.html.twig', array(
             'child' => $child,

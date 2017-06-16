@@ -38,6 +38,7 @@ class ResultsController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($result);
+            $child->setResultsSeen(false); // Notification de résultats
             $em->flush();
 
             $this->addFlash('info', 'Le résultat "'.$result->getYear().'" a bien été ajouté');

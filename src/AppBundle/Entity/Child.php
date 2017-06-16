@@ -233,7 +233,7 @@ class Child
     private $results;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ChildGroup")
+     * @ORM\ManyToMany(targetEntity="ChildGroup", inversedBy="childs")
      * @ORM\JoinTable(name="childs_groups",
      *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}

@@ -106,8 +106,9 @@ class PhotosController extends Controller
         $photo = new Photo();
         $photo->setImageFile($file);
         $photo->setChild($child);
-
         $em->persist($photo);
+
+        $child->setPhotosSeen(false);
         $em->flush();
 
         //infos sur le document envoyé
@@ -154,11 +155,19 @@ class PhotosController extends Controller
         $photo = new Photo();
         $photo->setImageFile($file);
         $photo->setGroup($childGroup);
-
         $em->persist($photo);
+
+        $this->notifyChildsOfGroup($childGroup);
         $em->flush();
 
         //infos sur le document envoyé
         return new JsonResponse(array('success' => true));
+    }
+
+    private function notifyChildsOfGroup(ChildGroup $childGroup){
+        foreach ($childGroup->getChilds() as $child){
+            $child->setPhotosSeen(false);
+        }
+        $this->getDoctrine()->getManager()->flush();
     }
 }
