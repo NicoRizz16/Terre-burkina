@@ -116,8 +116,9 @@ class DocumentsController extends Controller
         $document->setOriginalName($file->getClientOriginalName());
         $document->setFile($file);
         $document->setUser($user);
-
         $em->persist($document);
+
+        $user->setDocumentConsulted(false); // Notification de documents
         $em->flush();
 
         //infos sur le document envoyé
@@ -165,13 +166,20 @@ class DocumentsController extends Controller
         $document->setOriginalName($file->getClientOriginalName());
         $document->setFile($file);
         $document->setGroup($group);
-
         $em->persist($document);
+
+        $this->notifyUsersOfGroup($group); // Notifications de documents
         $em->flush();
 
         //infos sur le document envoyé
         return new JsonResponse(array('success' => true));
     }
 
+    private function notifyUsersOfGroup(SponsorGroup $group){
+        foreach ($group->getUsers() as $user){
+            $user->setDocumentConsulted(false);
+        }
+        $this->getDoctrine()->getManager()->flush();
+    }
 
 }

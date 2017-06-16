@@ -122,7 +122,7 @@ class User extends BaseUser
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity="SponsorGroup")
+     * @ORM\ManyToMany(targetEntity="SponsorGroup", inversedBy="users")
      * @ORM\JoinTable(name="sponsors_groups",
      *      joinColumns={@ORM\JoinColumn(name="sponsor_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}

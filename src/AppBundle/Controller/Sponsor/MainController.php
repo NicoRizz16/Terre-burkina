@@ -50,8 +50,12 @@ class MainController extends Controller
             throw $this->createAccessDeniedException('Seuls les parrains peuvent accéder à l\'espace Fasoma');
         }
 
+        $em = $this->getDoctrine()->getManager();
         // Récupération des documents de l'utilisateur
-        $documentsList = $this->getDoctrine()->getRepository('AppBundle:Document')->getUserDocuments($user);
+        $documentsList = $em->getRepository('AppBundle:Document')->getUserDocuments($user);
+
+        $user->setDocumentConsulted(true); // On enlève la notification de documents
+        $em->flush();
 
         return $this->render('sponsor/main/documents.html.twig', array(
             'user' => $user,
