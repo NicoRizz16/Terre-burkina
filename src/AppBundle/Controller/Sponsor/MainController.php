@@ -22,7 +22,7 @@ class MainController extends Controller
 {
     /**
      * @Route("", name="fasoma_homepage")
-*/
+     */
     public function indexAction()
     {
         $user = $this->getUser();
@@ -37,6 +37,25 @@ class MainController extends Controller
             'childs' => $user->getChilds(),
             'user' => $user,
             'lastNews' => $lastNews
+        ));
+    }
+
+    /**
+     * @Route("/documents", name="fasoma_documents")
+     */
+    public function documentsAction()
+    {
+        $user = $this->getUser();
+        if(!$user->hasRole('ROLE_SPONSOR')){
+            throw $this->createAccessDeniedException('Seuls les parrains peuvent accéder à l\'espace Fasoma');
+        }
+
+        // Récupération des documents de l'utilisateur
+        $documentsList = $this->getDoctrine()->getRepository('AppBundle:Document')->getUserDocuments($user);
+
+        return $this->render('sponsor/main/documents.html.twig', array(
+            'user' => $user,
+            'documentsList' => $documentsList
         ));
     }
 }

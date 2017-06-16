@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * DocumentRepository
  *
@@ -10,4 +12,20 @@ namespace AppBundle\Repository;
  */
 class DocumentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getUserDocuments(User $user)
+    {
+        $query = $this->createQueryBuilder('d');
+
+        $query->orWhere('d.user = ' . $user->getId());
+
+        foreach ($user->getSponsorGroups() as $group) {
+            $query->orWhere('d.group = ' . $group->getId());
+        }
+
+        return $query
+            ->orderBy('d.order', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

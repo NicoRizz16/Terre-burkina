@@ -20,7 +20,7 @@
                 {% for group in child.groups %}
                     <tr>
                         <td>
-                            <a href="#">{{ group.name }}</a>
+                            <a href="{{ path('admin_childs_group_photos', {'id': group.id}) }}">{{ group.name }}</a>
                         </td>
                         <td>
                             <button class="deleteBtn btn btn-danger btn-xs" id="{{ group.id }}"><span class="glyphicon glyphicon-trash"></span></button>

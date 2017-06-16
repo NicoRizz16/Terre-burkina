@@ -1,0 +1,49 @@
+{% extends 'sponsor/base.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">documents</i>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            {% for document in documentsList %}
+                <!-- Notifications column -->
+                <div class="col-md-3">
+
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" alt="Image document" class="img-fluid">
+                                <a href="{{ absolute_url(asset(vich_uploader_asset(document, 'file'))) }}">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+                            <!--/.Card image-->
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title h4-responsive"><a href="{{ absolute_url(asset(vich_uploader_asset(document, 'file'))) }}">{{ document.originalName }}</a></h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    <br>
+                </div>
+            {% else %}
+                <div class="col-12 text-center">
+                    <br>
+                    <h3 class="h3-responsive">Aucun document</h3>
+                    <br><br><br><br><br><br><br>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+

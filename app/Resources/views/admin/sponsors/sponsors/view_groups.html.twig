@@ -20,7 +20,7 @@
                 {% for group in sponsor.sponsorGroups %}
                     <tr>
                         <td>
-                            <a href="#">{{ group.name }}</a>
+                            <a href="{{ path('admin_sponsors_messages_group', {'id': group.id}) }}">{{ group.name }}</a>
                         </td>
                         <td>
                             <button class="deleteBtn btn btn-danger btn-xs" id="{{ group.id }}"><span class="glyphicon glyphicon-trash"></span></button>
