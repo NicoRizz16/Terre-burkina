@@ -56,10 +56,10 @@
                     <li class="nav-item" id="messages">
                         <a class="nav-link" href="{{ path('fasoma_messages') }}">Messagerie</a>
                     </li>
-                    <li class="nav-item dropdown btn-group" id="news">
+                    <li class="nav-item dropdown btn-group" id="account">
                         <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
                         <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
-                            <a class="dropdown-item" href="#">Mes informations</a>
+                            <a class="dropdown-item" href="{{ path('fasoma_profile') }}">Mes informations</a>
                             <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
                         </div>
                     </li>

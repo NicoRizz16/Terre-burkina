@@ -10,6 +10,7 @@
 namespace AppBundle\Controller\Sponsor;
 
 use AppBundle\Entity\Message;
+use AppBundle\Form\EditProfileType;
 use AppBundle\Form\MessageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -103,6 +104,52 @@ class MainController extends Controller
             'user' => $user,
             'messages' => $messagesList,
             'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/profil", name="fasoma_profile")
+     */
+    public function profileAction()
+    {
+        $user = $this->getUser();
+        if(!$user->hasRole('ROLE_SPONSOR')){
+            throw $this->createAccessDeniedException('Seuls les parrains peuvent accéder à l\'espace Fasoma');
+        }
+
+        return $this->render('sponsor/main/profile.html.twig', array(
+            'user' => $user
+        ));
+    }
+
+    /**
+     * @Route("/profil/modifier", name="fasoma_profile_edit")
+     */
+    public function profileEditAction(Request $request)
+    {
+        $user = $this->getUser();
+        if(!$user->hasRole('ROLE_SPONSOR')){
+            throw $this->createAccessDeniedException('Seuls les parrains peuvent accéder à l\'espace Fasoma');
+        }
+
+        $error = false;
+        $form = $this->createForm(EditProfileType::class, $user);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+
+            // Envoyer une notification de chgt sur la boite mail TB
+
+            $this->addFlash('info', 'Vos informations de compte ont bien été modifiées');
+            return $this->redirectToRoute('fasoma_profile');
+        } else if($form->isSubmitted()){
+            $error = true;
+        }
+
+        return $this->render('sponsor/main/profile_edit.html.twig', array(
+            'form' => $form->createView(),
+            'error' => $error
         ));
     }
 }

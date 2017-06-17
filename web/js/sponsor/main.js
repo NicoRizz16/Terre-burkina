@@ -4,6 +4,9 @@
 
 $(document).ready(function() {
 
+    // Material Select Initialization
+    $('.mdb-select').material_select();
+
     // Item actif du menu
     var topMenuInfo = $("#topMenuInfo").text();
     $("#" + topMenuInfo).addClass("active");

@@ -1,0 +1,74 @@
+{% extends 'sponsor/base.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">account</i>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-8 push-md-2">
+                <div class="jumbotron" id="fasomaUserInfos">
+                    <div class="text-center">
+                        <h2 class="h2-responsive">Mes informations</h2>
+                    </div>
+                    <br>
+                    <table class="table">
+                        <tr>
+                            <th>Civilité</th>
+                            <td>{{ user.civility }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ user.lastName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ user.firstName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date de naissance</th>
+                            <td>{{ user.dateOfBirth|date('d/m/Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>{{ user.adress|nl2br }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone</th>
+                            <td>{{ user.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom d'utilisateur</th>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse e-mail</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mode de versement</th>
+                            <td>{{ user.paymentChoice }}</td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div class="text-center">
+                        <a href="{{ path('fasoma_profile_edit') }}" class="btn btn-brown btn-lg">Modifier mes informations</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        {% for message in app.session.flashbag.get('info') %}
+        toastr["info"]("{{ message }}");
+        {% endfor %}
+    </script>
+{% endblock %}
+
+
