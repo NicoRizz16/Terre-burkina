@@ -1,4 +1,3 @@
-{% set abs_url = app.request.scheme ~'://' ~ app.request.httpHost %}
 
 <!DOCTYPE html>
 <html>
@@ -6,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="icon" type="image/png" href="{{ abs_url ~ asset('img/logo.png') }}" />
+    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.png')) }}" />
 
     {# ============= TITLE ============= #}
     <title>{% block title %}Terre Burkina{% endblock %}</title>
@@ -38,7 +37,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a href="{{ path('homepage') }}" class="navbar-brand">
-                <img src="{{ abs_url ~ asset('img/logo.png') }}" class="logo"/>
+                <img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo"/>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
                 <ul class="navbar-nav mr-auto">
