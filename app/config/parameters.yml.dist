@@ -20,5 +20,3 @@ parameters:
 
     # Adresse à laquelle les messages de contact sont envoyés
     send_contact_mail_to: ~
-
-    file_base_url: http://blablabla.com

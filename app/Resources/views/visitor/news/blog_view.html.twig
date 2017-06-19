@@ -25,7 +25,7 @@
 
                                         <!--Featured image-->
                                         {% if post.imageFile is not null %}
-                                            <img src="{{ file_base_url ~ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.imageName }}" class="img-fluid">
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(post, 'imageFile'))) }}" alt="{{ post.imageName }}" class="img-fluid">
                                         {% else %}
                                             <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" alt="Photo vide" class="img-fluid">
                                         {% endif %}
@@ -82,7 +82,7 @@
                             <!--Card image-->
                             <div class="view overlay hm-white-slight">
                                 {% if post.imageFile is not null %}
-                                    <img src="../../{{ vich_uploader_asset(post, 'imageFile') }}" class="img-fluid" alt="{{ post.imageName }}">
+                                    <img src="{{ absolute_url(asset(vich_uploader_asset(post, 'imageFile'))) }}" class="img-fluid" alt="{{ post.imageName }}">
                                 {% else %}
                                     <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" class="img-fluid" alt="Photo vide">
                                 {% endif %}

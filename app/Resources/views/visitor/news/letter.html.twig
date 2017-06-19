@@ -70,7 +70,7 @@
                                     {% if letter.module1Photo is not null %}
                                     <!--Card image-->
                                     <div class="view overlay hm-white-slight">
-                                        <img src="http://localhost:8888/SYMFONY/Terre-burkina/web/{{vich_uploader_asset(letter, 'module1Photo') }}" alt="{{ letter.module1PhotoName }}" />
+                                        <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module1Photo'))) }}" alt="{{ letter.module1PhotoName }}" />
                                         <a>
                                             <div class="mask"></div>
                                         </a>
@@ -101,7 +101,7 @@
                                     {% if letter.module2Photo is not null %}
                                         <!--Card image-->
                                         <div class="view overlay hm-white-slight">
-                                            <img src="http://localhost:8888/SYMFONY/Terre-burkina/web/{{vich_uploader_asset(letter, 'module2Photo') }}" alt="{{ letter.module2PhotoName }}" />
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module2Photo'))) }}" alt="{{ letter.module2PhotoName }}" />
                                             <a>
                                                 <div class="mask"></div>
                                             </a>
@@ -132,7 +132,7 @@
                                     {% if letter.module3Photo is not null %}
                                         <!--Card image-->
                                         <div class="view overlay hm-white-slight">
-                                            <img src="http://localhost:8888/SYMFONY/Terre-burkina/web/{{vich_uploader_asset(letter, 'module3Photo') }}" alt="{{ letter.module3PhotoName }}" />
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module3Photo'))) }}" alt="{{ letter.module3PhotoName }}" />
                                             <a>
                                                 <div class="mask"></div>
                                             </a>
@@ -163,7 +163,7 @@
                                     {% if letter.module4Photo is not null %}
                                         <!--Card image-->
                                         <div class="view overlay hm-white-slight">
-                                            <img src="http://localhost:8888/SYMFONY/Terre-burkina/web/{{vich_uploader_asset(letter, 'module4Photo') }}" alt="{{ letter.module4PhotoName }}" />
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module4Photo'))) }}" alt="{{ letter.module4PhotoName }}" />
                                             <a>
                                                 <div class="mask"></div>
                                             </a>
@@ -194,7 +194,7 @@
                                     {% if letter.module5Photo is not null %}
                                         <!--Card image-->
                                         <div class="view overlay hm-white-slight">
-                                            <img src="http://localhost:8888/SYMFONY/Terre-burkina/web/{{vich_uploader_asset(letter, 'module5Photo') }}" alt="{{ letter.module5PhotoName }}" />
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module5Photo'))) }}" alt="{{ letter.module5PhotoName }}" />
                                             <a>
                                                 <div class="mask"></div>
                                             </a>
