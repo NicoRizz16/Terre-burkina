@@ -9,8 +9,10 @@
 
 namespace AppBundle\Controller\Visitor;
 
+use AppBundle\Entity\Donation;
 use AppBundle\Entity\Newsletter;
 use AppBundle\Form\ContactType;
+use AppBundle\Form\DonateType;
 use AppBundle\Form\NewsletterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -153,4 +155,108 @@ class MainController extends Controller
         }
         return new JsonResponse(array('title' => $title, 'body' =>$body), 200);
     }
+
+    /**
+     * @Route("/don", name="donate")
+     */
+    public function donateAction(){
+
+        $form = $this->createForm(DonateType::class);
+
+        return $this->render('visitor/main/donate.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/ajax/donation", name="ajax_donate")
+     * @Method("POST")
+     */
+    public function ajaxDonateAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()){
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+
+        $form = $this->createForm(DonateType::class);
+        $form->handleRequest($request);
+        if ($form->isValid()){
+            if($request->request->get('submittedBtn') == "donate_card"){ // Paiement par carte
+                // Enregistrement du montant du don dans une variable session
+                $session = $request->getSession();
+                $session->set('donationAmount', $form->get('amount')->getData());
+
+                return new JsonResponse(array(
+                    'payment' => 'card',
+                    'paymentView' => $this->renderView('visitor/main/_stripe_button.html.twig', array(
+                        'publicKey' => $this->getParameter('stripe_public_key'),
+                        'donationAmount' => $request->request->get('amount')
+                    ))), 200);
+
+            } elseif($request->request->get('submittedBtn') == "donate_cheque"){ // Paiement par chèque
+                return new JsonResponse(array('payment' => 'cheque'), 200);
+
+            } elseif($request->request->get('submittedBtn') == "donate_transfer"){ // Paiement par virement bancaire
+                return new JsonResponse(array('payment' => 'transfer'), 200);
+            }
+        }
+
+        return new JsonResponse(
+            array(
+                'message' => 'Error!',
+                'form' => $this->renderView('visitor/main/_donate_form.html.twig',
+                    array(
+                        'form' => $form->createView()
+                    ))
+            ), 400);
+    }
+
+    /**
+     * @Route("/don/paiement", name="charge_donation")
+     */
+    public function chargeDonation(Request $request){
+        // clé secrète Stripe
+        \Stripe\Stripe::setApiKey($this->getParameter('stripe_private_key'));
+
+        $session = $request->getSession();
+        $amount = $session->get('donationAmount');
+
+        // Récupération du token généré par le formulaire checkout
+        $token = $request->get('stripeToken');
+
+        if(!$amount | !isset($token)){
+            $this->addFlash('error', 'Nous avons rencontré un problème lors de la procédure du paiement, veuillez réessayer.');
+            return $this->redirectToRoute('donate');
+        }
+
+        try { // On procède au paiement
+            \Stripe\Charge::create(array(
+                "amount" => $amount*100,
+                "currency" => "eur",
+                "description" => "Example charge",
+                "source" => $token,
+            ));
+        } catch(\Stripe\Error\Card $e) { // Gestion des erreurs concernant les informations de paiement
+            $body = $e->getJsonBody();
+            $err = $body['error'];
+            $this->addFlash('error', $err['message']);
+            return $this->redirectToRoute('donate');
+        } catch (\Stripe\Error\Base $e) { // Gestion globale des erreurs
+            $this->addFlash('error', 'Nous avons rencontré un problème lors de la procédure du paiement, veuillez réessayer.');
+            return $this->redirectToRoute('donate');
+        }
+
+        // On enregistre la donation
+        $donation = new Donation();
+        $donation->setAmount($amount);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($donation);
+        $em->flush();
+
+        // On réinitialise la session
+        $session->set('donationAmount', null);
+
+        return $this->render('visitor/main/confirm.html.twig');
+    }
+
 }

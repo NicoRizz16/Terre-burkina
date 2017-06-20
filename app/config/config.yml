@@ -39,9 +39,6 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 
-    globals:
-        file_base_url: '%file_base_url%'
-
 # Doctrine Configuration
 doctrine:
     dbal:

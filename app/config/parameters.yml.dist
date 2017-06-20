@@ -20,3 +20,7 @@ parameters:
 
     # Adresse à laquelle les messages de contact sont envoyés
     send_contact_mail_to: ~
+
+     # STRIPE KEYS
+    stripe_public_key: fqdsfdsfsdfdsfdsfdsqfs
+    stripe_private_key: dsfklsdfdsfqsdfsqdfsqdf

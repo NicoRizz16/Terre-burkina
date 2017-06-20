@@ -1,0 +1,204 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">donateItem</i>
+
+    <div class="container-fluid">
+        <br>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="jumbotron">
+                        <h2 class="h2-responsive">Faire un don</h2>
+                        <hr>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dictum ipsum neque, eget consequat felis convallis et. Nam tempor quis ligula quis tristique. Fusce gravida tempor nulla eget dignissim. Donec vitae condimentum sapien. Nam facilisis lectus sit amet efficitur semper. Sed egestas turpis ut ante tincidunt efficitur. In sed aliquam mauris. Cras ac sem ut est condimentum fringilla. Suspendisse in nisi velit. Aliquam erat volutpat. Sed tempor vel enim in volutpat. Sed at orci ipsum.
+
+                            Pellentesque lobortis fringilla tempor. Fusce imperdiet sem sapien, id molestie libero commodo eu. Morbi eget urna id orci auctor commodo sed in nisi. Maecenas scelerisque sem nec neque tempus, sed pellentesque ligula tempus. Curabitur auctor metus sed dolor condimentum, non facilisis sem pellentesque. Pellentesque vulputate, leo id efficitur tincidunt, orci sem laoreet erat, ut commodo ex sem vel justo. Donec a erat ut augue efficitur fringilla. Integer tincidunt, ex sed venenatis luctus, dolor nisi pellentesque orci, non placerat risus magna nec elit. Nam at est ipsum. Curabitur sapien nisl, posuere ac blandit id, sodales quis metus. Integer bibendum eros orci, ut dignissim lacus hendrerit ac. Praesent suscipit consequat mollis. Nam lobortis viverra viverra. Duis ornare efficitur posuere. In hac habitasse platea dictumst. Aliquam erat volutpat.
+
+                            Sed efficitur rhoncus turpis, et aliquam orci maximus nec. Nunc ultrices mollis odio, hendrerit malesuada lacus ornare vitae. Suspendisse nisi dolor, posuere at diam eu, placerat egestas purus. Vivamus hendrerit efficitur metus quis iaculis. Nunc finibus congue felis, vel molestie nisi rhoncus in. Integer at urna ornare, tincidunt ligula eget, mollis quam. Fusce maximus lectus vitae mi facilisis, eget consequat risus eleifend. Integer hendrerit luctus orci id porttitor. Vestibulum euismod, ligula consequat tincidunt egestas, dolor ante finibus libero, ut ullamcorper est tortor eget ante. Ut ut mattis augue. Mauris suscipit tincidunt orci nec posuere.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="jumbotron text-center">
+                        <h3 class="h3-responsive">Indiquez le montant de votre choix</h3>
+                        <hr>
+                        <div class="btn-group">
+                            <button class="btn btn-brown" id="donate30">30 €</button>
+                            <button class="btn btn-brown" id="donate60">60 €</button>
+                            <button class="btn btn-brown" id="donate120">120 €</button>
+                        </div>
+                        <div id="donateForm">
+                            {% include 'visitor/main/_donate_form.html.twig' with {'form': form} %}
+                        </div>
+                        <div id="donateCardBlock">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <br>
+    </div>
+
+
+
+    <!-- MODAL CHEQUE -->
+    <div class="modal fade" id="chequePaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead">Faire un don par chèque</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="text-center">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim,
+                            ab officiis totam.</p>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <a type="button" href="{{ path('contact') }}" class="btn btn-primary-modal"><i class="fa fa-phone" aria-hidden="true"></i> &nbsp;&nbsp;Nous contacter</a>
+                    <a type="button" class="btn btn-outline-secondary-modal waves-effect" data-dismiss="modal">Fermer</a>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Central Modal Medium Success-->
+
+
+
+    <!-- MODAL TRANSFER -->
+    <div class="modal fade" id="transferPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead">Faire un don par virement bancaire</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="text-center">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim,
+                            ab officiis totam.</p>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <a type="button" href="{{ path('contact') }}" class="btn btn-primary-modal"><i class="fa fa-phone" aria-hidden="true"></i> &nbsp;&nbsp;Nous contacter</a>
+                    <a type="button" class="btn btn-outline-secondary-modal waves-effect" data-dismiss="modal">Fermer</a>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Central Modal Medium Success-->
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(function () {
+
+            // ==============================
+            // BOUTONS MONTANT DU DON
+            // =============================
+            $('#donate30').click(function () {
+                $('#donate_amount').val(30);
+                removeActivationClass();
+                $(this).addClass('active');
+            });
+
+            $('#donate60').click(function () {
+                $('#donate_amount').val(60);
+                removeActivationClass();
+                $(this).addClass('active');
+            });
+
+            $('#donate120').click(function () {
+                $('#donate_amount').val(120);
+                removeActivationClass();
+                $(this).addClass('active');
+            });
+
+            $('#donate_amount').on('keyup', function () {
+                removeActivationClass();
+            });
+
+            function removeActivationClass(){
+                $('#donate30, #donate60, #donate120').removeClass('active');
+            }
+
+
+            // ==============================
+            // SOUMISSION DU FORMULAIRE
+            // =============================
+            initializeListeners();
+
+            function sendAjaxRequest(){
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_donate') }}',
+                    data: $('form[name=donate]').serialize()
+                })
+                    .done(function (data) {
+                        if(data.payment == "card"){
+                            $('#donateCardBlock').html(data.paymentView);
+                        } else if(data.payment == "cheque"){
+                            $('#chequePaymentModal').modal();
+
+                        } else if(data.payment == "transfer"){
+                            $('#transferPaymentModal').modal();
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        if (typeof jqXHR.responseJSON !== 'undefined') {
+                            if (jqXHR.responseJSON.hasOwnProperty('form')) {
+                                $('#donateForm').html(jqXHR.responseJSON.form);
+                                initializeListeners();
+                            }
+                        }
+                    });
+            }
+
+            function initializeListeners(){
+                $('#donate_card, #donate_cheque, #donate_transfer').click(function (e) {
+                    var input = $("<input>").attr("type", "hidden").attr("name", 'submittedBtn').val($(this).attr('id'));
+                    $('form[name=donate]').append(input);
+                    e.preventDefault();
+                    $('#donateCardBlock').html("");
+                    sendAjaxRequest();
+
+                });
+            }
+
+
+            {% for message in app.session.flashbag.get('error') %}
+            toastr["error"]("{{ message }}");
+            {% endfor %}
+
+        });
+    </script>
+{% endblock %}
+
+
