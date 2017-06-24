@@ -10,6 +10,7 @@
 namespace AppBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,7 @@ class MainController extends Controller
 {
     /**
      * @Route("/", name="admin_board")
+     * @Security("has_role('ROLE_MODERATOR')")
      */
     public function indexAction()
     {

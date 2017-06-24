@@ -163,6 +163,7 @@
                 })
                     .done(function (data) {
                         if(data.payment == "card"){
+                            $('.help-block').html("");
                             $('#donateCardBlock').html(data.paymentView);
                         } else if(data.payment == "cheque"){
                             $('#chequePaymentModal').modal();

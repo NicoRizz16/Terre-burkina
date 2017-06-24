@@ -36,4 +36,11 @@ class ChildRepository extends \Doctrine\ORM\EntityRepository
             ->where('c.sponsor IS NULL')
             ->orderBy('c.fullName', 'ASC');
     }
+
+    public function getChildsListQueryBuilder()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.fullName', 'ASC')
+            ;
+    }
 }

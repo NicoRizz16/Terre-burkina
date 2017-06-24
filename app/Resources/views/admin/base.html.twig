@@ -38,17 +38,29 @@
                 </div>
                 <div id="nav-top-right">
                     <ul>
-                        <li><a href="{{ path('admin_board') }}" title="Tableau de bord" id="boardMenuItem"><span class="glyphicon glyphicon-th"></span></a></li>
-                        <li><a href="{{ path('admin_sponsors') }}" id="sponsorsMenuItem" title="Parrains"><i class="fa fa-male" aria-hidden="true"></i><i class="fa fa-female" aria-hidden="true"></i></a></li>
-                        <li><a href="{{ path('admin_childs') }}" id="childsMenuItem" title="Filleuls"><i class="fa fa-child" aria-hidden="true"></i></a></li>
-                        <li><a href="{{ path('admin_management_posts') }}" id="managementMenuItem" title="Gestion du site"><span class="glyphicon glyphicon-folder-open"></span></a></li>
-                        <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><i class="fa fa-users" aria-hidden="true"></i></a></li>
-                        <li><a href="#" id="accountingMenuItem" title="Comptabilité"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
-                        <li><a href="#" id="journalMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}" title="Déconnexion" style="color: #cc0000;"><span class="glyphicon glyphicon-log-out"></span></a></li>
-                        {% if is_granted('ROLE_COORDINATOR') %}
-                        <li><a href="#" id="coordinationMenuItem">Coordination</a></li>
+                        {% if is_granted('ROLE_MODERATOR') %}
+                            <li><a href="{{ path('admin_board') }}" title="Tableau de bord" id="boardMenuItem"><span class="glyphicon glyphicon-th"></span></a></li>
+                            <li><a href="{{ path('admin_sponsors') }}" id="sponsorsMenuItem" title="Parrains"><i class="fa fa-male" aria-hidden="true"></i><i class="fa fa-female" aria-hidden="true"></i></a></li>
+                            <li><a href="{{ path('admin_childs') }}" id="childsMenuItem" title="Filleuls"><i class="fa fa-child" aria-hidden="true"></i></a></li>
+                            <li><a href="{{ path('admin_management_posts') }}" id="managementMenuItem" title="Gestion du site"><span class="glyphicon glyphicon-folder-open"></span></a></li>
                         {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><i class="fa fa-users" aria-hidden="true"></i></a></li>
+                            <li><a href="#" id="accountingMenuItem" title="Comptabilité"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
+                            <li><a href="#" id="journalMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_COORDINATOR') %}
+                            <li><a href="{{ path('admin_coordination') }}" id="coordinationMenuItem">Coordination</a></li>
+                        {% endif %}
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}" title="Déconnexion" style="color: #cc0000;">
+                                {% if is_granted('ROLE_COORDINATOR') %}
+                                    Déconnexion
+                                {% else %}
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                {% endif %}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>

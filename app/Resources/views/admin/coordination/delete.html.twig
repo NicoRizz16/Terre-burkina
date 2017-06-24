@@ -1,0 +1,22 @@
+{% extends "admin/coordination/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+    <i id="menuLeftInfo">nouvelles</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+
+        <h3>Supprimer la nouvelle "{{ news.title }}" ?</h3>
+
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger" formnovalidate><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+            <a href="{{ path('admin_coordination') }}" class="btn btn-warning btn-md">Annuler</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -81,6 +81,7 @@ class News
     public function __construct()
     {
         $this->setCreationDate(new \DateTime());
+        $this->setIsValid(false);
     }
 
 
