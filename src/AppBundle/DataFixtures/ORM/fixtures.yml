@@ -98,3 +98,8 @@ AppBundle\Entity\Message:
         isSenderAdmin: true
         isNotificationAdmin: <boolean(50)>
         group: '@sponsor_group_*'
+
+AppBundle\Entity\Donation:
+    donation_{1..45}:
+        donationDate: <dateTimeBetween('-300 days', 'now')>
+        amount: <randomFloat(2, 5, 200)>

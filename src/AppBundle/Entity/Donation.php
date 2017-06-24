@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Donation
 {
+    const NUM_ITEMS = 20;
+
     /**
      * @var int
      *

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 /**
  * DonationRepository
  *
@@ -10,4 +12,21 @@ namespace AppBundle\Repository;
  */
 class DonationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getDonations($page, $nbPerPage)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->orderBy('d.donationDate', 'DESC')
+            ->getQuery()
+        ;
+
+        $query
+            // On définit l'annonce à partir de laquelle commencer la liste
+            ->setFirstResult(($page-1)*$nbPerPage)
+            // Ainsi que le nombre d'annonce à afficher sur une page
+            ->setMaxResults($nbPerPage)
+        ;
+
+        // On retourne l'objet Paginator correspondant à la requête construite
+        return new Paginator($query, true);
+    }
 }
