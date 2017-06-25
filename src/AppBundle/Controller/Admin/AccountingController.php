@@ -9,11 +9,7 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Donation;
-use AppBundle\Entity\News;
-use AppBundle\Form\ChildNewsType;
 use AppBundle\Form\DonationType;
-use AppBundle\Form\GroupNewsType;
-use AppBundle\Form\NewsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +65,7 @@ class AccountingController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le don a bien été ajouté');
+            $this->get('app.add_record')->addRecord('Ajout d\'un don à la liste.');
             return $this->redirectToRoute('admin_accounting_donations');
         }
 
@@ -85,6 +82,7 @@ class AccountingController extends Controller
         $em->remove($donation);
         $em->flush();
         $this->addFlash('info', 'Le don a bien été supprimé.');
+        $this->get('app.add_record')->addRecord('Suppression d\'un don à la liste.');
         return $this->redirectToRoute('admin_accounting_donations');
     }
 

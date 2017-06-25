@@ -64,6 +64,8 @@ class SiteContentController extends Controller
         $em->remove($photo);
         $em->flush();
 
+        $this->get('app.add_record')->addRecord('Suppression d\'une photo à la galerie photo des parrainages.');
+
         return new JsonResponse(array('success' => true));
     }
 
@@ -106,6 +108,8 @@ class SiteContentController extends Controller
 
         $em->persist($gallery);
         $em->flush();
+
+        $this->get('app.add_record')->addRecord('Ajout d\'une photo à la galerie photo des parrainages.');
 
         //infos sur le document envoyé
         return new JsonResponse(array('success' => true));
@@ -154,6 +158,7 @@ class SiteContentController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'action "'.$action->getTitle().'" a bien été ajoutée.');
+            $this->get('app.add_record')->addRecord('Ajout de l\'action "'.$action->getTitle().'" à la page "Nos actions".');
             return $this->redirectToRoute('admin_management_actions');
         }
 
@@ -176,6 +181,7 @@ class SiteContentController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'action "'.$action->getTitle().'" a bien été modifiée.');
+            $this->get('app.add_record')->addRecord('Modification de l\'action "'.$action->getTitle().'" de la page "Nos actions".');
             return $this->redirectToRoute('admin_management_actions');
         }
 
@@ -198,6 +204,8 @@ class SiteContentController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'action "'.$action->getTitle().'" a bien été supprimée.');
+            $this->get('app.add_record')->addRecord('Suppression de l\'action "'.$action->getTitle().'" de la page "Nos actions".');
+
             return $this->redirectToRoute('admin_management_actions');
         }
 

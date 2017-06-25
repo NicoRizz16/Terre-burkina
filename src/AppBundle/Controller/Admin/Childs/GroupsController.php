@@ -52,6 +52,7 @@ class GroupsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le groupe "'.$childGroup->getName().'" a bien été enregistré.');
+            $this->get('app.add_record')->addRecord('Création du groupe de filleuls "'.$childGroup->getName().'".');
             return $this->redirectToRoute('admin_childs_groups');
         }
 
@@ -75,6 +76,7 @@ class GroupsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le groupe "'.$childGroup->getName().'" a bien été supprimé.');
+            $this->get('app.add_record')->addRecord('Suppression du groupe de filleuls "'.$childGroup->getName().'".');
             return $this->redirectToRoute('admin_childs_groups');
         }
 
@@ -99,6 +101,7 @@ class GroupsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le groupe a bien été renommé "'.$childGroup->getName().'".');
+            $this->get('app.add_record')->addRecord('Un groupe de filleul a été renommé en "'.$childGroup->getName().'".');
             return $this->redirectToRoute('admin_childs_groups');
         }
 

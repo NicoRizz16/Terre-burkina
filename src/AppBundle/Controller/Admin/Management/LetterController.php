@@ -67,6 +67,8 @@ class LetterController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'La lettre a bien été ajoutée');
+            $this->get('app.add_record')->addRecord('Ajout d\'une lettre d\'actualité.');
+
             return $this->redirectToRoute('admin_management_letters');
         }
 
@@ -97,6 +99,7 @@ class LetterController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'La lettre a bien été modifiée');
+            $this->get('app.add_record')->addRecord('Modification de la lettre d\'actualité du '.$letter->getCreationDate()->format('d/m/Y'));
             return $this->redirectToRoute('admin_management_letters');
         }
 
@@ -127,6 +130,7 @@ class LetterController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'La lettre a bien été supprimée');
+            $this->get('app.add_record')->addRecord('Suppression de la lettre d\'actualité du '.$letter->getCreationDate()->format('d/m/Y'));
             return $this->redirectToRoute('admin_management_letters');
         }
 
@@ -147,6 +151,7 @@ class LetterController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
         $this->addFlash('info', 'La lettre du '.$letter->getCreationDate()->format('d/m/Y').' est maintenant '.$message);
+        $this->get('app.add_record')->addRecord('Changement d\'état de la lettre d\'actualité du '.$letter->getCreationDate()->format('d/m/Y').' : '.$message);
 
         return $this->redirectToRoute('admin_management_letters');
     }

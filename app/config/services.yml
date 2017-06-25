@@ -54,3 +54,9 @@ services:
           - "@fos_user.util.token_generator"
       tags:
           - { name: doctrine.event_listener, event: prePersist }
+
+  app.add_record:
+          class: AppBundle\Utils\addRecord
+          arguments:
+              - "@doctrine.orm.entity_manager"
+              - "@security.token_storage"

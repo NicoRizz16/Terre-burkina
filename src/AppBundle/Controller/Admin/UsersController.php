@@ -69,6 +69,7 @@ class UsersController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
         $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" est maintenant '.$message);
+        $this->get('app.add_record')->addRecord('Changement d\'état de l\'utilisateur "'.$user->getUsername().'" : '.$message);
 
         return $this->redirectToRoute('admin_users');
     }
@@ -115,6 +116,7 @@ class UsersController extends Controller
         $em->persist($user);
         $em->flush();
         $this->addFlash('info', 'Le nouveau rôle de l\'utilisateur "'.$user->getUsername().'" a bien été enregistré.');
+        $this->get('app.add_record')->addRecord('Changement de rôle de l\'utilisateur "'.$user->getUsername().'".');
         return $this->redirectToRoute('admin_users');
     }
 
@@ -133,6 +135,7 @@ class UsersController extends Controller
             if($successfullyRegistered){
                 // L'utilisateur est bien enregistré
                 $this->addFlash('info', 'L\'utilisateur "'.$post['username'].'" a bien été enregistré.');
+                $this->get('app.add_record')->addRecord('Création de l\'utilisateur "'.$post['username'].'".');
                 // Envois du mail avec les données de connexion si demandé
                 if($post['send_mail']){
                     $sender = $this->get('send.account_data');
@@ -194,6 +197,7 @@ class UsersController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien été supprimé.');
+            $this->get('app.add_record')->addRecord('Suppression de l\'utilisateur "'.$user->getUsername().'".');
             return $this->redirectToRoute('admin_users');
         }
 
@@ -237,6 +241,7 @@ class UsersController extends Controller
             // Mise à jour de l'utilisateur
             $userManager->updateUser($user);
             $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien été modifié.');
+            $this->get('app.add_record')->addRecord('Modification de l\'utilisateur "'.$user->getUsername().'".');
             return $this->redirectToRoute('admin_users');
         }
 

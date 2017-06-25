@@ -66,6 +66,7 @@ class BlogController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'article "'.$post->getTitle().'" a bien été ajouté');
+            $this->get('app.add_record')->addRecord('Ajout d\'un article au blog : "'.$post->getTitle().'".');
             return $this->redirectToRoute('admin_management_posts');
         }
 
@@ -96,6 +97,7 @@ class BlogController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'article "'.$post->getTitle().'" a bien été modifié');
+            $this->get('app.add_record')->addRecord('Modification de l\'article du blog : "'.$post->getTitle().'".');
             return $this->redirectToRoute('admin_management_posts');
         }
 
@@ -126,6 +128,7 @@ class BlogController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'L\'article "'.$post->getTitle().'" a bien été supprimé');
+            $this->get('app.add_record')->addRecord('Suppression de l\'article du blog : "'.$post->getTitle().'".');
             return $this->redirectToRoute('admin_management_posts');
         }
 
@@ -146,6 +149,7 @@ class BlogController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
         $this->addFlash('info', 'L\'article "'.$post->getTitle().'" est maintenant '.$message);
+        $this->get('app.add_record')->addRecord('Changement d\'état de l\'article du blog "'.$post->getTitle().'" : '.$message);
 
         return $this->redirectToRoute('admin_management_posts');
     }

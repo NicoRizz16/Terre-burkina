@@ -52,6 +52,7 @@ class GroupController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le groupe "'.$sponsorGroup->getName().'" a bien été enregistré.');
+            $this->get('app.add_record')->addRecord('Création du groupe de parrains "'.$sponsorGroup->getName().'".');
             return $this->redirectToRoute('admin_sponsors_groups');
         }
 
@@ -75,6 +76,7 @@ class GroupController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le groupe "'.$sponsorGroup->getName().'" a bien été supprimé.');
+            $this->get('app.add_record')->addRecord('Suppression du groupe de parrains "'.$sponsorGroup->getName().'".');
             return $this->redirectToRoute('admin_sponsors_groups');
         }
 
@@ -99,6 +101,7 @@ class GroupController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le groupe a bien été renommé "'.$sponsorGroup->getName().'".');
+            $this->get('app.add_record')->addRecord('Un groupe de parrain a été renommé en "'.$sponsorGroup->getName().'".');
             return $this->redirectToRoute('admin_sponsors_groups');
         }
 

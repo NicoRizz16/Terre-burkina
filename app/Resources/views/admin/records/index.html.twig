@@ -1,0 +1,52 @@
+{% extends "admin/records/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">record</i>
+
+    {% if records|length > 0 %}
+        <table class="table table-striped marginTop25">
+            <tr>
+                <th>Date</th>
+                <th>Utilisateur</th>
+                <th>E-mail</th>
+                <th>Action</th>
+            </tr>
+
+            {% for record in records %}
+                <tr>
+                    <td>
+                        {{ record.datetime|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}<br>
+                        {{ record.datetime|date('h') }} h {{ record.datetime|date('i') }}
+                    </td>
+                    <td>
+                        {{ record.user.username }}
+                    </td>
+                    <td>
+                        {{ record.user.email }}
+                    </td>
+                    <td>
+                        {{ record.content }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="text-center">
+            <h3 class="marginTop25 emptyInfo">Registre vide</h3>
+        </div>
+    {% endif %}
+
+    {% if nbPageTotal > 1 %}
+        <div class="text-center">
+            <ul class="pagination">
+                {% for p in range(1, nbPageTotal) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('admin_records', {'page':p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock %}

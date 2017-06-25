@@ -44,6 +44,7 @@ class SponsorshipRequestsController extends Controller
     {
         if($sponsorshipRequest->getIsValid()){
             $sponsorshipRequest->setIsValid(false);
+            $this->get('app.add_record')->addRecord('Invalidation de la demande de parrainage de "'.$sponsorshipRequest->getEmail().'".');
 
         } else {
             if($sponsorshipRequest->getIsSponsorshipRequest() && ($sponsorshipRequest->getChild() == null)){
@@ -51,6 +52,7 @@ class SponsorshipRequestsController extends Controller
                 return $this->redirectToRoute('admin_sponsors_requests');
             }
             $sponsorshipRequest->setIsValid(true);
+            $this->get('app.add_record')->addRecord('Validation de la demande de parrainage de "'.$sponsorshipRequest->getEmail().'".');
             $now = new \DateTime();
             $sponsorshipRequest->setExpirationDate($now->modify('+2 month'));
         }
@@ -80,6 +82,7 @@ class SponsorshipRequestsController extends Controller
                 $sponsorshipRequest->setIsValid(false);
             }
             $em->flush();
+            $this->get('app.add_record')->addRecord('Modification de la demande de parrainage de "'.$sponsorshipRequest->getEmail().'".');
             $this->addFlash('info', 'La demande de parrainage a bien été modifiée.');
             return $this->redirectToRoute('admin_sponsors_requests');
         }
@@ -104,6 +107,7 @@ class SponsorshipRequestsController extends Controller
             $em->remove($sponsorshipRequest);
             $em->flush();
             $this->addFlash('info', 'La demande a bien été supprimée.');
+            $this->get('app.add_record')->addRecord('Suppression de la demande de parrainage de "'.$sponsorshipRequest->getEmail().'".');
             return $this->redirectToRoute('admin_sponsors_requests');
         }
 
@@ -128,6 +132,7 @@ class SponsorshipRequestsController extends Controller
             $em->remove($sponsorshipRequest);
             $em->flush();
             $this->addFlash('info', 'Le compte a bien été créé.');
+            $this->get('app.add_record')->addRecord('Création du compte pour la demande de parrainage de "'.$sponsorshipRequest->getEmail().'".');
             return $this->redirectToRoute('admin_sponsors_requests');
         }
 

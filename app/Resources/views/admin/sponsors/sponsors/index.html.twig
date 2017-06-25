@@ -62,6 +62,11 @@
                         <button class="btn btn-default btn-sm">Aucun</button>
                     {% endfor %}
                 </td>
+                {% if is_granted('ROLE_ADMIN') %}
+                <td>
+                    <a href="{{ path('fasoma_homepage', {'_switch_user': sponsor.username}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>

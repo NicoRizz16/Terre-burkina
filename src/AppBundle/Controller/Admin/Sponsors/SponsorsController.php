@@ -84,6 +84,7 @@ class SponsorsController extends Controller
             $userManager->updateUser($user);
 
             $this->addFlash('info', 'Les informations sur le parrain "'.$user->getFullName().'" ont bien été enregistrées.');
+            $this->get('app.add_record')->addRecord('Modification des informations du parrain "'.$user->getFullName().'".');
             return $this->redirectToRoute('admin_sponsors_view_infos', array('id' => $user->getId()));
         }
 

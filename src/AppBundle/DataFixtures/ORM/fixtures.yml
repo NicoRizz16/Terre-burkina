@@ -6,11 +6,18 @@ AppBundle\Entity\User:
         email: 'nicolas.rizzon@gmail.com'
         enabled: true
 
+    moderator_{1..15}:
+        username (unique): <firstName()><lastName()>
+        plainPassword: 'moderator'
+        role: ['ROLE_MODERATOR']
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        enabled: true
+
     sponsor_sponsor{1..55}:
         username (unique): <firstName()><lastName()>
         plainPassword: 'sponsor'
         role: ['ROLE_SPONSOR']
-        email (unique): 'nicolas.rizzon+<numberBetween(1, 1000)>@gmail.com'
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
         enabled: true
         firstName: <firstName()>
         lastName: <lastName()>
@@ -103,3 +110,9 @@ AppBundle\Entity\Donation:
     donation_{1..45}:
         donationDate: <dateTimeBetween('-300 days', 'now')>
         amount: <randomFloat(2, 5, 200)>
+
+AppBundle\Entity\Record:
+    record_{1..100}:
+        datetime: <dateTimeBetween('-300 days', 'now')>
+        user: '@moderator_*'
+        content: <text(50)>

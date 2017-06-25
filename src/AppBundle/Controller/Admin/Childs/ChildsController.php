@@ -70,6 +70,7 @@ class ChildsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le filleul "'.$child->getFirstName().' '.$child->getLastName().'" a bien été enregistré.');
+            $this->get('app.add_record')->addRecord('Ajout du filleul "'.$child->getFullName().'".');
             return $this->redirectToRoute('admin_childs');
         }
 
@@ -103,6 +104,7 @@ class ChildsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Le filleul "'.$child->getFullName().'" a bien été supprimé.');
+            $this->get('app.add_record')->addRecord('Suppression du filleul "'.$child->getFullName().'".');
             return $this->redirectToRoute('admin_childs');
         }
 
@@ -126,6 +128,7 @@ class ChildsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Les informations sur le filleul "'.$child->getFullName().'" ont bien été enregistrées.');
+            $this->get('app.add_record')->addRecord('Modification des informations du filleul "'.$child->getFullName().'".');
             return $this->redirectToRoute('admin_childs_view_infos', array('id' => $child->getId()));
         }
 
@@ -149,6 +152,7 @@ class ChildsController extends Controller
             $em->flush();
 
             $this->addFlash('info', 'Les informations sur le filleul "'.$child->getFullName().'" ont bien été enregistrées.');
+            $this->get('app.add_record')->addRecord('Modification des informations du filleul "'.$child->getFullName().'".');
             return $this->redirectToRoute('admin_childs_view_infos', array('id' => $child->getId()));
         }
 

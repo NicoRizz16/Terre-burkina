@@ -47,7 +47,7 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin_users') }}" title="Utilisateurs" id="usersMenuItem"><i class="fa fa-users" aria-hidden="true"></i></a></li>
                             <li><a href="{{ path('admin_accounting_donations') }}" id="accountingMenuItem" title="Comptabilité"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
-                            <li><a href="#" id="journalMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
+                            <li><a href="{{ path('admin_records') }}" id="recordsMenuItem" title="Journal des actions"><span class="glyphicon glyphicon-time"></span></a></li>
                         {% endif %}
                         {% if is_granted('ROLE_COORDINATOR') %}
                             <li><a href="{{ path('admin_coordination') }}" id="coordinationMenuItem">Coordination</a></li>
