@@ -25,6 +25,24 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('admin/board/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $newMessages = $em->getRepository('AppBundle:Message')->findBy(array('isNotificationAdmin' => true), array('creationDate' => 'ASC'));
+        $waitingPosts = $em->getRepository('AppBundle:Post')->findBy(array('published' => false), array('creationDate' => 'ASC'));
+        $waitingLetters = $em->getRepository('AppBundle:Letter')->findBy(array('isPublished' => false), array('creationDate' => 'ASC'));
+        $waitingInformationRequests = $em->getRepository('AppBundle:SponsorshipRequest')->findBy(array('isSponsorshipRequest' => false, 'isValid' => false), array('requestedAt' => 'ASC'));
+        $waitingSponsorshipRequests = $em->getRepository('AppBundle:SponsorshipRequest')->findBy(array('isSponsorshipRequest' => true, 'isValid' => false), array('requestedAt' => 'ASC'));
+        $waitingAccountRequests = $em->getRepository('AppBundle:SponsorshipRequest')->findBy(array('isSponsorshipRequest' => true, 'isValid' => true), array('requestedAt' => 'ASC'));
+        $waitingNews = $em->getRepository('AppBundle:News')->findBy(array('isValid' => false), array('creationDate' => 'ASC'));
+
+        return $this->render('admin/board/index.html.twig', array(
+            'newMessages' => $newMessages,
+            'waitingPosts' => $waitingPosts,
+            'waitingLetters' => $waitingLetters,
+            'waitingInformationRequests' => $waitingInformationRequests,
+            'waitingSponsorshipRequests' => $waitingSponsorshipRequests,
+            'waitingAccountRequests' => $waitingAccountRequests,
+            'waitingNews' => $waitingNews
+        ));
     }
 }

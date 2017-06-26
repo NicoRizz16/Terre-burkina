@@ -38,6 +38,19 @@ AppBundle\Entity\Post:
         author: '@admin'
         published: <boolean(75)>
 
+AppBundle\Entity\Letter:
+    letter_{1..15}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        summary: <text(200)>
+        content: <text(10000)>
+        module1Content: <text(500)>
+        module2Content: <text(500)>
+        module3Content: <text(500)>
+        module4Content: <text(500)>
+        module5Content: <text(500)>
+        author: '@moderator_*'
+        isPublished: <boolean(75)>
+
 AppBundle\Entity\Child:
     child_child_{1..55}:
         firstname: <firstName()>
@@ -95,7 +108,7 @@ AppBundle\Entity\Message:
         object: <sentence()>
         content: <text(1000)>
         isSenderAdmin: <boolean(50)>
-        isNotificationAdmin: <boolean(50)>
+        isNotificationAdmin: <boolean(5)>
         user: '@sponsor_sponsor*'
 
     group_message_{1..1000}:
@@ -103,7 +116,7 @@ AppBundle\Entity\Message:
         object: <sentence()>
         content: <text(1000)>
         isSenderAdmin: true
-        isNotificationAdmin: <boolean(50)>
+        isNotificationAdmin: false
         group: '@sponsor_group_*'
 
 AppBundle\Entity\Donation:
@@ -116,3 +129,40 @@ AppBundle\Entity\Record:
         datetime: <dateTimeBetween('-300 days', 'now')>
         user: '@moderator_*'
         content: <text(50)>
+
+AppBundle\Entity\SponsorshipRequest:
+    info_request_{1..5}:
+        requestedAt: <dateTimeBetween('-30 days', 'now')>
+        expirationDate: <dateTimeBetween('now', 'now')>
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        firstName: <firstName()>
+        lastName: <lastName()>
+        isSponsorshipRequest: false
+        isValid: false
+
+    sponsor_request_waiting_{1..5}:
+        requestedAt: <dateTimeBetween('-30 days', 'now')>
+        expirationDate: <dateTimeBetween('now', 'now')>
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        firstName: <firstName()>
+        lastName: <lastName()>
+        dateOfBirth: <dateTimeBetween('-70 years', '-20 years')>
+        address: <address()>
+        phone: <e164PhoneNumber()>
+        paymentChoice: <paymentChoice()>
+        isSponsorshipRequest: true
+        isValid: false
+
+    account_request_waiting_{1..5}:
+        requestedAt: <dateTimeBetween('-30 days', 'now')>
+        expirationDate: <dateTimeBetween('+30 days', '+60 days')>
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        firstName: <firstName()>
+        lastName: <lastName()>
+        dateOfBirth: <dateTimeBetween('-70 years', '-20 years')>
+        address: <address()>
+        phone: <e164PhoneNumber()>
+        paymentChoice: <paymentChoice()>
+        isSponsorshipRequest: true
+        child (unique): '@child_child_not_sponsored*'
+        isValid: true

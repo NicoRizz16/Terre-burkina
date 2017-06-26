@@ -1,7 +1,269 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block body %}
-    Hello world ADMIN !
+    <div class="container-fluid" id="boardContainer">
+        <div class="row">
+
+            <!-- COLONNE GAUCHE -->
+            <div class="col-md-8 col-md-offset-2">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <!-- DEMANDES DE PARRAINAGE EN ATTENTE -->
+                    {% if waitingSponsorshipRequests|length > 0 %}
+                        <div class="panel-group">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseSponsorshipRequest">Demandes de parrainage en attente de validation ({{ waitingSponsorshipRequests|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                                    </h4>
+                                </div>
+                                <div id="collapseSponsorshipRequest" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Email</th>
+                                            </tr>
+                                            {% for request in waitingSponsorshipRequests %}
+                                                <tr>
+                                                    <td>
+                                                        {{ request.requestedAt|date('d/m/Y') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ request.email }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('admin_sponsors_requests') }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- DEMANDES D'INFORMATIONS EN ATTENTE -->
+                    {% if waitingInformationRequests|length > 0 %}
+                        <div class="panel-group">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseInfoRequest">Demandes d'info en attente de validation ({{ waitingInformationRequests|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                                    </h4>
+                                </div>
+                                <div id="collapseInfoRequest" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Email</th>
+                                            </tr>
+                                            {% for request in waitingInformationRequests %}
+                                                <tr>
+                                                    <td>
+                                                        {{ request.requestedAt|date('d/m/Y') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ request.email }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('admin_sponsors_requests') }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- DEMANDES DE PARRAINAGE VALIDE EN ATTENTE DE COMPTE -->
+                    {% if waitingAccountRequests|length > 0 %}
+                        <div class="panel-group">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapseAccountRequest">Demandes de parrainage valide en attente de compte ({{ waitingAccountRequests|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                                    </h4>
+                                </div>
+                                <div id="collapseAccountRequest" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Email</th>
+                                            </tr>
+                                            {% for request in waitingAccountRequests %}
+                                                <tr>
+                                                    <td>
+                                                        {{ request.requestedAt|date('d/m/Y') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ request.email }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('admin_sponsors_requests') }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <!-- ARTICLES DU BLOG EN ATTENTE DE PUBLICATION -->
+                {% if waitingPosts|length > 0 %}
+                <div class="panel-group">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapsePost">Articles en attente de publication ({{ waitingPosts|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                            </h4>
+                        </div>
+                        <div id="collapsePost" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Titre</th>
+                                        </tr>
+                                        {% for post in waitingPosts %}
+                                            <tr>
+                                                <td>
+                                                    {{ post.creationDate|date('d/m/Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ post.title }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('admin_management_posts') }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- LETTRES D'ACTUALITE EN ATTENTE DE PUBLICATION -->
+                {% if waitingLetters|length > 0 %}
+                <div class="panel-group">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapseLetter">Lettres d'actu en attente de publication ({{ waitingLetters|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                            </h4>
+                        </div>
+                        <div id="collapseLetter" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Auteur</th>
+                                        </tr>
+                                        {% for letter in waitingLetters %}
+                                            <tr>
+                                                <td>
+                                                    {{ letter.creationDate|date('d/m/Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ letter.author.username }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('admin_management_letters') }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- NOUVELLES EN ATTENTE DE VALIDATION -->
+                {% if waitingNews|length > 0 %}
+                    <div class="panel-group">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapseMessages">Nouvelles en attente de validation ({{ waitingNews|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                                </h4>
+                            </div>
+                            <div id="collapseMessages" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Objet</th>
+                                        </tr>
+                                        {% for news in waitingNews %}
+                                            <tr>
+                                                <td>
+                                                    {{ news.creationDate|date('d/m/Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ news.title }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('admin_childs_news_coordination_validate', {'id': news.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- NOUVEAUX MESSAGES -->
+                {% if newMessages|length > 0 %}
+                <div class="panel-group">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapseMessages">Messages non lus ({{ newMessages|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                            </h4>
+                        </div>
+                        <div id="collapseMessages" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Emetteur</th>
+                                        </tr>
+                                        {% for message in newMessages %}
+                                            <tr>
+                                                <td>
+                                                    {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}<br>
+                                                    {{ message.creationDate|date('h') }} h {{ message.creationDate|date('i') }}
+                                                </td>
+                                                <td>
+                                                    {{ message.user.fullName }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('admin_sponsors_messages_sponsor', {'id': message.user.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 
