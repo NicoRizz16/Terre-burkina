@@ -8,8 +8,8 @@
         {% for photo in photos %}
         <div class="col-xs-6 col-sm-4 col-md-3 admin_gallery_thumbnail_container">
             <div class="thumbnail admin_gallery_thumbnail">
-                <a href="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}">
-                    <img src="../../../../{{ vich_uploader_asset(photo, 'imageFile') }}" alt="{{ photo.imageName }}">
+                <a href="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}">
+                    <img src="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" alt="{{ photo.imageName }}">
                 </a>
             </div>
             <div id="{{ photo.id }}">

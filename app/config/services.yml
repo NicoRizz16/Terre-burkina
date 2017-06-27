@@ -29,6 +29,9 @@ services:
           - "@mailer"
           - "@templating"
           - "%mailer_user%"
+          - "@Router"
+          - "@fos_user.util.token_generator"
+          - "@fos_user.user_manager"
 
   send.request_url:
         class: AppBundle\Utils\sendRequestUrl

@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GalleryRepository")
  * @Vich\Uploadable
  */
 class Gallery
 {
+    const NUM_ITEMS = 18;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -190,6 +192,15 @@ class Gallery
     public function getOrder()
     {
         return $this->order;
+    }
+
+    public function getWidth(){
+        list($width, $height, $type, $attr) = getimagesize($this->imageFile);
+        return $width;
+    }
+    public function getHeight(){
+        list($width, $height, $type, $attr) = getimagesize($this->imageFile);
+        return $height;
     }
 
 }

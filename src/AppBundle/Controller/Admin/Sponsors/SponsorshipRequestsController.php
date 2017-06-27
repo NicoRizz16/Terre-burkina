@@ -179,6 +179,10 @@ class SponsorshipRequestsController extends Controller
         $user->setRoles(array('ROLE_SPONSOR'));
 
         $userManager->updateUser($user);
-        $this->get('send.account_data')->sendAccountData($user->getEmail(), $user->getUsername(), $password);
+
+        $sponsorshipRequest->getChild()->setSponsor($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->get('send.account_data')->sendAccountData($user);
     }
 }

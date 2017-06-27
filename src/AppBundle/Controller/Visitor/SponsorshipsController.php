@@ -10,6 +10,7 @@
 namespace AppBundle\Controller\Visitor;
 
 use AppBundle\AppBundle;
+use AppBundle\Entity\Gallery;
 use AppBundle\Entity\Newsletter;
 use AppBundle\Entity\SponsorshipRequest;
 use AppBundle\Form\RequestInfoType;
@@ -17,6 +18,7 @@ use AppBundle\Form\RequestSponsorshipType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/parrainages")
@@ -75,10 +77,14 @@ class SponsorshipsController extends Controller
 
 
     /**
-     * @Route("/galerie", name="sponsorship_gallery")
+     * @Route("/galerie/{page}", name="sponsorship_gallery", requirements={"id": "\d+"})
      */
-    public function galleryAction(Request $request)
+    public function galleryAction(Request $request, $page = 1)
     {
+        if($page<1){
+            throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $sponsorshipRequest = new SponsorshipRequest();
@@ -94,13 +100,23 @@ class SponsorshipsController extends Controller
             return $this->redirectToRoute('sponsorship_presentation');
         }
 
-        $photos = $em->getRepository('AppBundle:Gallery')->findBy(array(), array('order' => 'DESC'));
+        $nbPerPage = Gallery::NUM_ITEMS;
+        $photos = $em->getRepository('AppBundle:Gallery')->getPhotosPaginateByOrder($page, $nbPerPage);
+        $nbPageTotal = ceil(count($photos)/$nbPerPage);
+
+        if($page>$nbPageTotal && $page != 1){
+            throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+        }
 
         return $this->render('visitor/sponsorships/gallery.html.twig', array(
             'form' => $form->createView(),
-            'photos' => $photos
+            'photos' => $photos,
+            'nbPageTotal' => $nbPageTotal,
+            'page' => $page
         ));
     }
+
+
 
     /**
      * @Route("/devenir-parrain", name="sponsorship_request")

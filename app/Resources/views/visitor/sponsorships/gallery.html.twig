@@ -14,26 +14,54 @@
                 <hr>
 
                 <div class="row">
-                    {% for photo in photos %}
-                        <div class="col-md-4 col-sm-6">
-                            <!--Card-->
-                            <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+                    <div class="col-12">
+                        {% if photos|length > 0 %}
+                            <div id="mdb-lightbox-ui"></div>
 
-                                <!--Card image-->
-                                <div class="view overlay hm-white-slight">
-                                    <img src="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" alt="{{ photo.imageName }}" class="img-fluid" />
-                                    <a href="{{ file_base_url ~ vich_uploader_asset(photo, 'imageFile') }}">
-                                        <div class="mask"></div>
-                                    </a>
-                                </div>
-                                <!--/.Card image-->
-
+                            <div class="mdb-lightbox">
+                                {% for photo in photos %}
+                                    <figure class="col-md-4 col-sm-6">
+                                        <a href="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" data-size="{{ photo.width }}x{{ photo.height }}">
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(photo, 'imageFile'))) }}" alt="{{ photo.imageName }}" class="img-fluid">
+                                        </a>
+                                    </figure>
+                                {% endfor %}
                             </div>
-                            <!--/.Card-->
-
-                        </div>
-                    {% endfor %}
+                        {% else %}
+                            <p>Aucune photo</p>
+                        {% endif %}
+                    </div>
                 </div>
+
+                {% if nbPageTotal > 1 %}
+                    <br>
+                    <!--Pagination-->
+                    <nav class="row text-center">
+                        <ul class="pagination m-auto">
+                            <li class="page-item {% if not (page > 1) %}disabled{% endif %}">
+                                <a class="page-link" {% if (page > 1) %}href="{{ path('sponsorship_gallery', {'page': (page-1)}) }}"{% endif %} aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                            {% for p in range(1, nbPageTotal) %}
+                                <li class="page-item {% if p == page %}active{% endif %}">
+                                    <a class="page-link" href="{{ path('sponsorship_gallery', {'page': p}) }}">{{ p }} {% if p == page %}<span class="sr-only">(current)</span>{% endif %}</a>
+                                </li>
+                            {% endfor %}
+
+
+                            <li class="page-item {% if not (page < nbPageTotal) %}disabled{% endif %}">
+                                <a class="page-link" {% if (page < nbPageTotal) %}href="{{ path('sponsorship_gallery', {'page': (page+1)}) }}"{% endif %} aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!--/.Pagination-->
+                {% endif %}
             </div>
         </div>
         <div class="col-md-4">
@@ -97,4 +125,13 @@
     {% endblock %}
 
 
-
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            $(function () {
+                {% if photos|length > 0 %}
+                $("#mdb-lightbox-ui").load("{{ absolute_url(asset('mdb-addons/mdb-lightbox-ui.html')) }}");
+                {% endif %}
+            });
+        </script>
+    {% endblock %}

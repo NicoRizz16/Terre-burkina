@@ -139,7 +139,8 @@ class UsersController extends Controller
                 // Envois du mail avec les données de connexion si demandé
                 if($post['send_mail']){
                     $sender = $this->get('send.account_data');
-                    $sender->sendAccountData($post['email'], $post['username'], $post['password']);
+                    $user = $this->get('fos_user.user_manager')->findUserByUsername($post['username']);
+                    $sender->sendAccountData($user);
                 }
             } else {
                 // L'utilisateur existe déjà
