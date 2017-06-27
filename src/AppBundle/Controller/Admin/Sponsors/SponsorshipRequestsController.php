@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/admin/parrains/demandes")
@@ -55,6 +56,8 @@ class SponsorshipRequestsController extends Controller
             $this->get('app.add_record')->addRecord('Validation de la demande de parrainage de "'.$sponsorshipRequest->getEmail().'".');
             $now = new \DateTime();
             $sponsorshipRequest->setExpirationDate($now->modify('+2 month'));
+            // Envois de l'url de la demande par mail lors de la validation
+            $this->get('send.request_url')->sendRequestUrl($sponsorshipRequest, $this->generateUrl('sponsorship_request_response', array('token' => $sponsorshipRequest->getToken()), UrlGeneratorInterface::ABSOLUTE_URL));
         }
 
         $this->getDoctrine()->getManager()->flush();

@@ -30,6 +30,13 @@ services:
           - "@templating"
           - "%mailer_user%"
 
+  send.request_url:
+        class: AppBundle\Utils\sendRequestUrl
+        arguments:
+            - "@mailer"
+            - "@templating"
+            - "%mailer_user%"
+
   app.form.create_user:
       class: AppBundle\Form\CreateUserType
       arguments: ['@security.token_storage']
