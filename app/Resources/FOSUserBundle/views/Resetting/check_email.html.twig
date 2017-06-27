@@ -1,0 +1,32 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 push-md-2">
+
+                <!--Form with header-->
+                <div class="card">
+                    <div class="card-block text-center">
+
+                        <!--Header-->
+                        <div class="form-header brown">
+                            <h3 class="h3-responsive">Email envoyé !</h3>
+                        </div>
+
+                        <p>Un e-mail a été envoyé.<br>
+                            Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.</p>
+                        <i>Remarque : Vous ne pouvez demander un nouveau mot de passe que toutes les {{ tokenLifetime }} heures.<br>
+                            Si vous ne recevez pas d'email, vérifiez votre dossier spam ou essayez à nouveau.</i>
+
+                    </div>
+
+                </div>
+                <!--/Form with header-->
+
+            </div>
+        </div>
+    </div>
+
+{% endblock fos_user_content %}

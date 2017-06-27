@@ -1,0 +1,80 @@
+{% extends 'sponsor/base.html.twig' %}
+
+{% form_theme form 'form/mdbootstrap_form.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">messages</i>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-ins" id="writeMessage">Ecrire un message</button>
+            </div>
+            <div id="writeMessageBlock" class="col-md-8 push-md-2">
+                {{ form_start(form) }}
+                <div class="md-form">
+                    {{ form_row(form.object) }}
+                </div>
+                <div class="md-form">
+                    {{ form_row(form.content) }}
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-ins" formnovalidate><i class="fa fa-send" aria-hidden="true"></i> Envoyer</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            {% if messages|length > 0 %}
+                {% for message in messages %}
+                    <div class="col-md-9 {% if not message.isSenderAdmin %}push-md-3{% endif %}">
+
+                        <!--Panel-->
+                        <div class="card">
+                            <div class="card-header {% if message.isSenderAdmin %}primary-color{% else %}info-color{% endif %} white-text">
+                                {{ message.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }} à {{ message.creationDate|date('H') }}h{{ message.creationDate|date('i') }}
+                            </div>
+                            <div class="card-block">
+                                <h4 class="card-title">{{ message.object }}</h4>
+                                <p class="card-text">{{ message.content|nl2br }}</p>
+                            </div>
+                        </div>
+                        <!--/.Panel-->
+                        <br>
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <br>
+                    <h3 class="h3-responsive">Aucun message</h3>
+                    <br><br><br><br><br><br><br>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px;">
+        <a href="#top-section" class="btn-floating btn-large brown">
+            <i class="fa fa-arrow-up"></i>
+        </a>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        {% for message in app.session.flashbag.get('info') %}
+        toastr["info"]("{{ message }}");
+        {% endfor %}
+        {% for message in app.session.flashbag.get('error') %}
+        toastr["error"]("{{ message }}");
+        {% endfor %}
+    </script>
+{% endblock %}
+
+

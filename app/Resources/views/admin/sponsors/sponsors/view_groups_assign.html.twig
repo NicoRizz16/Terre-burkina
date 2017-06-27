@@ -1,0 +1,20 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block sponsor_view %}
+    <i id="menuChildInfo">sponsorGroups</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary" formnovalidate>Ajouter le parrain au groupe</button>
+            <a href="{{ path('admin_sponsors_view_groups', {'id': sponsor.id}) }}" class="btn btn-warning btn-md">Annuler</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+

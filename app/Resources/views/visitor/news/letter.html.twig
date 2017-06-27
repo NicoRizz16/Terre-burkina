@@ -1,0 +1,249 @@
+{% set abs_url = app.request.scheme ~'://' ~ app.request.httpHost %}
+
+{% extends 'visitor/base.html.twig' %}
+
+{% block carousel %}
+    <!--Carousel Wrapper-->
+    <div id="homepageCarousel" class="carousel slide carousel-fade z-depth-1" data-ride="carousel">
+
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+            <!--First slide-->
+            <div class="carousel-item active">
+                <img src="{{ absolute_url(asset('img/lettre_actu.jpg')) }}" alt="First slide">
+                    <div class="carousel-caption">
+                      <h1 class="h1-responsive">L'arbre à palabre</h1>
+                        {% if letter is not null %}
+                            <p class="">Lettre du {{ letter.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</p>
+                        {% endif %}
+                    </div>
+            </div>
+            <!--/First slide-->
+        </div>
+        <!--/.Slides-->
+
+        <!--Controls-->
+        {% if previousLetter is not null %}
+        <a href="{{ path('letter', {'id': previousLetter.id}) }}" class="carousel-control-prev" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        {% endif %}
+
+        {% if nextLetter is not null %}
+        <a href="{{ path('letter', {'id': nextLetter.id}) }}" class="carousel-control-next" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        {% endif %}
+        <!--/.Controls-->
+    </div>
+    <!--/.Carousel Wrapper-->
+{% endblock %}
+
+{% block body %}
+    <i id="topMenuInfo">news</i>
+
+    <br/>
+    <div class="container-fluid">
+        <div class="row">
+            {% if letter is not null %}
+                <div class="col-md-4">
+
+                    <!-- SOMMAIRE -->
+                    <div class="row" id="letterSummaryBlock">
+                    {% if letter.summary is not null %}
+                        <div class="col-12">
+                            <div class="jumbotron">
+                                {{ letter.summary|raw }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    </div>
+
+                    <!-- MODULE 1 -->
+                    {% if (letter.module1Content is not null) or (letter.module1Photo is not null) %}
+                        <div class="row">
+                            <div class="col-12">
+                                <!--Card-->
+                                <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+                                    {% if letter.module1Photo is not null %}
+                                    <!--Card image-->
+                                    <div class="view overlay hm-white-slight">
+                                        <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module1Photo'))) }}" alt="{{ letter.module1PhotoName }}" />
+                                        <a>
+                                            <div class="mask"></div>
+                                        </a>
+                                    </div>
+                                    <!--/.Card image-->
+                                    {% endif %}
+
+                                    {% if letter.module1Content is not null %}
+                                    <!--Card content-->
+                                    <div class="card-block text-center">
+                                        {{ letter.module1Content|raw }}
+                                    </div>
+                                    <!--/.Card content-->
+                                    {% endif %}
+
+                                </div>
+                                <!--/.Card-->
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- MODULE 2 -->
+                    {% if (letter.module2Content is not null) or (letter.module2Photo is not null) %}
+                        <div class="row">
+                            <div class="col-12">
+                                <!--Card-->
+                                <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+                                    {% if letter.module2Photo is not null %}
+                                        <!--Card image-->
+                                        <div class="view overlay hm-white-slight">
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module2Photo'))) }}" alt="{{ letter.module2PhotoName }}" />
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                        <!--/.Card image-->
+                                    {% endif %}
+
+                                    {% if letter.module2Content is not null %}
+                                        <!--Card content-->
+                                        <div class="card-block text-center">
+                                            {{ letter.module2Content|raw }}
+                                        </div>
+                                        <!--/.Card content-->
+                                    {% endif %}
+
+                                </div>
+                                <!--/.Card-->
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- MODULE 3 -->
+                    {% if (letter.module3Content is not null) or (letter.module3Photo is not null) %}
+                        <div class="row">
+                            <div class="col-12">
+                                <!--Card-->
+                                <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+                                    {% if letter.module3Photo is not null %}
+                                        <!--Card image-->
+                                        <div class="view overlay hm-white-slight">
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module3Photo'))) }}" alt="{{ letter.module3PhotoName }}" />
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                        <!--/.Card image-->
+                                    {% endif %}
+
+                                    {% if letter.module3Content is not null %}
+                                        <!--Card content-->
+                                        <div class="card-block text-center">
+                                            {{ letter.module3Content|raw }}
+                                        </div>
+                                        <!--/.Card content-->
+                                    {% endif %}
+
+                                </div>
+                                <!--/.Card-->
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- MODULE 4 -->
+                    {% if (letter.module4Content is not null) or (letter.module4Photo is not null) %}
+                        <div class="row">
+                            <div class="col-12">
+                                <!--Card-->
+                                <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+                                    {% if letter.module4Photo is not null %}
+                                        <!--Card image-->
+                                        <div class="view overlay hm-white-slight">
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module4Photo'))) }}" alt="{{ letter.module4PhotoName }}" />
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                        <!--/.Card image-->
+                                    {% endif %}
+
+                                    {% if letter.module4Content is not null %}
+                                        <!--Card content-->
+                                        <div class="card-block text-center">
+                                            {{ letter.module4Content|raw }}
+                                        </div>
+                                        <!--/.Card content-->
+                                    {% endif %}
+
+                                </div>
+                                <!--/.Card-->
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- MODULE 5 -->
+                    {% if (letter.module5Content is not null) or (letter.module5Photo is not null) %}
+                        <div class="row">
+                            <div class="col-12">
+                                <!--Card-->
+                                <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+                                    {% if letter.module5Photo is not null %}
+                                        <!--Card image-->
+                                        <div class="view overlay hm-white-slight">
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(letter, 'module5Photo'))) }}" alt="{{ letter.module5PhotoName }}" />
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                        <!--/.Card image-->
+                                    {% endif %}
+
+                                    {% if letter.module5Content is not null %}
+                                        <!--Card content-->
+                                        <div class="card-block text-center">
+                                            {{ letter.module5Content|raw }}
+                                        </div>
+                                        <!--/.Card content-->
+                                    {% endif %}
+
+                                </div>
+                                <!--/.Card-->
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+                <div class="col-md-8" id="letterContentContainer">
+                    <div class="row" id="letterContentBlock">
+                        <div class="col-md-12">
+                            <div class="jumbotron">
+                                {{ letter.content|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            {% else %}
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h2 class="h2-responsive">
+                                    Aucune lettre
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,168 @@
+AppBundle\Entity\User:
+    admin:
+        username: 'admin'
+        plainPassword: 'admin'
+        role: ['ROLE_SUPER_ADMIN']
+        email: 'nicolas.rizzon@gmail.com'
+        enabled: true
+
+    moderator_{1..15}:
+        username (unique): <firstName()><lastName()>
+        plainPassword: 'moderator'
+        role: ['ROLE_MODERATOR']
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        enabled: true
+
+    sponsor_sponsor{1..55}:
+        username (unique): <firstName()><lastName()>
+        plainPassword: 'sponsor'
+        role: ['ROLE_SPONSOR']
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        enabled: true
+        firstName: <firstName()>
+        lastName: <lastName()>
+        lastContact: <dateTimeBetween('-3 years', 'now')>
+        lastPayment: <dateTimeBetween('-3 years', 'now')>
+        adress: <address()>
+        paymentChoice: <paymentChoice()>
+
+AppBundle\Entity\Newsletter:
+    newsletter_{1..25}:
+        email (unique): <email()>
+
+AppBundle\Entity\Post:
+    post1_{1..15}:
+        creationDate: <dateTimeBetween('-200 days', 'now')>
+        title (unique): <sentence()>
+        content: <text(1000)>
+        author: '@admin'
+        published: <boolean(75)>
+
+AppBundle\Entity\Letter:
+    letter_{1..15}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        summary: <text(200)>
+        content: <text(10000)>
+        module1Content: <text(500)>
+        module2Content: <text(500)>
+        module3Content: <text(500)>
+        module4Content: <text(500)>
+        module5Content: <text(500)>
+        author: '@moderator_*'
+        isPublished: <boolean(75)>
+
+AppBundle\Entity\Child:
+    child_child_{1..55}:
+        firstname: <firstName()>
+        lastname: <lastName()>
+        dateOfBirth: <dateTimeBetween('-20 years', 'now')>
+        adress: <address()>
+        school: <streetName()>
+        class: <numberBetween(1, 6)>
+        phone: <e164PhoneNumber()>
+        sponsorshipStart: <dateTimeBetween('-5 years', 'now')>
+        sponsorshipEnd: <dateTimeBetween('now', '+10 years')>
+        familySituation: <sentence()>
+        sponsor: '@sponsor_sponsor<current()>'
+        isSponsored: true
+
+    child_child_not_sponsored{1..20}:
+        firstname: <firstName()>
+        lastname: <lastName()>
+        dateOfBirth: <dateTimeBetween('-20 years', 'now')>
+        adress: <address()>
+        school: <streetName()>
+        class: <numberBetween(1, 6)>
+        phone: <e164PhoneNumber()>
+        sponsorshipStart: <dateTimeBetween('-5 years', 'now')>
+        sponsorshipEnd: <dateTimeBetween('now', '+10 years')>
+        familySituation: <sentence()>
+        isSponsored: false
+
+AppBundle\Entity\ChildGroup:
+    child_group_{1..25}:
+        name (unique): <word()>
+
+AppBundle\Entity\SponsorGroup:
+    sponsor_group_{1..25}:
+        name (unique): <word()>
+
+AppBundle\Entity\News:
+    child_news{1..1000}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        title: <sentence()>
+        content: <text(1000)>
+        isValid: <boolean(75)>
+        child: '@child_child_*'
+
+    group_news{1..300}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        title: <sentence()>
+        content: <text(1000)>
+        isValid: <boolean(75)>
+        group: '@child_group_*'
+
+AppBundle\Entity\Message:
+    sponsor_message_{1..1000}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        object: <sentence()>
+        content: <text(1000)>
+        isSenderAdmin: <boolean(50)>
+        isNotificationAdmin: <boolean(5)>
+        user: '@sponsor_sponsor*'
+
+    group_message_{1..1000}:
+        creationDate: <dateTimeBetween('-300 days', 'now')>
+        object: <sentence()>
+        content: <text(1000)>
+        isSenderAdmin: true
+        isNotificationAdmin: false
+        group: '@sponsor_group_*'
+
+AppBundle\Entity\Donation:
+    donation_{1..45}:
+        donationDate: <dateTimeBetween('-300 days', 'now')>
+        amount: <randomFloat(2, 5, 200)>
+
+AppBundle\Entity\Record:
+    record_{1..100}:
+        datetime: <dateTimeBetween('-300 days', 'now')>
+        user: '@moderator_*'
+        content: <text(50)>
+
+AppBundle\Entity\SponsorshipRequest:
+    info_request_{1..5}:
+        requestedAt: <dateTimeBetween('-30 days', 'now')>
+        expirationDate: <dateTimeBetween('now', 'now')>
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        firstName: <firstName()>
+        lastName: <lastName()>
+        isSponsorshipRequest: false
+        isValid: false
+
+    sponsor_request_waiting_{1..5}:
+        requestedAt: <dateTimeBetween('-30 days', 'now')>
+        expirationDate: <dateTimeBetween('now', 'now')>
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        firstName: <firstName()>
+        lastName: <lastName()>
+        dateOfBirth: <dateTimeBetween('-70 years', '-20 years')>
+        address: <address()>
+        phone: <e164PhoneNumber()>
+        paymentChoice: <paymentChoice()>
+        isSponsorshipRequest: true
+        isValid: false
+
+    account_request_waiting_{1..5}:
+        requestedAt: <dateTimeBetween('-30 days', 'now')>
+        expirationDate: <dateTimeBetween('+30 days', '+60 days')>
+        email (unique): 'nicolas.rizzon+<numberBetween(1, 10000)>@gmail.com'
+        firstName: <firstName()>
+        lastName: <lastName()>
+        dateOfBirth: <dateTimeBetween('-70 years', '-20 years')>
+        address: <address()>
+        phone: <e164PhoneNumber()>
+        paymentChoice: <paymentChoice()>
+        isSponsorshipRequest: true
+        child (unique): '@child_child_not_sponsored*'
+        isValid: true

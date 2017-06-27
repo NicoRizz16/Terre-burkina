@@ -1,0 +1,63 @@
+{% extends "admin/coordination/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">nouvelles</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="buttonsBar">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Ajouter une nouvelle
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_coordination_child_add') }}">D'un enfant</a></li>
+                    <li><a href="{{ path('admin_coordination_group_add') }}">D'un groupe d'enfants</a></li>
+                </ul>
+            </div>
+        </div>
+        {% if newsList|length > 0 %}
+            <table class="table table-striped marginTop25">
+                <tr>
+                    <th>Date</th>
+                    <th>À l'intention de</th>
+                    <th>Titre</th>
+                </tr>
+                {% for news in newsList %}
+                    <tr>
+                        <td>
+                            {{ news.creationDate|date('d/m/Y') }}
+                        </td>
+                        <td>
+                            {% if news.group is not null %}
+                                Groupe "{{ news.group.name }}"
+                            {% elseif news.child is not null %}
+                                Filleul "{{ news.child.fullName }}"
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ news.title }}
+                        </td>
+                        <td class="actionsColumn">
+                            <a href="{{ path('admin_coordination_edit', {'id': news.id}) }}" class="btn btn-primary btn-sm" title="Modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="{{ path('admin_coordination_delete', {'id': news.id}) }}" class="btn btn-danger btn-sm" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucune nouvelle en attente de validation</h3>
+            </div>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}

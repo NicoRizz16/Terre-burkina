@@ -1,0 +1,18 @@
+
+{% block subject %}
+{%- autoescape false -%}
+Réinitialisation de votre mot de passe
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+Bonjour {{ user.username }} !
+
+Pour réinitialiser votre mot de passe, merci de vous rendre sur {{ confirmationUrl }}
+
+Cordialement,
+L'association Terre Burkina
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

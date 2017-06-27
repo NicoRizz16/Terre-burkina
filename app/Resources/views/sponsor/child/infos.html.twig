@@ -1,0 +1,50 @@
+{% extends 'sponsor/child/layout.html.twig' %}
+
+{% block child_view %}
+    <div class="jumbotron">
+        <!--Dropdown ins-->
+        <div class="dropdown">
+
+            <!--Trigger-->
+            <button class="btn btn-ins dropdown-toggle" type="button" id="dropdownMenu8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informations</button>
+
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-ins">
+                <a class="dropdown-item" href="{{ path('fasoma_child_news', {'id': child.id}) }}">Nouvelles</a>
+                <a class="dropdown-item" href="{{ path('fasoma_child_photos', {'id': child.id}) }}">Photos</a>
+                <a class="dropdown-item" href="{{ path('fasoma_child_results', {'id': child.id}) }}">Résultats</a>
+            </div>
+        </div>
+        <!--Dropdown ins-->
+        <br>
+        <table class="table">
+            <tr>
+                <th>Prénom</th>
+                <td>{{ child.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ child.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Âge</th>
+                <td>{{ child.age }} ans</td>
+            </tr>
+            <tr>
+                <th>Date de naissance</th>
+                <td>{{ child.dateOfBirth|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Ecole</th>
+                <td>{{ child.school }}</td>
+            </tr>
+            <tr>
+                <th>Classe</th>
+                <td>{{ child.class }}</td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}
+
+

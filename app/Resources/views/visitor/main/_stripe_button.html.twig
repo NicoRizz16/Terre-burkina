@@ -1,0 +1,17 @@
+<div class="text-center">
+    <hr>
+    <h3 class="h3-responsive">Procéder au paiement</h3>
+    <form action="{{ path('charge_donation') }}" method="POST" class="text-center">
+        <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ publicKey }}"
+                data-amount="{{ donationAmount*100 }}"
+                data-name="Donation Terre-burkina"
+                data-description="don"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-zip-code="true"
+                data-currency="eur">
+        </script>
+    </form>
+</div>

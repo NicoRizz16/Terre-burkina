@@ -7,3 +7,66 @@ services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+
+  twig.extension.text:
+      class: Twig_Extensions_Extension_Text
+      tags:
+          - { name: twig.extension }
+
+  twig.extension.intl:
+      class: Twig_Extensions_Extension_Intl
+      tags:
+          - { name: twig.extension }
+
+  app.twig_extension.time_diff:
+      class: AppBundle\Twig\TimeDiffExtension
+      tags:
+          - { name: twig.extension }
+
+  send.account_data:
+      class: AppBundle\Utils\sendAccountData
+      arguments:
+          - "@mailer"
+          - "@templating"
+          - "%mailer_user%"
+          - "@Router"
+          - "@fos_user.util.token_generator"
+          - "@fos_user.user_manager"
+
+  send.request_url:
+        class: AppBundle\Utils\sendRequestUrl
+        arguments:
+            - "@mailer"
+            - "@templating"
+            - "%mailer_user%"
+
+  app.form.create_user:
+      class: AppBundle\Form\CreateUserType
+      arguments: ['@security.token_storage']
+      tags:
+          - { name: form.type }
+
+  authentication.handler.login_success_handler:
+      class:  AppBundle\Security\LoginSuccessHandler
+      arguments:  ['@router', '@security.authorization_checker']
+
+
+  app.sponsor_email_available:
+      class: AppBundle\Validator\SponsorEmailAvailableValidator
+      arguments:
+          - "@doctrine.orm.entity_manager"
+      tags:
+          - { name: validator.constraint_validator }
+
+  app.sponsorshiprequest_listener:
+      class: AppBundle\EventListener\generateRequestToken
+      arguments:
+          - "@fos_user.util.token_generator"
+      tags:
+          - { name: doctrine.event_listener, event: prePersist }
+
+  app.add_record:
+          class: AppBundle\Utils\addRecord
+          arguments:
+              - "@doctrine.orm.entity_manager"
+              - "@security.token_storage"

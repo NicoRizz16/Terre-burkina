@@ -1,0 +1,24 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    Administration parrains
+{% endblock %}
+
+{% block body %}
+
+    <i id="menuTopInfo">sponsorsMenuItem</i>
+
+    <nav id="nav-left">
+        <ul>
+            <li><a href="{{ path('admin_sponsors') }}" id="sponsors"><span class="mark"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> Parrains</a></li>
+            <li><a href="{{ path('admin_sponsors_groups') }}" id="groups"><span class="mark"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> Groupes</a></li>
+            <li><a href="{{ path('admin_sponsors_requests') }}" id="requests"><span class="mark"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> Demandes</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        {% block admin_body %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

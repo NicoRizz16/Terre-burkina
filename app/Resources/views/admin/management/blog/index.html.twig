@@ -1,0 +1,94 @@
+{% extends "admin/management/layout.html.twig" %}
+
+{% block title %}
+    Articles - {{ parent() }}
+{% endblock %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">blog</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_management_posts_add') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+    </div>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <table class="table table-striped marginTop25">
+        <tr>
+            <th>Date</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>État</th>
+        </tr>
+
+        {% for post in listPosts %}
+            <tr>
+                <td>
+                    {{ post.creationDate|date('d/m/Y') }}
+                </td>
+                <td>
+                    <a href="#">{{ post.title }}</a>
+                </td>
+                <td>
+                    {{ post.author }}
+                </td>
+                <td>
+                    <div class="btn-group">
+                        {% if post.published %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Publié <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_management_posts_toggle_published', {'id': post.id}) }}">Mettre en attente</a></li>
+                                </ul>
+                            {% else %}
+                                <button type="button" class="btn btn-success btn-sm ">Publié</button>
+                            {% endif %}
+                        {% else %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    En attente <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_management_posts_toggle_published', {'id': post.id}) }}">Publier</a></li>
+                                </ul>
+                            {% else %}
+                                <button type="button" class="btn btn-warning btn-sm ">En attente</button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_MODERATOR') and (not post.published) and (app.user.id == post.author.id)) %}
+                        <a href="{{ path('admin_management_posts_edit', {'id': post.id }) }}" class="btn btn-primary btn-sm" title="Modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{{ path('admin_management_posts_delete', {'id': post.id }) }}" class="btn btn-danger btn-sm" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>
+                    Pas encore d'articles...
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if nbPageTotal > 1 %}
+        <div class="text-center">
+        <ul class="pagination">
+            {% for p in range(1, nbPageTotal) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('admin_management_posts', {'page':p}) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.png')) }}" />
+
+    {# ============= TITLE ============= #}
+    <title>{% block title %}Demande de parrainage{% endblock %}</title>
+
+    {# ============= STYLES ============= #}
+    {% block stylesheets %}
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+        {% stylesheets filter='cssrewrite, ?scssphp'
+        'css/bootstrap.min.css'
+        'css/visitor/style.css'
+        'css/mdb.min.css'
+        output='css/visitor/compiled/app.css'%}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+    <div style="position: fixed; top: 20px; left:20px;">
+        <a href="{{ path('homepage') }}" class="btn-floating btn-large brown"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <br>
+                    <img src="{{ absolute_url(asset('img/logo.png')) }}" style="width: 100px;"/>
+                    <br><br>
+                    <h2 class="h2-responsive white-text">Informations sur le parrainage</h2>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="jumbotron">
+
+                        <!-- Nav tabs -->
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <ul class="nav nav-tabs md-pills pills-ins flex-column" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#panel41" role="tab"><i class="fa fa-archive fa-2x"></i><br> Les parrainages</a>
+                                    </li>
+                                    {% if sponsorshipRequest.isSponsorshipRequest %}
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#panel42" role="tab"><i class="fa fa-child fa-2x"></i><br> Mon filleul</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#panel43" role="tab"><i class="fa fa-credit-card fa-2x"></i><br> Versements</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="col-lg-9">
+                                <!-- Tab panels -->
+                                <div class="tab-content vertical">
+                                    <!--Panel "Les parrainages"-->
+                                    <div class="tab-pane fade in show active" id="panel41" role="tabpanel">
+                                        <hr class="hidden-lg-up">
+                                        <h3 class="h3-responsive">Les parrainages</h3>
+                                        <hr>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                    </div>
+                                    <!--/.Panel 1-->
+                                    {% if sponsorshipRequest.isSponsorshipRequest %}
+                                        <!--Panel "Mon filleul"-->
+                                        <div class="tab-pane fade in" id="panel42" role="tabpanel">
+                                            <hr class="hidden-lg-up">
+                                            <h3 class="h3-responsive">Mon filleul</h3>
+                                            <hr>
+                                            <div class="text-center">
+                                                {% if sponsorshipRequest.child.profilePhoto is not null %}
+                                                    <img src="{{ absolute_url(asset(vich_uploader_asset(sponsorshipRequest.child, 'profilePhoto'))) }}" alt="{{ sponsorshipRequest.child.profilePhotoName }}" class="rounded-circle" style="width: 200px;"/>
+                                                {% else %}
+                                                    <img src="{{ absolute_url(asset('img/empty_profile.png')) }}" alt="Avatar vide" class="rounded-circle" style="width: 200px;">
+                                                {% endif %}
+                                            </div>
+                                            <br>
+                                            <table class="table">
+                                                <tr>
+                                                    <th>Prénom</th>
+                                                    <td>{{ sponsorshipRequest.child.firstName }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <td>{{ sponsorshipRequest.child.lastName }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Âge</th>
+                                                    <td>{{ sponsorshipRequest.child.age }} ans</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Date de naissance</th>
+                                                    <td>{{ sponsorshipRequest.child.dateOfBirth|date('d/m/Y') }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Ecole</th>
+                                                    <td>{{ sponsorshipRequest.child.school }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Classe</th>
+                                                    <td>{{ sponsorshipRequest.child.class }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!--/.Panel 2-->
+                                        <!--Panel "Versements"-->
+                                        <div class="tab-pane fade in" id="panel43" role="tabpanel">
+                                            <hr class="hidden-lg-up">
+                                            <h3 class="h3-responsive">Versements</h3>
+                                            <hr>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                        </div>
+                                        <!--/.Panel 3-->
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+<!--Footer-->
+<footer class="page-footer center-on-small-only brown darken-3" style="padding-top: 0px;">
+
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="container-fluid">
+            © Copyright Terre Burkina {{ 'now'|date('Y') }}
+        </div>
+    </div>
+    <!--/.Copyright-->
+
+</footer>
+<!--/.Footer-->
+
+
+<!-- NewsletterModal -->
+<div class="modal fade" id="newsletterModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="newsletterModalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <p id="newsletterModalBody"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-brown" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{# ============= SCRIPTS ============= #}
+{% block javascripts %}
+
+    {% javascripts filter='?jsqueeze'
+    'js/jquery-2.2.3.min.js'
+    'js/tether.min.js'
+    'js/bootstrap.min.js'
+    'js/mdb.min.js'
+    'js/visitor/main.js'
+    output='js/visitor/compiled/app.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $(function () {
+            new WOW().init();
+        });
+    </script>
+
+{% endblock %}
+
+</body>
+</html>

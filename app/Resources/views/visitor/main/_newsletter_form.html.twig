@@ -1,0 +1,11 @@
+<li>
+    {{ form_start(form, {'attr': {'id': 'newsletterForm'}}) }}
+    <div class="md-form">
+        {{ form_widget(form.email,{'attr': {'class':'inputnewsletter','id': 'input_newsletter'}}) }}
+        {{ form_label(form.email) }}
+    </div>
+</li>
+<li>
+    <button type="submit" class="btn btn-danger btn-md" formnovalidate>OK</button>
+    {{ form_end(form) }}
+</li>

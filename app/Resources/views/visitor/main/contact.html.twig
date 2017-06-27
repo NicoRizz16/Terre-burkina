@@ -1,0 +1,73 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% form_theme form 'form/mdbootstrap_form.html.twig' %}
+
+{% block body %}
+
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="jumbotron">
+                    <div class="row">
+                        <br>
+                        <div class="col-md-12 text-center">
+                            <h2 class="h2-responsive">Nous répondons à toutes vos questions</h2>
+                        </div>
+                    </div>
+                    <hr>
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.civility) }}
+                            <div class="md-form">
+                                {{ form_row(form.name) }}
+                            </div>
+                            <div class="md-form">
+                                {{ form_row(form.email) }}
+                            </div>
+                            <div class="md-form">
+                                {{ form_row(form.phone) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="md-form">
+                                {{ form_row(form.knowUs) }}
+                            </div>
+                            <div class="md-form">
+                                {{ form_row(form.object) }}
+                            </div>
+                            <div class="md-form">
+                                {{ form_row(form.message) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <fieldset class="form-group">
+                                {{ form_widget(form.newsletter) }}
+                                {{ form_label(form.newsletter) }}
+                            </fieldset>
+
+                            <button type="submit" class="btn btn-brown" formnovalidate>Envoyer</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        {% for message in app.session.flashbag.get('info') %}
+            toastr["info"]("{{ message }}");
+        {% endfor %}
+    </script>
+{% endblock %}
+
+

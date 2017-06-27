@@ -1,0 +1,77 @@
+{% extends 'sponsor/base.html.twig' %}
+
+{% form_theme form 'form/mdbootstrap_form.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">account</i>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-8 push-md-2">
+                <div class="jumbotron">
+                    <div class="text-center">
+                        <h2 class="h2-responsive">Mes informations</h2>
+                    </div>
+                    <hr>
+                    {{ form_start(form) }}
+
+                    {{ form_row(form.civility) }}
+                    <br>
+                    <div class="md-form">
+                        {{ form_row(form.firstName) }}
+                    </div>
+                    <br>
+                    <div class="md-form">
+                        {{ form_row(form.lastName) }}
+                    </div>
+
+                    {{ form_row(form.dateOfBirth) }}
+
+                    <div class="md-form">
+                        {{ form_row(form.adress) }}
+                    </div>
+
+                    <div class="md-form">
+                        {{ form_row(form.phone) }}
+                    </div>
+                    <br>
+                    <div class="md-form">
+                        {{ form_row(form.email) }}
+                    </div>
+
+                    {{ form_row(form.paymentChoice) }}
+
+                    <div class="divider-new">
+                        <h2 class="h2-responsive wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">Mot de passe</h2>
+                    </div>
+
+                    {{ form_row(form.plainPassword.first) }}
+                    {{ form_row(form.plainPassword.second, {'attr': {'label': 'test'}}) }}
+
+                    <br>
+                    <div class="text-center">
+
+                        <button type="submit" class="btn btn-brown" formnovalidate>Enregistrer les modifications</button>
+                    </div>
+
+                    {{ form_end(form) }}
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        {% if error %}
+        toastr["error"]("Le formulaire contient une ou plusieurs erreurs.");
+        {% endif %}
+    </script>
+{% endblock %}
+
+

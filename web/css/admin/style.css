@@ -1,0 +1,277 @@
+
+/* =====================================================================
+============================= GLOBALS ==================================
+===================================================================== */
+body {
+    font-family: 'Arimo', sans-serif;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#menuTopInfo, #menuLeftInfo, #menuChildInfo{
+    display: none;
+}
+
+.mark{
+    display: none;
+    background-color: #F2F2F2;
+}
+
+.marginBottom30{
+    margin-bottom: 30px;
+}
+
+.marginTop25{
+    margin-top: 25px;
+}
+
+.marginTop15{
+    margin-top: 15px;
+}
+
+.emptyInfo{
+    color: #D9D9D9;
+}
+
+.actionsColumn {
+    min-width: 100px;
+}
+
+
+/* =====================================================================
+============================= TOP MENU =================================
+===================================================================== */
+#nav-top{
+    position: fixed;
+    width: 100%;
+    height: 55px;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #262626;
+    padding: 10px;
+    overflow: hidden;
+}
+
+#nav-top a{
+    color: #d9d9d9;
+    text-decoration: none;
+}
+
+#nav-top a:hover{
+    color: white;
+}
+
+#nav-top-left {
+    font-size: 2em;
+    margin-left: 5px;
+
+}
+
+#nav-top-right ul{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    list-style-type: none;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+#nav-top-right ul li{
+    margin-right: 50px;
+}
+
+.activeItem{
+    border-bottom: 5px solid #666666;
+    border-radius: 4px;
+    padding-bottom: 5px;
+}
+
+
+/* =====================================================================
+============================= LEFT MENU ================================
+===================================================================== */
+#nav-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+    background-color: #f2f2f2;
+    height: 100%;
+    width: 175px;
+    overflow: scroll;
+    margin-top: 55px;
+}
+
+#nav-left ul{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#nav-left li{
+    border-bottom: 1px solid white;
+}
+
+#nav-left a{
+    display: block;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 1.2em;
+    color: #666666;
+    text-decoration: none;
+}
+
+#nav-left a:hover{
+    color: #404040;
+    margin-left: 5px;
+}
+
+/* =====================================================================
+============================= CONTENT ================================
+===================================================================== */
+#content{
+    margin-top: 60px;
+    margin-left: 175px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
+
+#contentHead{
+
+}
+
+#contentBody{
+    margin-top: 20px;
+}
+
+.buttonsBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* =====================================================================
+============================= PHOTOS ==================================
+===================================================================== */
+
+.thumbnail {
+    height: 98px;
+    width: 137px;
+}
+
+.thumbnail a > img {
+    height: 100%;
+}
+
+.admin_gallery_thumbnail{
+    margin-bottom: 1px;
+}
+
+.admin_gallery_thumbnail_container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================================
+============================= DOCUMENTS ==================================
+===================================================================== */
+.document_preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.document_preview_link{
+    display: block;
+    padding: 8px;
+    height: 130px;
+    width: 110px;
+    text-align: center;
+    overflow: scroll;
+    border-radius: 5px;
+    word-wrap: break-word;
+    margin-bottom: 5px;
+    background-color: #999999;
+    text-decoration: none;
+    color: white;
+}
+
+.document_preview_link:hover{
+    text-decoration: none;
+    background-color: #CCCCCC;
+    color: white;
+}
+
+
+/* =====================================================================
+============================= MESSAGES =================================
+===================================================================== */
+#messagesContainer{
+    height: 430px;
+    overflow: scroll;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: inset 0px 0px 15px -7px rgba(0,0,0,0.61);
+    -moz-box-shadow: inset 0px 0px 15px -7px rgba(0,0,0,0.61);
+    box-shadow: inset 0px 0px 15px -7px rgba(0,0,0,0.61);
+    margin-bottom: 20px;
+    background-color: #e6e6e6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.messageInfos {
+    font-size: 0.8em;
+}
+
+#writeMessageBlock{
+    display: none;
+}
+
+/* =====================================================================
+============================= CHILD VIEW LAYOUT ========================
+===================================================================== */
+
+#child-photo-title-container, #sponsor-title-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child-profile_image {
+    width: 75px;
+    height: 75px;
+    border-radius: 50px;
+    margin-right: 20px;
+}
+
+#childBackButton, #sponsorBackButton{
+    position: absolute;
+    top: 5px;
+    left: 2px;
+}
+
+#child-view-content{
+    position: relative;
+    padding-bottom: 200px;
+}
+
+
+#boardContainer{
+    margin-top: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+

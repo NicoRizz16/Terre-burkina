@@ -1,0 +1,64 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block carousel %}
+    <!--Carousel Wrapper-->
+    <div id="homepageCarousel" class="carousel slide carousel-fade z-depth-1" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+            <!--First slide-->
+            <div class="carousel-item active">
+                <img src="{{ absolute_url(asset('img/classe.jpg')) }}" alt="First slide">
+                <div class="carousel-caption">
+                    <h1 class="h1-responsive">Nos actions</h1>
+                </div>
+            </div>
+            <!--/First slide-->
+        </div>
+        <!--/.Slides-->
+    </div>
+    <!--/.Carousel Wrapper-->
+{% endblock %}
+
+
+{% block body %}
+    <i id="topMenuInfo">actionsItem</i>
+
+    <div class="container-fluid white">
+        <br>
+        {% for action in listActions %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="divider-new">
+                        <h2 class="h2-responsive">{{ action.title }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 push-md-1">
+                    <!--Card-->
+                    <div class="card">
+                        <!--Card image-->
+                        <div class="view overlay hm-white-slight">
+                            {% if action.imageFile is not null %}
+                                <img src="{{ absolute_url(asset(vich_uploader_asset(action, 'imageFile'))) }}" class="img-fluid" alt="{{ action.imageName }}">
+                            {% else %}
+                                <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" class="img-fluid" alt="Photo vide">
+                            {% endif %}
+                            <a>
+                                <div class="mask"></div>
+                            </a>
+                        </div>
+                        <!--/.Card image-->
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <div class="col-md-6 push-md-1">
+                    <p>{{ action.content|raw }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
+    </div>
+
+    </div>
+{% endblock %}
+
+

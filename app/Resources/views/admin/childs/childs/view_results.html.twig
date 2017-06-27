@@ -1,0 +1,60 @@
+{% extends "admin/childs/childs/view_layout.html.twig" %}
+
+
+{% block child_view %}
+    <i id="menuChildInfo">results</i>
+
+    <div class="col-sm-10 col-sm-offset-1">
+        {% for message in app.session.flashbag.get('info') %}
+            <div class="alert alert-info marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+        {% endfor %}
+
+        {% if results|length > 0 %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Année</th>
+                    <th>Trimèstre 1</th>
+                    <th>Trimèstre 2</th>
+                    <th>Trimèstre 3</th>
+                    <th>Annuel</th>
+                </tr>
+
+                {% for result in results %}
+                    <tr>
+                        <td>
+                            <strong>{{ result.year }}</strong>
+                        </td>
+                        <td>
+                            Moyenne : {{ result.average1 }} / 20<br/>
+                            Rang : {{ result.rank1 }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            Moyenne : {{ result.average2 }} / 20<br/>
+                            Rang : {{ result.rank2 }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            Moyenne : {{ result.average3 }} / 20<br/>
+                            Rang : {{ result.rank3 }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            Moyenne : {{ result.averageYear }} / 20<br/>
+                            Rang : {{ result.rankYear }} / {{ result.maxRank }}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_childs_result_edit', {'child_id': child.id, 'result_id': result.id}) }}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="{{ path('admin_childs_result_delete', {'child_id': child.id, 'result_id': result.id}) }}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucun résultat</h3>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

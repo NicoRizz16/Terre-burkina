@@ -1,0 +1,20 @@
+{% extends "admin/management/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">newsletter</i>
+
+    <div class="col-md-7 col-md-offset-2 text-center">
+        <h1>Supprimer une adresse email de la newsletter</h1>
+        <p>Êtes-vous sûr de vouloir supprimer l'adresse "{{ newsletter.email }}" ?</p>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger marginTop25" formnovalidate>Supprimer l'adresse</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

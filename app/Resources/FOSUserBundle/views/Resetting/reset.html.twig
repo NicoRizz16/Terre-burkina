@@ -1,0 +1,52 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block fos_user_content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 push-md-3">
+
+                <!--Form with header-->
+                <div class="card" id="loginCard">
+                    <div class="card-block">
+
+                        <!--Header-->
+                        <div class="form-header brown">
+                            <h3 class="h3-responsive">Nouveau mot de passe</h3>
+                        </div>
+
+                        {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+
+                            <div class="md-form">
+                                <i class="fa fa-lock prefix"></i>
+                                {{ form_widget(form.plainPassword.first) }}
+                                {{ form_label(form.plainPassword.first) }}
+                            </div>
+
+                            <div class="md-form">
+                                <i class="fa fa-lock prefix"></i>
+                                {{ form_widget(form.plainPassword.second) }}
+                                {{ form_label(form.plainPassword.second) }}
+                            </div>
+                        <div class="text-danger">
+                            {{ form_errors(form.plainPassword.first) }}
+                        </div>
+
+                            <div class="text-center">
+                                <button type="submit" id="_submit" class="btn btn-brown" name="_submit" formnovalidate>Enregistrer</button>
+                            </div>
+                        {{ form_end(form) }}
+
+                    </div>
+
+                </div>
+                <!--/Form with header-->
+
+            </div>
+        </div>
+    </div>
+
+{% endblock fos_user_content %}
+

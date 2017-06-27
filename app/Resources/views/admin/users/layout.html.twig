@@ -1,0 +1,23 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    Administration utilisateurs
+{% endblock %}
+
+{% block body %}
+
+    <i id="menuTopInfo">usersMenuItem</i>
+
+    <nav id="nav-left">
+        <ul>
+            <li><a href="{{ path('admin_users') }}" id="utilisateurs"><span class="mark"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> Utilisateurs</a></li>
+            <li><a href="{{ path('admin_users_add') }}" id="ajouter"><span class="mark"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> Ajouter</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        {% block admin_body %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

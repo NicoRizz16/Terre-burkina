@@ -1,0 +1,66 @@
+{% set abs_url = app.request.scheme ~'://' ~ app.request.httpHost %}
+
+{% extends "admin/childs/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">childs</i>
+
+    <div class="text-center" id="child-photo-title-container">
+        <a href="{{ path('admin_childs') }}" class="btn btn-default btn-sm" id="childBackButton"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+        <div>
+            {% if child.profilePhoto is not null %}
+                <img src="{{ absolute_url(asset(vich_uploader_asset(child, 'profilePhoto'))) }}" alt="{{ child.profilePhotoName }}" class="child-profile_image"/>
+            {% else %}
+                <img src="{{ absolute_url(asset('img/empty_profile.png')) }}" alt="Avatar vide" class="child-profile_image">
+            {% endif %}
+        </div>
+        <div>
+            <h2>{{ child.fullName }}</h2>
+        </div>
+    </div>
+    <div class="marginTop15">
+        <div class="btn-group btn-group-justified">
+            <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" class="btn btn-default" id="infos">Informations</a>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="photos">Photos <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_childs_photos', {'id': child.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_childs_photos_add', {'id': child.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="news">Nouvelles <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_childs_news_child', {'id': child.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_childs_news_child_add', {'id': child.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="results">Résultats <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_childs_results', {'id': child.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_childs_result_add', {'id': child.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="childGroups">Groupes <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('admin_childs_view_groups', {'id': child.id}) }}">Liste</a></li>
+                    <li><a href="{{ path('admin_childs_view_groups_assign', {'id': child.id}) }}">Ajouter</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div id="child-view-content">
+        {% block child_view %}
+        {% endblock %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

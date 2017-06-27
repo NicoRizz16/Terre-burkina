@@ -1,0 +1,59 @@
+{% extends "admin/accounting/layout.html.twig" %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">donations</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="buttonsBar">
+            <a href="{{ path('admin_accounting_donations_add') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter un don</a>
+        </div>
+        {% if donationsList|length > 0 %}
+            <table class="table table-striped marginTop25">
+                <tr>
+                    <th>Date</th>
+                    <th>Montant</th>
+                </tr>
+                {% for donation in donationsList %}
+                    <tr>
+                        <td>
+                            {{ donation.donationDate|date('d/m/Y') }}
+                        </td>
+                        <td>
+                            {{ donation.amount }} €
+                        </td>
+                        <td class="actionsColumn">
+                            <a href="{{ path('admin_accounting_donations_delete', {'id': donation.id}) }}" class="btn btn-danger btn-sm" title="Supprimer"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucune donation</h3>
+            </div>
+        {% endif %}
+
+        {% if nbPageTotal > 1 %}
+            <div class="text-center">
+                <ul class="pagination">
+                    {% for p in range(1, nbPageTotal) %}
+                        <li{% if p == page %} class="active"{% endif %}>
+                            <a href="{{ path('admin_accounting_donations', {'page':p}) }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}

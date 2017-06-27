@@ -1,0 +1,39 @@
+#topMenuInfo{
+    display: none;
+}
+
+.logo {
+    width: 150px;
+}
+
+@media screen and (max-width: 991px){
+    .indexChildName{
+        text-align: center;
+    }
+}
+
+
+#fasomaUserInfos{
+    overflow: scroll;
+}
+
+/* =============================================================== */
+/* ============================= FORMS ========================= */
+/* =============================================================== */
+.help-block{
+    color: #bf360c;
+    padding: 5px;
+}
+
+#edit_profile_dateOfBirth > .select-wrapper input.select-dropdown{
+    text-align: center;
+}
+
+/* =====================================================================
+============================= MESSAGES =================================
+===================================================================== */
+
+#writeMessageBlock{
+    display: none;
+}
+

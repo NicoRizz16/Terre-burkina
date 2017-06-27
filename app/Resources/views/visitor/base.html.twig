@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.png')) }}" />
+
+    {# ============= TITLE ============= #}
+    <title>{% block title %}Terre Burkina{% endblock %}</title>
+
+    {# ============= STYLES ============= #}
+    {% block stylesheets %}
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+        {% stylesheets filter='cssrewrite, ?scssphp'
+        'css/bootstrap.min.css'
+        'css/visitor/style.css'
+        'css/mdb.min.css'
+        output='css/visitor/compiled/app.css'%}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+{# ===========================================================
+===========================  MENU ==========================
+============================================================ #}
+    <nav class="navbar navbar-toggleable-md navbar-light white">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="{{ path('homepage') }}" class="navbar-brand">
+                <img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo"/>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav1">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" id="association">
+                        <a class="nav-link" href="{{ path('association') }}">L'association</a>
+                    </li>
+                    <li class="nav-item dropdown btn-group" id="sponsorships">
+                        <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Les parrainages</a>
+                        <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
+                            <a class="dropdown-item" href="{{ path('sponsorship_presentation') }}">Présentation</a>
+                            <a class="dropdown-item" href="{{ path('sponsorship_school_system') }}">Système scolaire</a>
+                            <a class="dropdown-item" href="{{ path('sponsorship_gallery') }}">Photos</a>
+                            <a class="dropdown-item" href="{{ path('sponsorship_request') }}">Devenir parrain</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" id="actionsItem">
+                        <a class="nav-link" href="{{ path('nos_actions') }}">Nos actions</a>
+                    </li>
+                    <li class="nav-item" id="maisonDeLuc">
+                        <a class="nav-link" href="{{ path('maison_de_luc') }}">La maison de Luc</a>
+                    </li>
+                    <li class="nav-item dropdown btn-group" id="news">
+                        <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actualités</a>
+                        <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
+                            <a class="dropdown-item" href="{{ path('blog') }}">Blog</a>
+                            <a class="dropdown-item" href="{{ path('letter') }}">L'arbre à palabre</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" id="donateItem">
+                        <a class="nav-link" href="{{ path('donate') }}">Faire un don</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block carousel %}
+    {% endblock %}
+
+    <main>
+        {% block body %}
+        {% endblock %}
+    </main>
+
+
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only brown darken-3">
+
+        <!--Call to action-->
+        <div class="call-to-action">
+            <ul>
+                <li>
+                    <h3 class="h3-responsive">S'inscrire à la newsletter</h3>
+                </li>
+                <br/>
+                {{ render(controller('AppBundle:Visitor/Main:newsletter')) }}
+            </ul>
+        </div>
+        <!--/.Call to action-->
+
+        <hr>
+
+        <!--Footer Links-->
+        <div class="container-fluid">
+            <div class="row text-center">
+
+                <!--First column-->
+                <div class="col-md-3 offset-md-1">
+                    <h5 class="title">Terre burkina</h5>
+                    <p>Sed efficitur rhoncus turpis, et aliquam orci maximus nec. Nunc ultrices mollis odio, hendrerit malesuada lacus ornare vitae. Suspendisse nisi dolor, posuere at diam eu, placerat egestas purus.</p>
+                </div>
+                <!--/.First column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Second column-->
+                <div class="col-md-2 offset-md-1">
+                    <h5 class="title">Informations</h5>
+                    <ul>
+                        <li>
+                            Adresse
+                        </li>
+                        <li>
+                            Téléphone
+                        </li>
+                        <li>
+                            E-mail
+                        </li>
+                        <li><a href="{{ path('contact') }}" class="btn btn-md btn-ins">Contactez-nous</a></li>
+                    </ul>
+                </div>
+                <!--/.Second column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Third column-->
+                <div class="col-md-2">
+                    <h5 class="title">Connexion</h5>
+                    <ul>
+                        <li>
+                            {% if is_granted('ROLE_MODERATOR') %}
+                                <a href="{{ path('admin_board') }}" class="btn btn-md btn-ins">Espace admin</a>
+                            {% else %}
+                                <a href="{{ path('fasoma_homepage') }}" class="btn btn-md btn-ins">Espace parrain</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Third column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Fourth column-->
+                <div class="col-md-2">
+                    <h5 class="title">Liens</h5>
+                    <ul>
+                        <li><a href="#!">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <!--/.Fourth column-->
+
+            </div>
+        </div>
+        <!--/.Footer Links-->
+
+
+        <hr>
+
+        <!--Social buttons-->
+        <div class="social-section">
+            <ul>
+                <li><a class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a></li>
+            </ul>
+        </div>
+        <!--/.Social buttons-->
+
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © Copyright Terre Burkina {{ 'now'|date('Y') }}
+            </div>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+
+    <!-- NewsletterModal -->
+    <div class="modal fade" id="newsletterModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="newsletterModalTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="newsletterModalBody"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-brown" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {# ============= SCRIPTS ============= #}
+    {% block javascripts %}
+
+        {% javascripts filter='?jsqueeze'
+        'js/jquery-2.2.3.min.js'
+        'js/tether.min.js'
+        'js/bootstrap.min.js'
+        'js/mdb.min.js'
+        'js/visitor/main.js'
+        output='js/visitor/compiled/app.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script>
+            $(function () {
+                new WOW().init();
+            });
+        </script>
+
+    {% endblock %}
+
+</body>
+</html>

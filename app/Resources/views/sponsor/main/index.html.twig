@@ -1,0 +1,121 @@
+{% extends 'sponsor/base.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">childs</i>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Notifications column -->
+            <div class="col-lg-3">
+                <!--Card-->
+                <div class="card">
+
+                    <!--Card content-->
+                    <div class="card-block text-center">
+                        <!--Title-->
+                        <h4 class="card-title"><i class="fa fa-info" aria-hidden="true"></i> Infos</h4>
+                        <hr>
+                        {% if not user.documentConsulted or not user.messageConsulted %}
+                            <ul>
+                                {% if not user.documentConsulted %}
+                                    <li>Vous avez de <strong>nouveaux documents</strong>.</li>
+                                {% endif %}
+                                {% if not user.documentConsulted and not user.messageConsulted %}
+                                <br>
+                                {% endif %}
+                                {% if not user.messageConsulted %}
+                                    <li>Vous avez de <strong>nouveaux messages</strong>.</li>
+                                {% endif %}
+                            </ul>
+                        {% else %}
+                            Aucune notification
+                        {% endif %}
+                    </div>
+                    <!--/.Card content-->
+
+                </div>
+                <!--/.Card-->
+                <br>
+            </div>
+
+            <!-- Childs column -->
+            <div class="col-lg-6">
+                {% for child in childs %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="jumbotron">
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        {% if child.profilePhoto is not null %}
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(child, 'profilePhoto'))) }}" alt="{{ child.profilePhotoName }}" style="height: 100px;" class="rounded-circle"/>
+                                        {% else %}
+                                            <img src="{{ absolute_url(asset('img/empty_profile.png')) }}" alt="Avatar vide" style="height: 100px;" class="rounded-circle">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-lg-8 indexChildName">
+                                        <h3 class="h3-responsive"><a href="{{ path('fasoma_child_infos', {'id': child.id}) }}">{{ child.fullName }}</a> <br><small class="text-muted">{{ child.age }} ans</small></h3>
+                                        <ul>
+                                            {% if not child.resultsSeen or not child.photosSeen or not child.newsSeen %}
+                                                <ul>
+                                                    {% if not child.newsSeen %}
+                                                        <li class="text-info"><i class="fa fa-info" aria-hidden="true"></i> Vous avez reçu des nouvelles.</li>
+                                                    {% endif %}
+                                                    {% if not child.photosSeen %}
+                                                        <li class="text-info"><i class="fa fa-info" aria-hidden="true"></i> Vous avez reçu des photos.</li>
+                                                    {% endif %}
+                                                    {% if not child.resultsSeen %}
+                                                        <li class="text-info"><i class="fa fa-info" aria-hidden="true"></i> Vous avez reçu des résultats.</li>
+                                                    {% endif %}
+                                                </ul>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <div class="btn-group">
+                                            <a href="{{ path('fasoma_child_news', {'id': child.id}) }}" class="btn btn-brown btn-sm">Nouvelles</a>
+                                            <a href="{{ path('fasoma_child_photos', {'id': child.id}) }}" class="btn btn-brown btn-sm">Photos</a>
+                                            <a href="{{ path('fasoma_child_results', {'id': child.id}) }}" class="btn btn-brown btn-sm">Résultats</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    Aucun filleul
+                {% endfor %}
+            </div>
+
+            <!-- Last news column -->
+            <div class="col-lg-3">
+                <!--Card-->
+                <div class="card">
+
+                    <!--Card content-->
+                    <div class="card-block text-center">
+                        <!--Title-->
+                        <h4 class="card-title">Dernières nouvelles</h4>
+                        <hr>
+                        {% for news in lastNews %}
+                            <h5 class="h5-responsive">{{ news.title }} <br><small class="text-muted">{{ news.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</small></h5>
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% else %}
+                            <h5 class="h5-responsive">Aucune nouvelle</h5>
+                        {% endfor %}
+                    </div>
+                    <!--/.Card content-->
+
+                </div>
+                <!--/.Card-->
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+

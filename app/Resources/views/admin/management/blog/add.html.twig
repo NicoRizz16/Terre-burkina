@@ -1,0 +1,59 @@
+{% extends "admin/management/layout.html.twig" %}
+
+{% block title %}
+    Ajouter un article
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Include Editor style. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+    <i id="menuLeftInfo">blog</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_management_posts') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1">
+        <h1 class="text-center">Ajouter un article</h1>
+        <hr>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary marginTop25 marginBottom30" formnovalidate>Enregistrer</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Include external JS libs. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1//js/froala_editor.pkgd.min.js"></script>
+
+
+    <script>
+        <!-- Initialize the editor. -->
+        $(function() {
+            $('textarea').froalaEditor({
+                height: 400,
+                toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'color', 'emoticons', '|', 'paragraphFormat', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'insertTable', '|', 'quote', 'insertHR', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html']
+            });
+
+            $(":file").filestyle({buttonName: "btn-default", buttonBefore: true, buttonText: "&nbsp;Choisir"})
+        });
+    </script>
+{% endblock %}

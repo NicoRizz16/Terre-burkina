@@ -1,0 +1,123 @@
+{% extends 'sponsor/child/layout.html.twig' %}
+
+{% block child_view %}
+    <div class="jumbotron">
+        <!--Dropdown ins-->
+        <div class="dropdown">
+
+            <!--Trigger-->
+            <button class="btn btn-ins dropdown-toggle" type="button" id="dropdownMenu8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Résultats</button>
+
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-ins">
+                <a class="dropdown-item" href="{{ path('fasoma_child_infos', {'id': child.id}) }}">Informations</a>
+                <a class="dropdown-item" href="{{ path('fasoma_child_news', {'id': child.id}) }}">Nouvelles</a>
+                <a class="dropdown-item" href="{{ path('fasoma_child_photos', {'id': child.id}) }}">Photos</a>
+            </div>
+        </div>
+        <!--Dropdown ins-->
+        <hr>
+        {% for result in resultsList %}
+            <h3 class="h3-responsive">{{ result.year }}</h3>
+            <div class="row">
+                <div class="col-lg-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    T1
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Moyenne</th>
+                                <td>{{ result.average1 }}/20</td>
+                            </tr>
+                            <tr>
+                                <th>Rang</th>
+                                <td>{{ result.rank1 }}/{{ result.maxRank }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                T2
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Moyenne</th>
+                            <td>{{ result.average2 }}/20</td>
+                        </tr>
+                        <tr>
+                            <th>Rang</th>
+                            <td>{{ result.rank2 }}/{{ result.maxRank }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                T3
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Moyenne</th>
+                            <td>{{ result.average3 }}/20</td>
+                        </tr>
+                        <tr>
+                            <th>Rang</th>
+                            <td>{{ result.rank3 }}/{{ result.maxRank }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                Année
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Moyenne</th>
+                            <td>{{ result.averageYear }}/20</td>
+                        </tr>
+                        <tr>
+                            <th>Rang</th>
+                            <td>{{ result.rankYear }}/{{ result.maxRank }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            {% if loop.last %}
+                <i>T = trimèstre</i>
+            {% endif %}
+        {% else %}
+            Aucun résultat
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,25 @@
+{% extends "admin/sponsors/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">groups</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_sponsors_groups') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1 text-center">
+        <h2>Êtes-vous sûr de vouloir supprimer le groupe "{{ sponsorGroup.name }}" ?</h2>
+        <p><strong>Attention !</strong></p>
+        <p>La suppression est irréversible, tous les documents et messages associés au groupe seront perdus définitivement.</p>
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger marginTop25" formnovalidate>Supprimer le groupe</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

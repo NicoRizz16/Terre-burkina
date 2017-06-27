@@ -1,0 +1,56 @@
+{% extends "admin/childs/groups/view_layout.html.twig" %}
+
+
+{% block group_view %}
+    <i id="menuChildInfo">news</i>
+
+    <div class="col-sm-8 col-sm-offset-2">
+        {% for message in app.session.flashbag.get('info') %}
+            <div class="alert alert-info marginTop15 marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger marginTop15 marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+        {% endfor %}
+
+        {% if newsList|length > 0 %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Date</th>
+                    <th>Titre</th>
+                </tr>
+
+                {% for news in newsList %}
+                    <tr>
+                        <td>
+                            {{ news.creationDate|date('d/m/Y') }}
+                        </td>
+                        <td>
+                            <a href="#">{{ news.title }}</a>
+                        </td>
+                        <td class="actionsColumn">
+                            <a href="{{ path('admin_childs_news_group_edit', {'group_id': group.id, 'news_id': news.id}) }}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="{{ path('admin_childs_news_group_delete', {'group_id': group.id, 'news_id': news.id}) }}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucune nouvelle</h3>
+            </div>
+        {% endif %}
+
+        {% if nbPageTotal > 1 %}
+            <div class="text-center">
+                <ul class="pagination">
+                    {% for p in range(1, nbPageTotal) %}
+                        <li{% if p == page %} class="active"{% endif %}>
+                            <a href="{{ path('admin_childs_news_group', {'id': group.id, 'page':p}) }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

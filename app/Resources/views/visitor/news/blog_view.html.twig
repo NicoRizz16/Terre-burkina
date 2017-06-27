@@ -1,0 +1,128 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">news</i>
+
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{{ path('blog') }}" title="Retour à la liste" class="btn btn-sm btn-brown"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        </div>
+                        <!--Post column-->
+                        <div class="col-md-10 push-md-1">
+
+                            <!--Section: Post-->
+                            <section class="section section-blog-fw">
+
+                                <!--First row-->
+                                <div class="row">
+
+                                    <div class="col-md-12 wow fadeInUp">
+
+                                        <!--Featured image-->
+                                        {% if post.imageFile is not null %}
+                                            <img src="{{ absolute_url(asset(vich_uploader_asset(post, 'imageFile'))) }}" alt="{{ post.imageName }}" class="img-fluid">
+                                        {% else %}
+                                            <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" alt="Photo vide" class="img-fluid">
+                                        {% endif %}
+
+                                        <!--Post data-->
+                                        <div class="jumbotron wow fadeInUp" data-wow-delay="0.2s">
+                                            <h2>{{ post.title }}</h2>
+                                            <p>{{ post.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</p>
+                                        </div>
+                                        <!--/Post data-->
+
+                                        <!--Post text-->
+                                        <div class="post-text">
+                                            {{ post.content|raw }}
+                                        </div>
+                                        <!--/Post text-->
+
+                                        <hr>
+
+                                        <div class="text-center">
+                                            <h3 class="h3-responsive">Voulez-vous partager ?</h3>
+                                            <!--Facebook-->
+                                            <a href="https://www.facebook.com/mdbootstrap" target="_blank" class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!--/First row-->
+
+                            </section>
+                            <!--/Section: Post-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="divider-new white-text" id="homepageDivider">
+            <h2 class="h2-responsive wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">Derniers articles</h2>
+        </div>
+
+        <section id="lastPosts">
+            <div class="row">
+
+                {% for post in lastPosts %}
+                    <div class="col-md-4">
+                        <!--Card-->
+                        <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                {% if post.imageFile is not null %}
+                                    <img src="{{ absolute_url(asset(vich_uploader_asset(post, 'imageFile'))) }}" class="img-fluid" alt="{{ post.imageName }}">
+                                {% else %}
+                                    <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" class="img-fluid" alt="Photo vide">
+                                {% endif %}
+                                <a href="{{ path('blog_view', {'slug': post.slug}) }}">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+                            <!--/.Card image-->
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title">{{ post.title }}</h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                {% else %}
+                    <div class="col-md-6 push-md-3">
+                        <!--Card-->
+                        <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title">Aucun article pour le moment</h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                {% endfor %}
+
+            </div>
+        </section>
+
+    </div>
+
+{% endblock %}
+

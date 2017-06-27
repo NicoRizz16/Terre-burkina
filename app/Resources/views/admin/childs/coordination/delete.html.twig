@@ -1,0 +1,24 @@
+{% extends "admin/childs/layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block admin_body %}
+
+    <i id="menuLeftInfo">coordination</i>
+
+    <div class="buttonsBar">
+        <a href="{{ path('admin_childs_news_coordination') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1 text-center">
+        <h3>Êtes-vous sûr de vouloir supprimer la nouvelle "{{ news.title }}" ?</h3>
+
+        <div class="marginTop25">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-danger" formnovalidate>Supprimer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

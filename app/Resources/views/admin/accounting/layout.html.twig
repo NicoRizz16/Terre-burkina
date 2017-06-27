@@ -1,0 +1,22 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    Comptabilité
+{% endblock %}
+
+{% block body %}
+
+    <i id="menuTopInfo">accountingMenuItem</i>
+
+    <nav id="nav-left">
+        <ul>
+            <li><a href="{{ path('admin_accounting_donations') }}" id="donations"><span class="mark"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> Dons</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        {% block admin_body %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+
+{% block sponsor_view %}
+<i id="menuChildInfo">infos</i>
+
+<div>
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    <div class="col-md-8">
+        <h3>Informations sur le parrain &nbsp;&nbsp;<a href="{{ path('admin_sponsors_view_infos_edit', {'id': sponsor.id}) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></a></h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Civilité</th>
+                <td>{{ sponsor.civility }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ sponsor.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ sponsor.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Date de naissance</th>
+                <td>{{ sponsor.dateOfBirth|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ sponsor.email }}</td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>{{ sponsor.phone }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ sponsor.adress }}</td>
+            </tr>
+            <tr>
+                <th>Dernier contact</th>
+                <td>
+                    {% if sponsor.lastContact is null %}
+                        <button class="btn btn-danger btn-sm">Jamais</button>
+                    {% elseif dayDiff(sponsor.lastContact) >= 365 %}
+                        <button class="btn btn-danger btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
+                    {% elseif (dayDiff(sponsor.lastContact) > 60 and dayDiff(sponsor.lastContact) < 365) %}
+                        <button class="btn btn-warning btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
+                    {% else %}
+                        <button class="btn btn-success btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Mode de versement</th>
+                <td>{{ sponsor.paymentChoice|capitalize }}</td>
+            </tr>
+            <tr>
+                <th>Dernier versement</th>
+                <td>{{ sponsor.lastPayment|date('d/m/Y') }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <h3>Filleuls</h3>
+            <table class="table table-striped">
+            {% for child in sponsor.childs %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" class="btn btn-info btn-md">{{ child.fullName }}</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>
+                        <button class="btn btn-default btn-md">Aucun</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+{% endblock %}

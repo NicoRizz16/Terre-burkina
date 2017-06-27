@@ -1,0 +1,208 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block carousel %}
+    <!--Carousel Wrapper-->
+    <div id="homepageCarousel" class="carousel slide carousel-fade z-depth-1" data-ride="carousel">
+        <!--Indicators-->
+        <ol class="carousel-indicators">
+            <li data-target="#homepageCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#homepageCarousel" data-slide-to="1"></li>
+            <li data-target="#homepageCarousel" data-slide-to="2"></li>
+        </ol>
+        <!--/.Indicators-->
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+            <!--First slide-->
+            <div class="carousel-item active">
+                <img src="{{ absolute_url(asset('img/enfants.jpg')) }}" alt="First slide">
+              <!--  <div class="carousel-caption">
+                    <h3 class="h3-responsive">Light mask</h3>
+                    <p>First text</p>
+                </div>-->
+            </div>
+            <!--/First slide-->
+            <!--Second slide-->
+            <div class="carousel-item">
+                <img src="{{ absolute_url(asset('img/classe.jpg')) }}" alt="Second slide">
+            </div>
+            <!--/Second slide-->
+            <!--Third slide-->
+            <div class="carousel-item">
+                <img src="{{ absolute_url(asset('img/paysage.jpg')) }}" alt="Third slide">
+            </div>
+            <!--/Third slide-->
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <a class="carousel-control-prev" href="#homepageCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#homepageCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        <!--/.Controls-->
+    </div>
+    <!--/.Carousel Wrapper-->
+{% endblock %}
+
+
+{% block body %}
+    <i id="topMenuInfo">homepage</i>
+
+    <div class="container-fluid white">
+        <br>
+        <section id="homepageLinks">
+            <div class="row">
+
+                <!--First columnn-->
+                <div class="col-lg-3">
+                    <!--Card-->
+                    <div class="card">
+
+                        <!--Card content-->
+                        <div class="card-block text-center">
+                            <!--Title-->
+                            <h4 class="card-title">Nos actions</h4>
+                            <hr>
+                            <!--Text-->
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident fuga animi architecto dolores dicta cum quo velit.</p>
+                            <a href="#" class="btn btn-brown">En savoir plus</a>
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--First columnn-->
+
+                <!--Second columnn-->
+                <div class="col-lg-3">
+                    <!--Card-->
+                    <div class="card">
+
+                        <!--Card content-->
+                        <div class="card-block text-center">
+                            <!--Title-->
+                            <h4 class="card-title">Les parrainages</h4>
+                            <hr>
+                            <!--Text-->
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident fuga animi architecto dolores dicta cum quo velit.</p>
+                            <a href="{{ path('sponsorship_presentation') }}" class="btn btn-brown">En savoir plus</a>
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--Second columnn-->
+
+                <!--Third columnn-->
+                <div class="col-lg-3">
+                    <!--Card-->
+                    <div class="card">
+
+                        <!--Card content-->
+                        <div class="card-block text-center">
+                            <!--Title-->
+                            <h4 class="card-title">La maison de Luc</h4>
+                            <hr>
+                            <!--Text-->
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident fuga animi architecto dolores dicta cum quo velit.</p>
+                            <a href="#" class="btn btn-brown">En savoir plus</a>
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--Third columnn-->
+
+                <!--First columnn-->
+                <div class="col-lg-3">
+                    <!--Card-->
+                    <div class="card">
+
+                        <!--Card content-->
+                        <div class="card-block text-center">
+                            <!--Title-->
+                            <h4 class="card-title">L'arbre à palabre</h4>
+                            <hr>
+                            <!--Text-->
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident fuga animi architecto dolores dicta cum quo velit.</p>
+                            <a href="#" class="btn btn-brown">En savoir plus</a>
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--First columnn-->
+            </div>
+        </section>
+        <br>
+    </div>
+
+
+    <div class="container">
+
+        <div class="divider-new white-text" id="homepageDivider">
+            <h2 class="h2-responsive wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">Derniers articles</h2>
+        </div>
+
+        <section id="lastPosts">
+            <div class="row">
+
+                {% for post in lastPosts %}
+                    <div class="col-md-4">
+                        <!--Card-->
+                        <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight">
+                                {% if post.imageFile is not null %}
+                                    <img src="{{ absolute_url(asset(vich_uploader_asset(post, 'imageFile'))) }}" class="img-fluid" alt="{{ post.imageName }}">
+                                {% else %}
+                                    <img src="{{ absolute_url(asset('img/no-photo.jpg')) }}" class="img-fluid" alt="Photo vide">
+                                {% endif %}
+                                <a href="{{ path('blog_view', {'slug': post.slug}) }}">
+                                    <div class="mask"></div>
+                                </a>
+                            </div>
+                            <!--/.Card image-->
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title">{{ post.title }}</h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                {% else %}
+                    <div class="col-md-6 push-md-3">
+                        <!--Card-->
+                        <div class="card wow fadeInUp mb-2" style="visibility: visible; animation-name: fadeInUp;">
+
+                            <!--Card content-->
+                            <div class="card-block text-center">
+                                <!--Title-->
+                                <h4 class="card-title">Aucun article pour le moment</h4>
+                            </div>
+                            <!--/.Card content-->
+
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                {% endfor %}
+
+            </div>
+        </section>
+
+    </div>
+{% endblock %}
+
+

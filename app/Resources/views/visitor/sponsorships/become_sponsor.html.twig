@@ -1,0 +1,70 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% form_theme form 'form/mdbootstrap_form.html.twig' %}
+
+{% block body %}
+    <i id="topMenuInfo">sponsorships</i>
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <div class="text-center">
+                    <h1 class="h1-responsive">Demande de parrainage</h1>
+                </div>
+                <hr>
+                {% for message in app.session.flashbag.get('info') %}
+                    <div class="alert alert-info marginTop25"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+                {% endfor %}
+                {% for message in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger marginTop25"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+                {% endfor %}
+
+                {{ form_start(form) }}
+
+                {{ form_row(form.civility) }}
+
+                <div class="md-form">
+                    {{ form_row(form.firstName) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_row(form.lastName) }}
+                </div>
+
+                {{ form_row(form.dateOfBirth) }}
+
+                <div class="md-form">
+                    {{ form_row(form.email) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_row(form.address) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_row(form.phone) }}
+                </div>
+
+                {{ form_row(form.paymentChoice) }}
+                <br>
+                <div class="text-center">
+                    <fieldset class="form-group">
+                        {{ form_widget(form.newsletter) }}
+                        {{ form_label(form.newsletter) }}
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-brown" formnovalidate>Je souhaite parrainer un enfant</button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+

@@ -1,0 +1,70 @@
+{% extends "admin/sponsors/sponsors/view_layout.html.twig" %}
+
+
+{% block sponsor_view %}
+    <i id="menuChildInfo">sponsorGroups</i>
+
+    {% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info marginTop25 marginBottom30"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger marginTop25 marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+    {% endfor %}
+
+    {% if sponsor.sponsorGroups|length > 0 %}
+        <div class="col-sm-6 col-sm-offset-3">
+            <table class="table table-striped">
+                <tr>
+                    <th>Groupes</th>
+                </tr>
+                {% for group in sponsor.sponsorGroups %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('admin_sponsors_messages_group', {'id': group.id}) }}">{{ group.name }}</a>
+                        </td>
+                        <td>
+                            <button class="deleteBtn btn btn-danger btn-xs" id="{{ group.id }}"><span class="glyphicon glyphicon-trash"></span></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="marginTop25 emptyInfo">Aucun groupe</h3>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(function(){
+
+            $('.deleteBtn').click(function () {
+                var groupID = $(this).attr('id');
+                deleteGroup(groupID);
+                $(this).parent().parent().fadeOut();
+            });
+
+            function deleteGroup(groupID){
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_sponsor_group_remove', {'id': sponsor.id}) }}',
+                    data: 'groupID=' + groupID
+                })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+            }
+
+        });
+
+    </script>
+{% endblock %}

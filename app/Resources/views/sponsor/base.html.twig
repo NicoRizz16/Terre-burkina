@@ -1,0 +1,175 @@
+{% set abs_url = app.request.scheme ~'://' ~ app.request.httpHost %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ abs_url ~ asset('img/logo.png') }}" />
+
+    {# ============= TITLE ============= #}
+    <title>{% block title %}Terre Burkina{% endblock %}</title>
+
+    {# ============= STYLES ============= #}
+    {% block stylesheets %}
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+        {% stylesheets filter='cssrewrite, ?scssphp'
+        'css/bootstrap.min.css'
+        'css/mdb.min.css'
+        'css/sponsor/style.css'
+        output='css/sponsor/compiled/app.css'%}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    {% endblock %}
+
+</head>
+
+<body id="top-section">
+    <br>
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1 class="h1-responsive brown-text"><img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo"/> Fasoma</h1>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <nav class="navbar navbar-toggleable-md navbar-dark brown darken-1">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="{{ path('fasoma_homepage') }}" class="navbar-brand">
+                Espace Fasoma
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav1">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" id="childs">
+                        <a class="nav-link" href="{{ path('fasoma_homepage') }}">Filleuls</a>
+                    </li>
+                    <li class="nav-item" id="documents">
+                        <a class="nav-link" href="{{ path('fasoma_documents') }}">Documents</a>
+                    </li>
+                    <li class="nav-item" id="messages">
+                        <a class="nav-link" href="{{ path('fasoma_messages') }}">Messagerie</a>
+                    </li>
+                    <li class="nav-item dropdown btn-group" id="account">
+                        <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
+                        <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
+                            <a class="dropdown-item" href="{{ path('fasoma_profile') }}">Mes informations</a>
+                            <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('homepage') }}">Revenir au site</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <main>
+        {% block body %}
+        {% endblock %}
+    </main>
+
+
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only brown darken-3">
+
+        <!--Footer Links-->
+        <div class="container-fluid">
+            <div class="row text-center">
+
+                <!--First column-->
+                <div class="col-md-3 offset-md-1">
+                    <h5 class="title">contact</h5>
+                    <ul>
+                        <li>
+                            Adresse
+                        </li>
+                        <li>
+                            Téléphone
+                        </li>
+                        <li>
+                            E-mail
+                        </li>
+                    </ul>
+                </div>
+                <!--/.First column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Second column-->
+                <div class="col-md-3 offset-md-1">
+                    <img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo" style="margin-bottom: 10px;"/>
+                </div>
+                <!--/.Second column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Third column-->
+                <div class="col-md-3">
+                    <ul>
+                        <li>
+                            <a href="{{ path('homepage') }}" class="btn btn-md btn-ins">Retour au site</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-md btn-ins">Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Third column-->
+
+            </div>
+        </div>
+        <!--/.Footer Links-->
+
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © Copyright Terre Burkina {{ 'now'|date('Y') }}
+            </div>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+    <!-- EXIT IMPERSONATION-->
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <div style="position: fixed; top: 20px; right: 24px;">
+            <a href="{{ path('admin_board', {'_switch_user': '_exit'}) }}" class="btn-floating btn-large red">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+        </div>
+    {% endif %}
+
+
+    {# ============= SCRIPTS ============= #}
+    {% block javascripts %}
+
+        {% javascripts filter='?jsqueeze'
+        'js/jquery-2.2.3.min.js'
+        'js/tether.min.js'
+        'js/bootstrap.min.js'
+        'js/mdb.min.js'
+        'js/sponsor/main.js'
+        output='js/sponsor/compiled/app.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script>
+            $(function () {
+                new WOW().init();
+            });
+        </script>
+
+    {% endblock %}
+
+</body>
+</html>
