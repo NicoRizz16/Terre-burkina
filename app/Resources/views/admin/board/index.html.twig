@@ -1,6 +1,8 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block body %}
+    <i id="menuTopInfo">boardMenuItem</i>
+
     <div class="container-fluid" id="boardContainer">
         <div class="row">
 
@@ -194,10 +196,10 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapseMessages">Nouvelles en attente de validation ({{ waitingNews|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                                    <a data-toggle="collapse" href="#collapseNews">Nouvelles en attente de validation ({{ waitingNews|length }}) <span class="glyphicon glyphicon-triangle-bottom"></span></a>
                                 </h4>
                             </div>
-                            <div id="collapseMessages" class="panel-collapse collapse">
+                            <div id="collapseNews" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <table class="table">
                                         <tr>

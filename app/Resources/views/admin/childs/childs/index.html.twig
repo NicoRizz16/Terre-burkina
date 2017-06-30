@@ -48,7 +48,7 @@
                 </td>
                 <td>
                     {% if child.sponsor is not null %}
-                        <a href="#" class="btn btn-success btn-sm">{{ child.sponsor.firstName }} {{ child.sponsor.lastName }}</a>
+                        <a href="{{ path('admin_sponsors_view_infos', {'id': child.sponsor.id}) }}" class="btn btn-success btn-sm">{{ child.sponsor.firstName }} {{ child.sponsor.lastName }}</a>
                     {% else %}
                         <a href="#" class="btn btn-danger btn-sm">Non parrainé</a>
                     {% endif %}

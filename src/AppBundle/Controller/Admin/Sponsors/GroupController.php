@@ -109,4 +109,14 @@ class GroupController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    /**
+     * @Route("/{id}/membres", name="admin_sponsors_group_members", requirements={"id": "\d+"})
+     */
+    public function membersAction(SponsorGroup $sponsorGroup)
+    {
+        return $this->render('admin/sponsors/groups/view_members.html.twig', array(
+            'group' => $sponsorGroup
+        ));
+    }
 }

@@ -130,6 +130,19 @@ AppBundle\Entity\Record:
         user: '@moderator_*'
         content: <text(50)>
 
+AppBundle\Entity\Result:
+    result_{1..5}:
+        child: '@child_child_<current()>'
+        year: <numberBetween(2000, 2017)>
+        average1: '<numberBetween(1, 20)>/20'
+        rank1: '<numberBetween(1, 45)>/45'
+        average2: '<numberBetween(1, 20)>/20'
+        rank2: '<numberBetween(1, 45)>/45'
+        average3: '<numberBetween(1, 20)>/20'
+        rank3: '<numberBetween(1, 45)>/45'
+        averageYear: '<numberBetween(1, 20)>/20'
+        rankYear: '<numberBetween(1, 45)>/45'
+
 AppBundle\Entity\SponsorshipRequest:
     info_request_{1..5}:
         requestedAt: <dateTimeBetween('-30 days', 'now')>

@@ -110,4 +110,14 @@ class GroupsController extends Controller
         ));
     }
 
+    /**
+     * @Route("/{id}/membres", name="admin_childs_group_members", requirements={"id": "\d+"})
+     */
+    public function membersAction(ChildGroup $childGroup)
+    {
+        return $this->render('admin/childs/groups/view_members.html.twig', array(
+            'group' => $childGroup
+        ));
+    }
+
 }

@@ -35,103 +35,92 @@ class Result
     private $year;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="average1", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="average1", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "La moyenne doit faire moins de {{ limit }} caractères."
      * )
      */
     private $average1;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="rank1", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="rank1", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "Le rang doit faire moins de {{ limit }} caractères."
      * )
      */
     private $rank1;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="average2", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="average2", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "La moyenne doit faire moins de {{ limit }} caractères."
      * )
      */
     private $average2;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="rank2", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="rank2", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "Le rang doit faire moins de {{ limit }} caractères."
      * )
      */
     private $rank2;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="average3", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="average3", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "La moyenne doit faire moins de {{ limit }} caractères."
      * )
      */
     private $average3;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="rank3", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="rank3", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "Le rang doit faire moins de {{ limit }} caractères."
      * )
      */
     private $rank3;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="average_year", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="average_year", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "La moyenne doit faire moins de {{ limit }} caractères."
      * )
      */
     private $averageYear;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="rank_year", type="float", nullable=true)
-     * @Assert\Type(
-     *      type="numeric",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
+     * @ORM\Column(name="rank_year", type="string", nullable=true)
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "Le rang doit faire moins de {{ limit }} caractères."
      * )
      */
     private $rankYear;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="max_rank", type="integer", nullable=true)
-     * @Assert\Type(
-     *      type="integer",
-     *      message="La valeur {{ value }} n'est pas un {{ type }} valide."
-     * )
-     */
-    private $maxRank;
 
     /**
      * @ORM\ManyToOne(targetEntity="Child", inversedBy="results")
