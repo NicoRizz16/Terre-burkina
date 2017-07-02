@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -28,6 +29,14 @@ class ChildType extends AbstractType
             ))
             ->add('dateOfBirth', BirthdayType::class, array(
                 'label' => 'Date de naissance'
+            ))
+            ->add('sex', ChoiceType::class, array(
+                'label' => 'Sexe',
+                'placeholder' => 'Choisir',
+                'choices' => array(
+                    'Masculin' => 'M',
+                    'Féminin' => 'F'
+                )
             ))
             ->add('adress', TextareaType::class, array(
                 'label' => 'Adresse'

@@ -46,9 +46,9 @@
                 <td>
                     {% if sponsor.lastContact is null %}
                         <button class="btn btn-danger btn-sm">Jamais</button>
-                    {% elseif dayDiff(sponsor.lastContact) >= 365 %}
+                    {% elseif dayDiff(sponsor.lastContact) >= 91 %}
                         <button class="btn btn-danger btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
-                    {% elseif (dayDiff(sponsor.lastContact) > 60 and dayDiff(sponsor.lastContact) < 365) %}
+                    {% elseif (dayDiff(sponsor.lastContact) > 30 and dayDiff(sponsor.lastContact) < 91) %}
                         <button class="btn btn-warning btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>
                     {% else %}
                         <button class="btn btn-success btn-sm">{{ timeDiff(sponsor.lastContact) }}</button>

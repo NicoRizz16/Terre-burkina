@@ -119,6 +119,7 @@ class DocumentsController extends Controller
         $em->persist($document);
 
         $user->setDocumentConsulted(false); // Notification de documents
+        $user->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
         $em->flush();
 
         //infos sur le document envoyé
@@ -178,6 +179,7 @@ class DocumentsController extends Controller
     private function notifyUsersOfGroup(SponsorGroup $group){
         foreach ($group->getUsers() as $user){
             $user->setDocumentConsulted(false);
+            $user->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
         }
         $this->getDoctrine()->getManager()->flush();
     }

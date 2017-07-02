@@ -80,7 +80,7 @@ class CoordinationController extends Controller
             $em->remove($news);
             $em->flush();
 
-            $this->addFlash('info', 'La nouvelle "'.$news->getTitle().'" a bien été supprimée.');
+            $this->addFlash('info', 'La nouvelle a bien été supprimée.');
             return $this->redirectToRoute('admin_coordination');
         }
 
@@ -104,7 +104,7 @@ class CoordinationController extends Controller
             $em->persist($news);
             $em->flush();
 
-            $this->addFlash('info', 'La nouvelle "'.$news->getTitle().'" a bien été ajoutée');
+            $this->addFlash('info', 'La nouvelle a bien été ajoutée');
             return $this->redirectToRoute('admin_coordination');
         }
 
@@ -127,7 +127,7 @@ class CoordinationController extends Controller
             $em->persist($news);
             $em->flush();
 
-            $this->addFlash('info', 'La nouvelle "'.$news->getTitle().'" a bien été ajoutée');
+            $this->addFlash('info', 'La nouvelle a bien été ajoutée');
             return $this->redirectToRoute('admin_coordination');
         }
 
