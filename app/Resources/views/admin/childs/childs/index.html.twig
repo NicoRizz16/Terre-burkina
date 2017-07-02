@@ -16,13 +16,70 @@
     {% endfor %}
 
     <table class="table table-striped marginTop25">
-        <tr>
+        <tr style="white-space: nowrap;">
             <th></th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Age</th>
-            <th>Début parrainage</th>
-            <th>Fin parrainage</th>
+            <th>
+                {% if by == 'firstName' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'firstName', 'order': 'DESC'}) }}">Prénom <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'firstName' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'firstName', 'order': 'ASC'}) }}">Prénom <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'firstName', 'order': 'ASC'}) }}">Prénom</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'lastName' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'lastName', 'order': 'DESC'}) }}">Nom <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'lastName' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'lastName', 'order': 'ASC'}) }}">Nom <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'lastName', 'order': 'ASC'}) }}">Nom</a>
+                {% endif %}
+            </th>
+            <th>Sexe</th>
+            <th>
+                {% if by == 'dateOfBirth' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'dateOfBirth', 'order': 'DESC'}) }}">Âge <span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
+                {% elseif by == 'dateOfBirth' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'dateOfBirth', 'order': 'ASC'}) }}">Âge <span class="glyphicon glyphicon-sort-by-order"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'dateOfBirth', 'order': 'ASC'}) }}">Âge</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'adress' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'adress', 'order': 'DESC'}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'adress' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'adress', 'order': 'ASC'}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'adress', 'order': 'ASC'}) }}">Adresse</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'school' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'school', 'order': 'DESC'}) }}">École <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'school' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'school', 'order': 'ASC'}) }}">École <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'school', 'order': 'ASC'}) }}">École</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'class' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'class', 'order': 'DESC'}) }}">Classe <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'class' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'class', 'order': 'ASC'}) }}">Classe <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'class', 'order': 'ASC'}) }}">Classe</a>
+                {% endif %}
+            </th>
+            <th>{% if by == 'familySituation' and order == 'ASC' %}
+                    <a href="{{ path('admin_childs', {'by': 'familySituation', 'order': 'DESC'}) }}">Situation familiale <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'familySituation' and order == 'DESC' %}
+                    <a href="{{ path('admin_childs', {'by': 'familySituation', 'order': 'ASC'}) }}">Situation familiale <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_childs', {'by': 'familySituation', 'order': 'ASC'}) }}">Situation familiale</a>
+                {% endif %}</th>
             <th>Parrain</th>
         </tr>
 
@@ -38,13 +95,28 @@
                     {{ child.lastName|upper }}
                 </td>
                 <td>
-                    {{ child.getAge }} ans
+                    {{ child.sex|upper }}
                 </td>
                 <td>
-                    {{ child.sponsorshipStart|date('d/m/Y') }}
+                    {% if child.age == 0 %}
+                        Moins d'un an
+                    {% elseif child.age == 1 %}
+                        {{ child.age }} an
+                    {% else %}
+                        {{ child.age }} ans
+                    {% endif %}
                 </td>
                 <td>
-                    {{ child.sponsorshipEnd|date('d/m/Y') }}
+                    {{ child.adress }}
+                </td>
+                <td>
+                    {{ child.school }}
+                </td>
+                <td>
+                    {{ child.class }}
+                </td>
+                <td>
+                    {{ child.familySituation }}
                 </td>
                 <td>
                     {% if child.sponsor is not null %}
@@ -68,7 +140,7 @@
             <ul class="pagination">
                 {% for p in range(1, nbPageTotal) %}
                     <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('admin_childs', {'page':p}) }}">{{ p }}</a>
+                        <a href="{{ path('admin_childs', {'page':p, 'by': by, 'order': order}) }}">{{ p }}</a>
                     </li>
                 {% endfor %}
             </ul>

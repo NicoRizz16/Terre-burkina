@@ -29,12 +29,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, true);
     }
 
-    public function getSponsors($page, $nbPerPage)
+    public function getSponsors($page, $nbPerPage, $by, $order)
     {
+        $by = $this->byWhiteList($by);
+        $order = $this->orderWhiteList($order);
+
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.roles LIKE :roles')
             ->setParameter('roles', '%ROLE_SPONSOR%')
-            ->orderBy('u.lastName', 'ASC')
+            ->orderBy('u.'.$by, $order)
             ->getQuery()
             ;
 
@@ -56,6 +59,22 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%ROLE_SPONSOR%')
             ;
+    }
+
+    private function byWhiteList($by){
+        $whitelist = array('firstName', 'lastName', 'adress', 'paymentChoice', 'lastPayment', 'lastContact');
+        if(!in_array($by, $whitelist)){
+            return 'lastName';
+        }
+        return $by;
+    }
+
+    private function orderWhiteList($order){
+        $whitelist = array('ASC', 'DESC');
+        if(!in_array($order, $whitelist)){
+            return 'ASC';
+        }
+        return $order;
     }
 
 }

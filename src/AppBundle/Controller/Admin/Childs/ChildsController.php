@@ -29,9 +29,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ChildsController extends Controller
 {
     /**
-     * @Route("/{page}", name="admin_childs", requirements={"page": "\d+"})
+     * @Route("/{by}/{order}/{page}", name="admin_childs", defaults={"by": "lastName", "order": "ASC"}, requirements={"page": "\d+"})
      */
-    public function indexAction($page = 1)
+    public function indexAction($by, $order, $page = 1)
     {
         if($page<1){
             throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
@@ -41,7 +41,7 @@ class ChildsController extends Controller
 
         // Récupération de la liste des utilisateurs pour la page demandée
         $nbPerPage = Child::NUM_ITEMS;
-        $childsList = $repository->getChilds($page, $nbPerPage);
+        $childsList = $repository->getChilds($page, $nbPerPage, $by, $order);
         $nbPageTotal = ceil(count($childsList)/$nbPerPage);
 
         if($page>$nbPageTotal && $page != 1){
@@ -51,7 +51,9 @@ class ChildsController extends Controller
         return $this->render('admin/childs/childs/index.html.twig', array(
             'childsList' => $childsList,
             'nbPageTotal' => $nbPageTotal,
-            'page' => $page
+            'page' => $page,
+            'by' => $by,
+            'order' => $order
         ));
     }
 

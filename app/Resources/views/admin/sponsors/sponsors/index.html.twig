@@ -12,14 +12,63 @@
     {% endfor %}
 
     <table class="table table-striped marginTop25">
-        <tr>
+        <tr style="white-space: nowrap;">
             <th></th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Adresse</th>
-            <th>Mode de versement</th>
-            <th>Dernier versement</th>
-            <th>Dernier contact</th>
+            <th>
+                {% if by == 'firstName' and order == 'ASC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'firstName', 'order': 'DESC'}) }}">Prénom <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'firstName' and order == 'DESC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'firstName', 'order': 'ASC'}) }}">Prénom <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_sponsors', {'by': 'firstName', 'order': 'ASC'}) }}">Prénom</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'lastName' and order == 'ASC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastName', 'order': 'DESC'}) }}">Nom <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'lastName' and order == 'DESC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastName', 'order': 'ASC'}) }}">Nom <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastName', 'order': 'ASC'}) }}">Nom</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'adress' and order == 'ASC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'adress', 'order': 'DESC'}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'adress' and order == 'DESC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'adress', 'order': 'ASC'}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_sponsors', {'by': 'adress', 'order': 'ASC'}) }}">Adresse</a>
+                {% endif %}
+            </th>
+            <th>Téléphone</th>
+            <th>
+                {% if by == 'paymentChoice' and order == 'ASC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'paymentChoice', 'order': 'DESC'}) }}">Mode de versement <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                {% elseif by == 'paymentChoice' and order == 'DESC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'paymentChoice', 'order': 'ASC'}) }}">Mode de versement <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_sponsors', {'by': 'paymentChoice', 'order': 'ASC'}) }}">Mode de versement</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'lastPayment' and order == 'ASC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastPayment', 'order': 'DESC'}) }}">Dernier versement <span class="glyphicon glyphicon-sort-by-order"></span></a>
+                {% elseif by == 'lastPayment' and order == 'DESC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastPayment', 'order': 'ASC'}) }}">Dernier versement <span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastPayment', 'order': 'ASC'}) }}">Dernier versement</a>
+                {% endif %}
+            </th>
+            <th>
+                {% if by == 'lastContact' and order == 'ASC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastContact', 'order': 'DESC'}) }}">Dernier contact <span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
+                {% elseif by == 'lastContact' and order == 'DESC' %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastContact', 'order': 'ASC'}) }}">Dernier contact <span class="glyphicon glyphicon-sort-by-order"></span></a>
+                {% else %}
+                    <a href="{{ path('admin_sponsors', {'by': 'lastContact', 'order': 'ASC'}) }}">Dernier contact</a>
+                {% endif %}
+            </th>
             <th>Filleuls</th>
         </tr>
 
@@ -36,6 +85,9 @@
                 </td>
                 <td>
                     {{ sponsor.adress }}
+                </td>
+                <td>
+                    {{ sponsor.phone }}
                 </td>
                 <td>
                     {{ sponsor.paymentChoice|capitalize }}
@@ -82,7 +134,7 @@
             <ul class="pagination">
                 {% for p in range(1, nbPageTotal) %}
                     <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('admin_sponsors', {'page':p}) }}">{{ p }}</a>
+                        <a href="{{ path('admin_sponsors', {'page':p, 'by': by, 'order': order}) }}">{{ p }}</a>
                     </li>
                 {% endfor %}
             </ul>
