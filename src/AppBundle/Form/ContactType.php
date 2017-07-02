@@ -34,18 +34,6 @@ class ContactType extends AbstractType
                     'Mlle' => 'Mlle',
                     'Entreprise' => 'Entreprise',
                     'Association' => 'Association'
-                ),
-                'constraints' => array(
-                    new Choice(array(
-                        'choices' => array(
-                            'M.',
-                            'Mme.',
-                            'Mlle.',
-                            'Entreprise',
-                            'Association'
-                        ),
-                        'message' => 'Vous devez choisir votre civilité parmi la liste.'
-                    ))
                 )
             ))
             ->add('name', TextType::class, array(

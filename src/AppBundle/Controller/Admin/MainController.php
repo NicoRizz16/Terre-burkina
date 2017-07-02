@@ -34,6 +34,7 @@ class MainController extends Controller
         $waitingSponsorshipRequests = $em->getRepository('AppBundle:SponsorshipRequest')->findBy(array('isSponsorshipRequest' => true, 'isValid' => false), array('requestedAt' => 'ASC'));
         $waitingAccountRequests = $em->getRepository('AppBundle:SponsorshipRequest')->findBy(array('isSponsorshipRequest' => true, 'isValid' => true), array('requestedAt' => 'ASC'));
         $waitingNews = $em->getRepository('AppBundle:News')->findBy(array('isValid' => false), array('creationDate' => 'ASC'));
+        $changedProfiles = $em->getRepository('AppBundle:User')->findBy(array('profileChanged' => true));
 
         return $this->render('admin/board/index.html.twig', array(
             'newMessages' => $newMessages,
@@ -42,7 +43,8 @@ class MainController extends Controller
             'waitingInformationRequests' => $waitingInformationRequests,
             'waitingSponsorshipRequests' => $waitingSponsorshipRequests,
             'waitingAccountRequests' => $waitingAccountRequests,
-            'waitingNews' => $waitingNews
+            'waitingNews' => $waitingNews,
+            'changedProfiles' => $changedProfiles
         ));
     }
 }

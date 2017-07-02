@@ -36,14 +36,6 @@ class RequestSponsorshipType extends AbstractType
                     'Mlle' => 'Mlle'
                 ),
                 'constraints' => array(
-                    new Choice(array(
-                        'choices' => array(
-                            'M.',
-                            'Mme.',
-                            'Mlle.'
-                        ),
-                        'message' => 'Vous devez choisir votre civilité parmi la liste.'
-                    )),
                     new NotBlank(array(
                         'message' => 'Vous devez remplir ce champ'
                     ))
