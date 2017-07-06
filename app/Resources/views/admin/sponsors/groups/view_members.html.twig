@@ -1,0 +1,30 @@
+{% extends "admin/sponsors/groups/view_layout.html.twig" %}
+
+
+{% block group_view %}
+    <i id="menuChildInfo">members</i>
+
+    <div class="col-sm-4 col-sm-offset-4">
+
+        {% if group.users|length > 0 %}
+            <table class="table table-striped">
+                <tr>
+                    <th>Nom</th>
+                </tr>
+
+                {% for sponsor in group.users %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('admin_sponsors_view_infos', {'id': sponsor.id}) }}">{{ sponsor.fullName }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="text-center">
+                <h3 class="marginTop25 emptyInfo">Aucun membre</h3>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

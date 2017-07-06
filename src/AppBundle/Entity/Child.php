@@ -79,6 +79,13 @@ class Child
     /**
      * @var string
      *
+     * @ORM\Column(name="sex", type="string", nullable=true)
+     */
+    private $sex;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="adress", type="text", nullable=true)
      * @Assert\Length(
      *      min = 5,
@@ -965,5 +972,29 @@ class Child
     public function getSponsorshipRequest()
     {
         return $this->sponsorshipRequest;
+    }
+
+    /**
+     * Set sex
+     *
+     * @param string $sex
+     *
+     * @return Child
+     */
+    public function setSex($sex)
+    {
+        $this->sex = $sex;
+
+        return $this;
+    }
+
+    /**
+     * Get sex
+     *
+     * @return string
+     */
+    public function getSex()
+    {
+        return $this->sex;
     }
 }

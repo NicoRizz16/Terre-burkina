@@ -24,7 +24,7 @@
             {% for group in groups %}
                 <tr>
                     <td>
-                        <a href="{{ path('admin_childs_group_photos', {'id': group.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <a href="{{ path('admin_childs_group_members', {'id': group.id}) }}" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     </td>
                     <td>
                         {{ group.name|upper }}

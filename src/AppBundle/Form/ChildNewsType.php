@@ -27,9 +27,6 @@ class ChildNewsType extends AbstractType
                 },
                 'choice_value' => 'id'
             ))
-            ->add('title', TextType::class, array(
-                'label' => 'Titre :'
-            ))
             ->add('content', TextareaType::class, array(
                 'label' => 'Message :',
                 'attr' => array(

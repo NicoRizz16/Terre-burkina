@@ -27,12 +27,34 @@
                 <td>{{ child.lastName }}</td>
             </tr>
             <tr>
+                <th>Sexe</th>
+                <td>
+                    {% if child.sex == "M" %}
+                        <i class="fa fa-mars" aria-hidden="true"></i>
+                    {% elseif child.sex == "F" %}
+                        <i class="fa fa-venus" aria-hidden="true"></i>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
                 <th>Âge</th>
-                <td>{{ child.age }} ans</td>
+                <td>
+                    {% if child.age == 0 %}
+                        Moins d'un an
+                    {% elseif child.age == 1 %}
+                        {{ child.age }} an
+                    {% else %}
+                        {{ child.age }} ans
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Date de naissance</th>
                 <td>{{ child.dateOfBirth|date('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ child.adress }}</td>
             </tr>
             <tr>
                 <th>Ecole</th>
@@ -41,6 +63,10 @@
             <tr>
                 <th>Classe</th>
                 <td>{{ child.class }}</td>
+            </tr>
+            <tr>
+                <th>Situation familiale</th>
+                <td>{{ child.familySituation }}</td>
             </tr>
         </table>
     </div>

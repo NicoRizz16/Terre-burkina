@@ -38,6 +38,7 @@ class NewsController extends Controller
             $news->setIsValid(true);
             $news->setChild($child);
             $news->getChild()->setNewsSeen(false); // Notification de nouvelles
+            $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
@@ -264,6 +265,7 @@ class NewsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $news->setIsValid(true);
             $news->getChild()->setNewsSeen(false); // Notification de nouvelles
+            $news->getChild()->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
             $em->flush();
@@ -304,6 +306,7 @@ class NewsController extends Controller
     private function notifyChildsOfGroup(ChildGroup $childGroup){
         foreach ($childGroup->getChilds() as $child){
             $child->setNewsSeen(false);
+            $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact de chaque parrain
         }
         $this->getDoctrine()->getManager()->flush();
     }

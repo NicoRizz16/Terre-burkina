@@ -54,7 +54,15 @@
                                         {% endif %}
                                     </div>
                                     <div class="col-lg-8 indexChildName">
-                                        <h3 class="h3-responsive"><a href="{{ path('fasoma_child_infos', {'id': child.id}) }}">{{ child.fullName }}</a> <br><small class="text-muted">{{ child.age }} ans</small></h3>
+                                        <h3 class="h3-responsive"><a href="{{ path('fasoma_child_infos', {'id': child.id}) }}">{{ child.fullName }}</a> <br>
+                                            <small class="text-muted">{% if child.age == 0 %}
+                                                    Moins d'un an
+                                                {% elseif child.age == 1 %}
+                                                    {{ child.age }} an
+                                                {% else %}
+                                                    {{ child.age }} ans
+                                                {% endif %}</small>
+                                        </h3>
                                         <ul>
                                             {% if not child.resultsSeen or not child.photosSeen or not child.newsSeen %}
                                                 <ul>

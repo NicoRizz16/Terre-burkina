@@ -12,10 +12,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ChildRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getChilds($page, $nbPerPage)
+    public function getChilds($page, $nbPerPage, $by, $order)
     {
+        $by = $this->byWhiteList($by);
+        $order = $this->orderWhiteList($order);
+
         $query = $this->createQueryBuilder('c')
-            ->orderBy('c.lastName', 'ASC')
+            ->orderBy('c.'.$by, $order)
             ->getQuery()
         ;
 
@@ -28,6 +31,22 @@ class ChildRepository extends \Doctrine\ORM\EntityRepository
 
         // On retourne l'objet Paginator correspondant à la requête construite
         return new Paginator($query, true);
+    }
+
+    private function byWhiteList($by){
+        $whitelist = array('firstName', 'lastName', 'adress', 'dateOfBirth', 'school', 'class', 'familySituation');
+        if(!in_array($by, $whitelist)){
+            return 'lastName';
+        }
+        return $by;
+    }
+
+    private function orderWhiteList($order){
+        $whitelist = array('ASC', 'DESC');
+        if(!in_array($order, $whitelist)){
+            return 'ASC';
+        }
+        return $order;
     }
 
     public function getOrphanChildsQueryBuilder()

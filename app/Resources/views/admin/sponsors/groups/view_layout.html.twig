@@ -7,11 +7,14 @@
     <div class="text-center" id="sponsor-title-container">
         <a href="{{ path('admin_sponsors_groups') }}" class="btn btn-default btn-sm" id="sponsorBackButton"><span class="glyphicon glyphicon-chevron-left"></span> Retour à la liste</a>
         <div>
-            <h2>{{ group.name }}</h2>
+            <h2>{{ group.name|upper }}</h2>
         </div>
     </div>
     <div class="marginTop15">
         <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <a href="{{ path('admin_sponsors_group_members', {'id': group.id}) }}" class="btn btn-default dropdown-toggle" id="members">Membres</a>
+            </div>
             <a href="{{ path('admin_sponsors_messages_group', {'id': group.id}) }}" class="btn btn-default" id="messages">Messages</a>
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="documents">Documents <span class="caret"></span></button>

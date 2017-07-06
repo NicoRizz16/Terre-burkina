@@ -107,6 +107,13 @@ class User extends BaseUser
     private $messageConsulted;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="profile_changed", type="boolean")
+     */
+    private $profileChanged;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Child", mappedBy="sponsor")
      */
     private $childs;
@@ -136,6 +143,7 @@ class User extends BaseUser
         parent::__construct();
         $this->setDocumentConsulted(true);
         $this->setMessageConsulted(true);
+        $this->setProfileChanged(false);
         $this->sponsorGroups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -595,5 +603,29 @@ class User extends BaseUser
             }
         }
         return false;
+    }
+
+    /**
+     * Set profileChanged
+     *
+     * @param boolean $profileChanged
+     *
+     * @return User
+     */
+    public function setProfileChanged($profileChanged)
+    {
+        $this->profileChanged = $profileChanged;
+
+        return $this;
+    }
+
+    /**
+     * Get profileChanged
+     *
+     * @return boolean
+     */
+    public function getProfileChanged()
+    {
+        return $this->profileChanged;
     }
 }

@@ -137,6 +137,7 @@ class MainController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $userManager = $this->get('fos_user.user_manager');
+            $user->setProfileChanged(true);
             $userManager->updateUser($user);
 
             // Envoyer une notification de chgt sur la boite mail TB

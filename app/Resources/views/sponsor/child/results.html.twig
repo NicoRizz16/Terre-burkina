@@ -18,7 +18,7 @@
         <!--Dropdown ins-->
         <hr>
         {% for result in resultsList %}
-            <h3 class="h3-responsive">{{ result.year }}</h3>
+            <h3 class="h3-responsive">Année scolaire {{ result.year }}/{{ result.year + 1 }}</h3>
             <div class="row">
                 <div class="col-lg-3">
                     <table class="table">
@@ -33,11 +33,11 @@
                         <tbody>
                             <tr>
                                 <th>Moyenne</th>
-                                <td>{{ result.average1 }}/20</td>
+                                <td>{{ result.average1 }}</td>
                             </tr>
                             <tr>
                                 <th>Rang</th>
-                                <td>{{ result.rank1 }}/{{ result.maxRank }}</td>
+                                <td>{{ result.rank1 }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,11 +55,11 @@
                         <tbody>
                         <tr>
                             <th>Moyenne</th>
-                            <td>{{ result.average2 }}/20</td>
+                            <td>{{ result.average2 }}</td>
                         </tr>
                         <tr>
                             <th>Rang</th>
-                            <td>{{ result.rank2 }}/{{ result.maxRank }}</td>
+                            <td>{{ result.rank2 }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -77,11 +77,11 @@
                         <tbody>
                         <tr>
                             <th>Moyenne</th>
-                            <td>{{ result.average3 }}/20</td>
+                            <td>{{ result.average3 }}</td>
                         </tr>
                         <tr>
                             <th>Rang</th>
-                            <td>{{ result.rank3 }}/{{ result.maxRank }}</td>
+                            <td>{{ result.rank3 }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -99,11 +99,11 @@
                         <tbody>
                         <tr>
                             <th>Moyenne</th>
-                            <td>{{ result.averageYear }}/20</td>
+                            <td>{{ result.averageYear }}</td>
                         </tr>
                         <tr>
                             <th>Rang</th>
-                            <td>{{ result.rankYear }}/{{ result.maxRank }}</td>
+                            <td>{{ result.rankYear }}</td>
                         </tr>
                         </tbody>
                     </table>

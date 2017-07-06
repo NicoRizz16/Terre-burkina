@@ -47,16 +47,6 @@ class EditSponsorType extends AbstractType
                     'M.' => 'M.',
                     'Mme' => 'Mme',
                     'Mlle' => 'Mlle'
-                ),
-                'constraints' => array(
-                    new Choice(array(
-                        'choices' => array(
-                            'M.',
-                            'Mme.',
-                            'Mlle.'
-                        ),
-                        'message' => 'Vous devez choisir votre civilité parmi la liste.'
-                    ))
                 )
             ))
             ->add('firstName', TextType::class, array(
