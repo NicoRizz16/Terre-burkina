@@ -1,13 +1,14 @@
 {% extends 'visitor/base.html.twig' %}
 
 {% block carousel %}
+
     <!--Carousel Wrapper-->
     <div id="homepageCarousel" class="carousel slide carousel-fade z-depth-1" data-ride="carousel">
         <!--Slides-->
         <div class="carousel-inner" role="listbox">
             <!--First slide-->
             <div class="carousel-item active">
-                <img src="{{ absolute_url(asset('img/enfants.jpg')) }}" alt="First slide">
+                <img src="{{ absolute_url(asset('img/enfants.jpg')) }}" alt="First slide" class="img-fluid">
                 <div class="carousel-caption">
                       <h1 class="h1-responsive">L'association</h1>
                 </div>
@@ -17,6 +18,7 @@
         <!--/.Slides-->
     </div>
     <!--/.Carousel Wrapper-->
+
 {% endblock %}
 
 
