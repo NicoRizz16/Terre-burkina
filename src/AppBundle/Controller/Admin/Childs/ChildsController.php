@@ -29,35 +29,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ChildsController extends Controller
 {
     /**
-     * @Route("/{by}/{order}/{page}", name="admin_childs", defaults={"by": "lastName", "order": "ASC"}, requirements={"page": "\d+"})
-     */
-    public function indexAction($by, $order, $page = 1)
-    {
-        if($page<1){
-            throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
-        }
-
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Child');
-
-        // Récupération de la liste des utilisateurs pour la page demandée
-        $nbPerPage = Child::NUM_ITEMS;
-        $childsList = $repository->getChilds($page, $nbPerPage, $by, $order);
-        $nbPageTotal = ceil(count($childsList)/$nbPerPage);
-
-        if($page>$nbPageTotal && $page != 1){
-            throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
-        }
-
-        return $this->render('admin/childs/childs/index.html.twig', array(
-            'childsList' => $childsList,
-            'nbPageTotal' => $nbPageTotal,
-            'page' => $page,
-            'by' => $by,
-            'order' => $order
-        ));
-    }
-
-    /**
      * @Route("/ajouter", name="admin_childs_add")
      */
     public function addAction(Request $request)
@@ -230,5 +201,34 @@ class ChildsController extends Controller
         $em->flush();
 
         return new JsonResponse(array('success' => true));
+    }
+
+    /**
+     * @Route("/{by}/{order}/{page}", name="admin_childs", defaults={"by": "lastName", "order": "ASC"}, requirements={"page": "\d+"})
+     */
+    public function indexAction($by, $order, $page = 1)
+    {
+        if($page<1){
+            throw new NotFoundHttpException('Page "'.$page.'"inexistante.');
+        }
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Child');
+
+        // Récupération de la liste des utilisateurs pour la page demandée
+        $nbPerPage = Child::NUM_ITEMS;
+        $childsList = $repository->getChilds($page, $nbPerPage, $by, $order);
+        $nbPageTotal = ceil(count($childsList)/$nbPerPage);
+
+        if($page>$nbPageTotal && $page != 1){
+            throw $this->createNotFoundException('La page "'.$page.'" n\'existe pas.');
+        }
+
+        return $this->render('admin/childs/childs/index.html.twig', array(
+            'childsList' => $childsList,
+            'nbPageTotal' => $nbPageTotal,
+            'page' => $page,
+            'by' => $by,
+            'order' => $order
+        ));
     }
 }
