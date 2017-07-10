@@ -204,7 +204,7 @@ class ChildsController extends Controller
     }
 
     /**
-     * @Route("/{by}/{order}/{page}", name="admin_childs", defaults={"by": "lastName", "order": "ASC"}, requirements={"page": "\d+"})
+     * @Route("/liste/{by}/{order}/{page}", name="admin_childs", defaults={"by": "lastName", "order": "ASC"}, requirements={"page": "\d+"})
      */
     public function indexAction($by, $order, $page = 1)
     {
