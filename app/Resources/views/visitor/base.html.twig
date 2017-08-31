@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.png')) }}" />
+    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.jpg')) }}" />
 
     {# ============= TITLE ============= #}
     <title>{% block title %}Terre Burkina{% endblock %}</title>
@@ -17,8 +17,8 @@
 
         {% stylesheets filter='cssrewrite, ?scssphp'
         'css/bootstrap.min.css'
-        'css/visitor/style.css'
         'css/mdb.min.css'
+        'css/visitor/style.css'
         output='css/visitor/compiled/app.css'%}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
@@ -37,7 +37,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a href="{{ path('homepage') }}" class="navbar-brand">
-                <img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo"/>
+                <img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo"/>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
                 <ul class="navbar-nav mr-auto">
@@ -84,7 +84,7 @@
 
 
     <!--Footer-->
-    <footer class="page-footer center-on-small-only brown darken-3">
+    <footer class="page-footer center-on-small-only">
 
         <!--Call to action-->
         <div class="call-to-action">

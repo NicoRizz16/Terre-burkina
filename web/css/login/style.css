@@ -5,7 +5,7 @@
 }
 
 #logo {
-    width: 100px;
+    width: 150px;
 }
 
 .marginTop25 {
@@ -28,3 +28,16 @@
         margin-bottom: 10px;
     }
 }
+
+/* =============================================================== */
+/* ============================= BUTTONS ========================= */
+/* =============================================================== */
+.btn-ins, .btn-brown{
+    background-color: #f7a70f;
+}
+
+.btn-ins:hover, .btn-ins:focus, .btn-brown:hover, .btn-brown:focus{
+    background-color: #fabf52 !important;
+}
+
+.brown{background-color:#087292!important}

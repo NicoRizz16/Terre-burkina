@@ -1,5 +1,23 @@
+/* FONTS */
+@font-face {
+    font-family: "jtmw";
+    font-style: normal;
+    src: url('font/jtmw.otf') format('truetype');
+}
+
+@font-face {
+    font-family: "jtmw";
+    font-style: italic;
+    src: url('font/jtmw_italic.otf') format('truetype');
+}
+
+
+
+
+/* GENERAL */
+
 body{
-    background-color: #8d6e63; /* MDBOOSTRAP brown lighten-1 */
+    background-color: #087292; /* MDBOOSTRAP brown lighten-1 */
 }
 
 #topMenuInfo{
@@ -11,16 +29,27 @@ body{
 /* =============================================================== */
 
 .logo{
-    width: 100px;
+    width: 150px;
+}
+
+#navbarNav1 a{
+    font-family: "jtmw", Helvetica, Arial, sans-serif;
+    color: #087292;
+    font-size: 1.3em;
 }
 
 
 /* =============================================================== */
-/* ================== HOMEPAGE CAROUSEL ========================== */
+/* ==================  CAROUSEL ========================== */
 /* =============================================================== */
 
 #homepageCarousel{
     z-index: 100;
+}
+
+.img-fluid{
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -44,10 +73,26 @@ body{
     text-align: center;
 }
 
+/* =============================================================== */
+/* ============================= BUTTONS ========================= */
+/* =============================================================== */
+.btn-ins, .btn-brown{
+    background-color: #f7a70f;
+}
+
+.btn-ins:hover, .btn-ins:focus, .btn-brown:hover, .btn-brown:focus{
+    background-color: #fabf52 !important;
+}
+
 
 /* =============================================================== */
 /* ============================= FOOTER ========================= */
 /* =============================================================== */
+
+footer{
+    background-color: #575756;
+}
+
 #newsletterForm label {
     color: white;
 }

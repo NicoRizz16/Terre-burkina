@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{ abs_url ~ asset('img/logo.png') }}" />
+    <link rel="icon" type="image/png" href="{{ abs_url ~ asset('img/logo.jpg') }}" />
 
     {# ============= TITLE ============= #}
     <title>{% block title %}Terre Burkina{% endblock %}</title>
@@ -31,13 +31,13 @@
     <div class="container-fluid">
         <div class="row text-center">
             <div class="col-12">
-                <h1 class="h1-responsive brown-text"><img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo"/> Fasoma</h1>
+                <h1 class="h1-responsive" id="headerTitle"><img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo"/> Fasoma</h1>
             </div>
         </div>
     </div>
     <br>
 
-    <nav class="navbar navbar-toggleable-md navbar-dark brown darken-1">
+    <nav class="navbar navbar-toggleable-md navbar-dark unique-color">
         <div class="container">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -79,7 +79,7 @@
 
 
     <!--Footer-->
-    <footer class="page-footer center-on-small-only brown darken-3">
+    <footer class="page-footer center-on-small-only">
 
         <!--Footer Links-->
         <div class="container-fluid">
@@ -106,7 +106,7 @@
 
                 <!--Second column-->
                 <div class="col-md-3 offset-md-1">
-                    <img src="{{ absolute_url(asset('img/logo.png')) }}" class="logo" style="margin-bottom: 10px;"/>
+                    <img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo" style="margin-bottom: 10px;"/>
                 </div>
                 <!--/.Second column-->
 

@@ -1,9 +1,37 @@
+/* FONTS */
+@font-face {
+    font-family: "jtmw";
+    font-style: normal;
+    src: url('font/jtmw.otf') format('truetype');
+}
+
+@font-face {
+    font-family: "jtmw";
+    font-style: italic;
+    src: url('font/jtmw_italic.otf') format('truetype');
+}
+
+#headerTitle{
+    font-family: "jtmw", Helvetica, Arial, sans-serif;
+    color: #087292;
+}
+
 #topMenuInfo{
     display: none;
 }
 
 .logo {
     width: 150px;
+}
+
+#navbarNav1 a{
+    font-family: "jtmw", Helvetica, Arial, sans-serif;
+    font-size: 1.3em;
+}
+
+.navbar-brand{
+    font-family: "jtmw", Helvetica, Arial, sans-serif;
+    font-size: 1.6em;
 }
 
 @media screen and (max-width: 991px){
@@ -15,6 +43,17 @@
 
 #fasomaUserInfos{
     overflow: scroll;
+}
+
+/* =============================================================== */
+/* ============================= BUTTONS ========================= */
+/* =============================================================== */
+.btn-ins, .btn-brown{
+    background-color: #f7a70f;
+}
+
+.btn-ins:hover, .btn-ins:focus, .btn-brown:hover, .btn-brown:focus{
+    background-color: #fabf52 !important;
 }
 
 /* =============================================================== */
@@ -37,3 +76,7 @@
     display: none;
 }
 
+
+footer{
+    background-color: #575756;
+}
