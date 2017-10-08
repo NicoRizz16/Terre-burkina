@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * @Route("/admin/parrains/demandes")
+ * @Route("/admin/parrainage/demandes")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class SponsorshipRequestsController extends Controller

@@ -194,6 +194,27 @@ class UsersController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($user->getChilds() as $child) {
+                $child->setSponsor(null);
+                $child->setIsSponsored(false);
+                $em->persist($child);
+            }
+            $lettersUser = $em->getRepository('AppBundle:Letter')->findBy(array('author' => $user));
+            if($lettersUser){
+                foreach ($lettersUser as $letter){
+                    $letter->setAuthor(null);
+                    $em->persist($letter);
+                }
+            }
+            $postsUser = $em->getRepository('AppBundle:Post')->findBy(array('author' => $user));
+            if($postsUser){
+                foreach ($postsUser as $post){
+                    $post->setAuthor(null);
+                    $em->persist($post);
+                }
+            }
+
             $em->remove($user);
             $em->flush();
 

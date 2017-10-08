@@ -1,0 +1,34 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block title %}Page non trouvée (Erreur 404){% endblock %}
+
+{% block body %}
+    <br>
+    <div class="container-fluid white">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <div class="divider-new">
+                    <h2 class="h2-responsive">Page non trouvée</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 push-md-2">
+                <h5>La page demandée a pu être déplacée ou renommée, ou est temporairement indisponible.</h5>
+                <br>
+                <p>Vous pouvez :<br>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ path('contact') }}" class="link-text">Nous contacter</a> pour signaler un lien défecteux,</li>
+                        <li>ou cliquer sur le bouton retour de votre navigateur,</li>
+                        <li>ou revenir à la <a href="{{ path('homepage') }}">page d'accueil</a></li>
+                    </ul>
+                </p>
+                <p>Veuillez nous excuser pour la gêne occasionnée.</p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+

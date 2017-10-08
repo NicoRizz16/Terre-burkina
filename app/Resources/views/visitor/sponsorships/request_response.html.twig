@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.png')) }}" />
+    <link rel="icon" type="image/png" href="{{ absolute_url(asset('img/logo.jpg')) }}" />
 
     {# ============= TITLE ============= #}
     <title>{% block title %}Demande de parrainage{% endblock %}</title>
@@ -26,10 +26,10 @@
 
 </head>
 
-<body>
+<body id="requestResonseBody">
 
-    <div style="position: fixed; top: 20px; left:20px;">
-        <a href="{{ path('homepage') }}" class="btn-floating btn-large brown"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    <div style="position: absolute; top: 20px; left:20px;">
+        <a href="{{ path('homepage') }}" class="btn-floating btn-large ins-bg"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
     </div>
 
     <header>
@@ -37,9 +37,8 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <br>
-                    <img src="{{ absolute_url(asset('img/logo.png')) }}" style="width: 100px;"/>
-                    <br><br>
-                    <h2 class="h2-responsive white-text">Informations sur le parrainage</h2>
+                    <img src="{{ absolute_url(asset('img/logo.jpg')) }}" style="width: 150px;"/>
+                    <br>
                     <br>
                 </div>
             </div>
@@ -78,9 +77,227 @@
                                         <hr class="hidden-lg-up">
                                         <h3 class="h3-responsive">Les parrainages</h3>
                                         <hr>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                        <p>Madame, Monsieur,<br>
+                                            Suite à votre désir de parrainer un élève, nous vous adressons ce dossier de parrainage.<br>
+                                            Il contient différents documents qui vous permettront d’avoir une meilleure lisibilité de votre parrainage. La transparence étant notre priorité, n’hésitez jamais à nous contacter pour plus d’informations.<br>
+                                            Bonne lecture et merci de votre engagement !
+                                        </p>
+                                        <p style="text-align: right"><strong>Pour les équipes Terre Burkina en France et au Burkina Faso,</strong><br>
+                                            <strong>Anthony PATÉ, Président.</strong>
+                                        </p>
+                                        <hr>
+
+
+                                        <!--Accordion wrapper-->
+                                        <div class="accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+                                            <!-- Accordion card -->
+                                            <div class="card">
+
+                                                <!-- Card header -->
+                                                <div class="card-header" role="tab" id="headingOne">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <h5 class="mb-0">
+                                                            Charte du parrainage Terre Burkina <i class="fa fa-angle-down rotate-icon"></i>
+                                                        </h5>
+                                                    </a>
+                                                </div>
+
+                                                <!-- Card body -->
+                                                <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="card-body">
+                                                        <ul>
+                                                            <li><i class="fa fa-google-wallet" aria-hidden="true"></i>&nbsp;&nbsp; Le parrainage proposé par Terre Burkina prend en compte les différentes dimensions de la vie d’un élève ; financer les frais et le matériel scolaire, se nourrir, se vêtir, se laver et accéder aux structures de soins sont les conditions nécessaires pour une scolarité réussie. </li><br>
+                                                            <li><i class="fa fa-google-wallet" aria-hidden="true"></i>&nbsp;&nbsp; Les élèves en difficulté sont repérés par l’inspection scolaire burkinabè, avec laquelle Terre Burkina travaille en partenariat. Le choix des enfants parrainés porte uniquement sur des critères sociaux ; toute notion de sexe, âge, village, appartenance ethnique, religieuse ou politique est exclue.</li><br>
+                                                            <li><i class="fa fa-google-wallet" aria-hidden="true"></i>&nbsp;&nbsp; L’action des parrains/marraines ne s’arrête pas au parrainage de son ou sa filleul(e). Tout parrainage contribue également à financer activement des projets de développement local. Venir en aide aux enfants c’est aussi participer à la lutte pour le développement du pays.</li><br>
+                                                            <li><i class="fa fa-google-wallet" aria-hidden="true"></i>&nbsp;&nbsp; Les parents ou tuteurs légaux de l’enfant parrainé sont signataires d’un contrat de parrainage. Ce contrat a pour objectif d’engager et d’investir pleinement les parents ou tuteurs dans le processus de parrainage. La réussite de l’enfant et l’engagement de la famille sont au cœur du projet !</li><br>
+                                                            <li><i class="fa fa-google-wallet" aria-hidden="true"></i>&nbsp;&nbsp; La richesse des échanges entre l’enfant parrainé au Burkina Faso et son parrain ou sa marraine en France est essentielle, la découverte mutuelle est notre priorité. Une correspondance est organisée entre filleul et parrain.</li><br>
+                                                            <li><i class="fa fa-google-wallet" aria-hidden="true"></i>&nbsp;&nbsp; Un parrainage est un engagement fort et s’entend toujours sur le long terme. Cependant, le parrain ou la marraine reste toujours libre d’interrompre le parrainage sur simple demande et sans explication.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Accordion card -->
+
+                                            <!-- Accordion card -->
+                                            <div class="card">
+
+                                                <!-- Card header -->
+                                                <div class="card-header" role="tab" id="headingTwo">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        <h5 class="mb-0">
+                                                            Où va votre argent ? <i class="fa fa-angle-down rotate-icon"></i>
+                                                        </h5>
+                                                    </a>
+                                                </div>
+
+                                                <!-- Card body -->
+                                                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-8 push-md-2">
+                                                                <!--Card-->
+                                                                <div class="card mb-2">
+
+                                                                    <!--Card image-->
+                                                                    <div class="view overlay hm-white-slight">
+                                                                        <img src="{{ absolute_url(asset('img/annexe1.jpg')) }}" class="img-fluid" alt="Membres de l'association">
+                                                                        <a href="{{ absolute_url(asset('img/annexe1.jpg')) }}">
+                                                                            <div class="mask"></div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!--/.Card image-->
+
+                                                                </div>
+                                                                <!--/.Card-->
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <!--Card-->
+                                                                <div class="card mb-2">
+
+                                                                    <!--Card image-->
+                                                                    <div class="view overlay hm-white-slight">
+                                                                        <img src="{{ absolute_url(asset('img/annexe2.jpg')) }}" class="img-fluid" alt="Membres de l'association">
+                                                                        <a href="{{ absolute_url(asset('img/annexe2.jpg')) }}">
+                                                                            <div class="mask"></div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!--/.Card image-->
+
+                                                                </div>
+                                                                <!--/.Card-->
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <!--Card-->
+                                                                <div class="card mb-2">
+
+                                                                    <!--Card image-->
+                                                                    <div class="view overlay hm-white-slight">
+                                                                        <img src="{{ absolute_url(asset('img/annexe3.jpg')) }}" class="img-fluid" alt="Membres de l'association">
+                                                                        <a href="{{ absolute_url(asset('img/annexe3.jpg')) }}">
+                                                                            <div class="mask"></div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!--/.Card image-->
+
+                                                                </div>
+                                                                <!--/.Card-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Accordion card -->
+
+                                            <!-- Accordion card -->
+                                            <div class="card">
+
+                                                <!-- Card header -->
+                                                <div class="card-header" role="tab" id="headingThree">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        <h5 class="mb-0">
+                                                            Au début du parrainage... <i class="fa fa-angle-down rotate-icon"></i>
+                                                        </h5>
+                                                    </a>
+                                                </div>
+
+                                                <!-- Card body -->
+                                                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div class="card-body">
+                                                        <p>
+                                                            Dès votre premier versement, nos coordinateurs locaux iront à la rencontre de l’enfant et de ses parents (ou de son tuteur légal) et ils leur soumettront le contrat de parrainage (ci-dessous) qu’ils devront accepter et signer pour débuter le parrainage.
+                                                        </p>
+                                                        <p>
+                                                            En fonction de sa situation, votre filleul(e) est soit déscolarisé(e), soit scolarisé(e) sans s’acquitter des frais de scolarité (ce grâce à la bienveillance du directeur de son école par exemple). Dans les deux cas, il faudra régulariser le tout rapidement. En plus de cela, il est nécessaire de lui procurer vêtements et fournitures et d’évaluer ses besoins quotidiens (nourriture, matériel, etc.)
+                                                        </p>
+                                                        <p>
+                                                            Dans un second temps, il (elle) se rendra à l’école dans les mêmes conditions que le reste des élèves de sa classe et la correspondance pourra alors débuter. Vous recevrez vos identifiants « Fasoma », l’espace en ligne personnalisé dédié à votre parrainage, dans les plus brefs délais.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Accordion card -->
+
+                                            <!-- Accordion card -->
+                                            <div class="card">
+
+                                                <!-- Card header -->
+                                                <div class="card-header" role="tab" id="headingFour">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                        <h5 class="mb-0">
+                                                            Contrat entre les parents ou tuteurs légaux de votre filleul(e) et Terre Burkina <i class="fa fa-angle-down rotate-icon"></i>
+                                                        </h5>
+                                                    </a>
+                                                </div>
+
+                                                <!-- Card body -->
+                                                <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                    <div class="card-body">
+                                                       <div class="row">
+                                                            <div class="col-md-8 push-md-2">
+                                                                <!--Card-->
+                                                                <div class="card mb-2">
+
+                                                                    <!--Card image-->
+                                                                    <div class="view overlay hm-white-slight">
+                                                                        <img src="{{ absolute_url(asset('img/annexe5.jpg')) }}" class="img-fluid" alt="Membres de l'association">
+                                                                        <a href="{{ absolute_url(asset('img/annexe5.jpg')) }}">
+                                                                            <div class="mask"></div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!--/.Card image-->
+
+                                                                </div>
+                                                                <!--/.Card-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Accordion card -->
+
+                                            <!-- Accordion card -->
+                                            <div class="card">
+
+                                                <!-- Card header -->
+                                                <div class="card-header" role="tab" id="headingFive">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                        <h5 class="mb-0">
+                                                            Votre espace en ligne Fasoma <i class="fa fa-angle-down rotate-icon"></i>
+                                                        </h5>
+                                                    </a>
+                                                </div>
+
+                                                <!-- Card body -->
+                                                <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
+                                                    <div class="card-body">
+                                                        <p>Fasoma est un espace en ligne exclusivement réservé à nos parrains et marraines.</p>
+                                                        <p>Sur cette plateforme protégée par un identifiant et un mot de passe, vous accèderez à toutes les informations concernant le parrainage : fiche de votre filleul(e), nouvelles régulières, photos et résultats scolaires, actualités de l’association, documents relatifs au parrainage, messagerie interne entre vous et notre équipe en France.</p>
+                                                        <div class="row">
+                                                            <div class="col-md-6 push-md-3">
+                                                                <!--Card-->
+                                                                <div class="card mb-2">
+
+                                                                    <!--Card image-->
+                                                                    <div class="view overlay hm-white-slight">
+                                                                        <img src="{{ absolute_url(asset('img/annexe4.jpg')) }}" class="img-fluid" alt="Membres de l'association">
+                                                                        <a href="{{ absolute_url(asset('img/annexe4é.jpg')) }}">
+                                                                            <div class="mask"></div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!--/.Card image-->
+
+                                                                </div>
+                                                                <!--/.Card-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Accordion card -->
+                                        </div>
+                                        <!--/.Accordion wrapper-->
+
                                     </div>
                                     <!--/.Panel 1-->
                                     {% if sponsorshipRequest.isSponsorshipRequest %}
@@ -99,12 +316,12 @@
                                             <br>
                                             <table class="table">
                                                 <tr>
-                                                    <th>Prénom</th>
-                                                    <td>{{ sponsorshipRequest.child.firstName }}</td>
+                                                    <th>Prénom et nom de famille</th>
+                                                    <td>{{ sponsorshipRequest.child.fullName }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Nom</th>
-                                                    <td>{{ sponsorshipRequest.child.lastName }}</td>
+                                                    <th>Sexe</th>
+                                                    <td>{{ sponsorshipRequest.child.sex }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Âge</th>
@@ -115,6 +332,10 @@
                                                     <td>{{ sponsorshipRequest.child.dateOfBirth|date('d/m/Y') }}</td>
                                                 </tr>
                                                 <tr>
+                                                    <th>Lieu de résidence</th>
+                                                    <td>{{ sponsorshipRequest.child.adress }}</td>
+                                                </tr>
+                                                <tr>
                                                     <th>Ecole</th>
                                                     <td>{{ sponsorshipRequest.child.school }}</td>
                                                 </tr>
@@ -122,7 +343,14 @@
                                                     <th>Classe</th>
                                                     <td>{{ sponsorshipRequest.child.class }}</td>
                                                 </tr>
+                                                <tr>
+                                                    <th>Situation familiale</th>
+                                                    <td>{{ sponsorshipRequest.child.familySituation }}</td>
+                                                </tr>
                                             </table>
+                                            <p>
+                                                NB : Ces infos sont celles communiquées par l’inspection scolaire ou un de nos autres partenaires. Elles seront confirmées par nos équipes lors de la première rencontre avec l’élève.
+                                            </p>
                                         </div>
                                         <!--/.Panel 2-->
                                         <!--Panel "Versements"-->
@@ -130,9 +358,59 @@
                                             <hr class="hidden-lg-up">
                                             <h3 class="h3-responsive">Versements</h3>
                                             <hr>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Périodicité</th>
+                                                    <th>Parrainage Classique</th>
+                                                    <th>Maison de Luc</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>Mensuelle</td>
+                                                    <td>30,00 €</td>
+                                                    <td>45,00 €</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Trimestrielle</td>
+                                                    <td>90,00 €</td>
+                                                    <td>135,00 €</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Semestrielle</td>
+                                                    <td>180,00 €</td>
+                                                    <td>270,00 €</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Annuelle</td>
+                                                    <td>360,00 €</td>
+                                                    <td>540,00 €</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <p>Merci de nous adresser régulièrement ce montant.</p>
+                                            <p>La date du premier versement fera office de date anniversaire et de renouvellement du paiement.<br>
+                                                 Aucun prélèvement ne sera opéré par Terre Burkina, nous invitons à effectuer un virement régulier à la date anniversaire et à la fréquence que vous aurez choisie.
+                                            </p>
+                                            <p>
+                                                <strong><u>Par virement :</u></strong><br>
+                                                Objet : "Terre Burkina (parrainage)"<br>
+                                                Titulaire du compte : TERRE BURKINA<br>
+                                                Domiciliation : CREDITCOOP<br>
+                                                RIB : 42559 00085 41020006930 71<br>
+                                                IBAN : FR76 4255 9000 8541 0200 0693 071<br>
+                                                BIC :    CCOPFRPPXXX
+                                            </p>
+                                            <p>
+                                                <strong><u>Par chèque :</u></strong><br>
+                                                A l'ordre de : "Terre Burkina (parrainage)"<br>
+                                                A l'adresse suivante : Terre Burkina, 34 rue du Maréchal Foch, 54110 VARANGEVILLE<br>
+                                            </p>
+                                            <p class="text-center">
+                                                <strong><u>Pour votre don, vous bénéficiez de 66% de déduction fiscale</u></strong><br>
+                                                (Articles 200-1-b et 238 bis-1-a du CGI)
+                                            </p>
                                         </div>
                                         <!--/.Panel 3-->
                                     {% endif %}
@@ -148,7 +426,7 @@
 
 
 <!--Footer-->
-<footer class="page-footer center-on-small-only brown darken-3" style="padding-top: 0px;">
+<footer class="page-footer center-on-small-only" style="padding-top: 0px;">
 
     <!--Copyright-->
     <div class="footer-copyright">

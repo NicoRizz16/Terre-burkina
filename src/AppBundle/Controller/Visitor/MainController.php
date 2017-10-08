@@ -63,6 +63,14 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/mentions-legales", name="mensions_legales")
+     */
+    public function mensionsLegalesAction()
+    {
+        return $this->render('visitor/main/mentions_legales.html.twig');
+    }
+
+    /**
      * @Route("/contact", name="contact")
      */
     public function contactAction(Request $request)

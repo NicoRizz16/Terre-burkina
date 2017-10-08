@@ -41,23 +41,26 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item" id="association">
-                        <a class="nav-link" href="{{ path('association') }}">L'association</a>
+                    <li class="nav-item dropdown btn-group" id="association">
+                        <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">L'Association</a>
+                        <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
+                            <a class="dropdown-item" href="{{ path('association') }}">Présentation</a>
+                            <a class="dropdown-item" href="{{ path('sponsorship_gallery') }}">Galerie Photos</a>
+                        </div>
                     </li>
                     <li class="nav-item dropdown btn-group" id="sponsorships">
-                        <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Les parrainages</a>
+                        <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Les Parrainages</a>
                         <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
                             <a class="dropdown-item" href="{{ path('sponsorship_presentation') }}">Présentation</a>
                             <a class="dropdown-item" href="{{ path('sponsorship_school_system') }}">Système scolaire</a>
-                            <a class="dropdown-item" href="{{ path('sponsorship_gallery') }}">Photos</a>
-                            <a class="dropdown-item" href="{{ path('sponsorship_request') }}">Devenir parrain</a>
+                            <a class="dropdown-item" href="{{ path('sponsorship_request') }}">Devenir Parrain</a>
                         </div>
                     </li>
                     <li class="nav-item" id="actionsItem">
-                        <a class="nav-link" href="{{ path('nos_actions') }}">Nos actions</a>
+                        <a class="nav-link" href="{{ path('nos_actions') }}">Nos Actions</a>
                     </li>
                     <li class="nav-item" id="maisonDeLuc">
-                        <a class="nav-link" href="{{ path('maison_de_luc') }}">La maison de Luc</a>
+                        <a class="nav-link" href="{{ path('maison_de_luc') }}">La Maison de Luc</a>
                     </li>
                     <li class="nav-item dropdown btn-group" id="news">
                         <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actualités</a>
@@ -107,7 +110,10 @@
                 <!--First column-->
                 <div class="col-md-3 offset-md-1">
                     <h5 class="title">Terre burkina</h5>
-                    <p>Sed efficitur rhoncus turpis, et aliquam orci maximus nec. Nunc ultrices mollis odio, hendrerit malesuada lacus ornare vitae. Suspendisse nisi dolor, posuere at diam eu, placerat egestas purus.</p>
+                    <p>
+                        Parrainages d’enfants et projets solidaires au Burkina Faso.  Avec 1 € par jour, parrainez un élève et redonnez de l’espoir aux familles en difficulté.
+                        Ensemble pour un monde plus juste !
+                    </p>
                 </div>
                 <!--/.First column-->
 
@@ -118,13 +124,15 @@
                     <h5 class="title">Informations</h5>
                     <ul>
                         <li>
-                            Adresse
+                            Terre Burkina<br>
+                            34, rue Foch<br>
+                            54110 VARANGEVILLE
                         </li>
                         <li>
-                            Téléphone
+                            06.14.40.90.71
                         </li>
                         <li>
-                            E-mail
+                            terre.burkina@gmail.com
                         </li>
                         <li><a href="{{ path('contact') }}" class="btn btn-md btn-ins">Contactez-nous</a></li>
                     </ul>
@@ -154,7 +162,7 @@
                 <div class="col-md-2">
                     <h5 class="title">Liens</h5>
                     <ul>
-                        <li><a href="#!">Mentions légales</a></li>
+                        <li><a href="{{ path('mensions_legales') }}">Mentions légales</a></li>
                     </ul>
                 </div>
                 <!--/.Fourth column-->
@@ -169,7 +177,7 @@
         <!--Social buttons-->
         <div class="social-section">
             <ul>
-                <li><a class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a></li>
+                <li><a href="https://www.facebook.com/TerreBurkina/" class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a></li>
             </ul>
         </div>
         <!--/.Social buttons-->

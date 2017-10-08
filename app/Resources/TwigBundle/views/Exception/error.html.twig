@@ -1,0 +1,34 @@
+{% extends 'visitor/base.html.twig' %}
+
+{% block title %}Une erreur s'est produite{% endblock %}
+
+{% block body %}
+    <br>
+    <div class="container-fluid white">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <div class="divider-new">
+                    <h2 class="h2-responsive">Une erreur s'est produite</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 push-md-2">
+                <h5>Le serveur a retourné une "{{ status_code }} {{ status_text }}".</h5>
+                <br>
+                <p>Vous pouvez :<br>
+                <ul>
+                    <li><a href="{{ path('contact') }}" class="link-text">Nous contacter</a> pour signaler cette erreur,</li>
+                    <li>ou cliquer sur le bouton retour de votre navigateur,</li>
+                    <li>ou revenir à la <a href="{{ path('homepage') }}">page d'accueil</a></li>
+                </ul>
+                </p>
+                <p>Veuillez nous excuser pour la gêne occasionnée.</p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+

@@ -10,9 +10,9 @@
         <div class="carousel-inner" role="listbox">
             <!--First slide-->
             <div class="carousel-item active">
-                <img src="{{ absolute_url(asset('img/lettre_actu.jpg')) }}" alt="First slide" class="img-fluid">
+                <img src="{{ absolute_url(asset('img/arbre_palabre.jpg')) }}" alt="Paysage" class="img-fluid">
                     <div class="carousel-caption">
-                      <h1 class="h1-responsive">L'arbre à palabre</h1>
+                      <h1 class="h1-responsive">L'Arbre à Palabre</h1>
                         {% if letter is not null %}
                             <p class="">Lettre du {{ letter.creationDate|localizeddate('none', 'none', app.request.locale, "Europe/Paris", "cccc d MMMM Y") }}</p>
                         {% endif %}

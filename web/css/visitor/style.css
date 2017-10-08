@@ -20,6 +20,10 @@ body{
     background-color: #087292; /* MDBOOSTRAP brown lighten-1 */
 }
 
+#requestResonseBody{
+    background-color: white;
+}
+
 #topMenuInfo{
     display: none;
 }
