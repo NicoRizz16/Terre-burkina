@@ -250,16 +250,22 @@ class UsersController extends Controller
             $userManager = $this->get('fos_user.user_manager');
             // Vérification que le nom d'utilisateur demandé n'est pas déjà pris par un autre utilisateur
             $userWithSameUsername = $userManager->findUserByUsername($user->getUsername());
-            if($userWithSameUsername->getId() != $user->getId()){
-                $this->addFlash('error', 'Le nom d\'utilisateur "'.$user->getUsername().'" est déjà utilisé.');
-                return $this->redirectToRoute('admin_users');
+            if($userWithSameUsername){
+                if($userWithSameUsername->getId() != $user->getId()){
+                    $this->addFlash('error', 'Le nom d\'utilisateur "'.$user->getUsername().'" est déjà utilisé.');
+                    return $this->redirectToRoute('admin_users');
+                }
             }
+
             // Vérification que l'adresse email demandée n'est pas déjà prise par un autre utilisateur
             $userWithSameEmail = $userManager->findUserByEmail($user->getEmail());
-            if($userWithSameEmail->getId() != $user->getId()){
-                $this->addFlash('error', 'L\'adresse email "'.$user->getEmail().'" est déjà réservée à un autre utilisateur.');
-                return $this->redirectToRoute('admin_users');
+            if($userWithSameEmail){
+                if($userWithSameEmail->getId() != $user->getId()){
+                    $this->addFlash('error', 'L\'adresse email "'.$user->getEmail().'" est déjà réservée à un autre utilisateur.');
+                    return $this->redirectToRoute('admin_users');
+                }
             }
+
             // Mise à jour de l'utilisateur
             $userManager->updateUser($user);
             $this->addFlash('info', 'L\'utilisateur "'.$user->getUsername().'" a bien été modifié.');

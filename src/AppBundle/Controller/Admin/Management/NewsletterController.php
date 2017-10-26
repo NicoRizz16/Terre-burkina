@@ -64,9 +64,8 @@ class NewsletterController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($newsletter);
-            $em->flush();
+
+            $this->get('app.subscribe_newsletter')->subscribeNewsletter($newsletter->getEmail());
 
             $this->addFlash('info', 'L\'adresse email "'.$newsletter->getEmail().'" a bien été ajoutée à la liste.');
             return $this->redirectToRoute('admin_management_newsletter');
@@ -87,12 +86,11 @@ class NewsletterController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($newsletter);
-            $em->flush();
+
+            $this->get('app.unsubscribe_newsletter')->unsubscribeNewsletter($newsletter->getEmail());
 
             $this->addFlash('info', 'L\'adresse "'.$newsletter->getEmail().'" a bien été supprimée.');
-            return $this->redirectToRoute('admin_users');
+            return $this->redirectToRoute('admin_management_newsletter');
         }
 
         return $this->render('admin/management/newsletter/delete.html.twig', array(

@@ -162,16 +162,8 @@ class SponsorshipsController extends Controller
 
     private function manageNewsletterSubscription(SponsorshipRequest $sponsorshipRequest)
     {
-        $em = $this->getDoctrine()->getManager();
-
         if($sponsorshipRequest->getNewsletter()){ // Inscription à la newsletter si case cochée
-            $alreadyExists = $em->getRepository('AppBundle:Newsletter')->findOneBy(array('email' => $sponsorshipRequest->getEmail()));
-            if(!$alreadyExists){
-                $newsletter = new Newsletter();
-                $newsletter->setEmail($sponsorshipRequest->getEmail());
-                $em->persist($newsletter);
-                $em->flush();
-            }
+            $this->get('app.subscribe_newsletter')->subscribeNewsletter($sponsorshipRequest->getEmail());
         }
     }
 

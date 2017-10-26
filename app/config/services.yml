@@ -66,7 +66,23 @@ services:
           - { name: doctrine.event_listener, event: prePersist }
 
   app.add_record:
-          class: AppBundle\Utils\addRecord
-          arguments:
-              - "@doctrine.orm.entity_manager"
-              - "@security.token_storage"
+      class: AppBundle\Utils\addRecord
+      arguments:
+          - "@doctrine.orm.entity_manager"
+          - "@security.token_storage"
+
+  app.subscribe_newsletter:
+    class: AppBundle\Utils\subscribeNewsletter
+    arguments:
+        - "@doctrine.orm.entity_manager"
+        - "%mailchimp_api_key%"
+        - "%mailchimp_list_id%"
+        - "@event_dispatcher"
+
+  app.unsubscribe_newsletter:
+      class: AppBundle\Utils\unsubscribeNewsletter
+      arguments:
+          - "@doctrine.orm.entity_manager"
+          - "%mailchimp_api_key%"
+          - "%mailchimp_list_id%"
+          - "@event_dispatcher"

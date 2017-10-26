@@ -28,12 +28,9 @@
                                 <!-- Grid row -->
                                 <br>
                                 <p>
-                                    Nous avons besoin de vous.<br>
-                                     Chaque don compte. <br>
-                                    D’avance merci !
+                                    Nous avons besoin de vous.<br> Chaque don compte. <br> D’avance merci !
                                 </p>
-                                <p>Association à but Humanitaire, chaque don bénéficie de 66% de déduction fiscale<br>
-                                    (Articles 200-1-b et 238 bis-1-a du CGI)
+                                <p>Association à but Humanitaire, chaque don bénéficie de 66% de déduction fiscale<br> (Articles 200-1-b et 238 bis-1-a du CGI)
                                 </p>
                             </div>
                             <!-- Grid column -->
@@ -83,6 +80,7 @@
                     <div class="text-center">
                         <p><strong>Adresse à laquelle envoyer le chèque</Strong> :<br> 34, rue Foch à VARANGEVILLE (54110)</p>
                         <p><Strong>Ordre</Strong> : Terre Burkina</p>
+                        <p>Les équipes de Terre Burkina en France et au Burkina Faso vous remercient très chaleureusement pour votre don !</p>
                     </div>
                 </div>
 
@@ -123,6 +121,7 @@
                             <strong>IBAN</strong> : FR76 4255 9000 8541 0200 0693 071<br>
                             <strong>BIC</strong> :    CCOPFRPPXXX
                         </p>
+                        <p>Les équipes de Terre Burkina en France et au Burkina Faso vous remercient très chaleureusement pour votre don !</p>
                     </div>
                 </div>
 
@@ -204,6 +203,8 @@
                             if (jqXHR.responseJSON.hasOwnProperty('form')) {
                                 $('#donateForm').html(jqXHR.responseJSON.form);
                                 initializeListeners();
+                                // Personnalisation message d'erreur formulaire
+                                $('.help-block').css('font-size', '12px');
                             }
                         }
                     });

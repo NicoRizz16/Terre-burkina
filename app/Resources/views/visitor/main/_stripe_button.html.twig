@@ -7,12 +7,13 @@
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="{{ publicKey }}"
                 data-amount="{{ donationAmount*100 }}"
-                data-name="Faire un don"
+                data-name="Don de {{ donationAmount }} €"
                 data-description="Association Terre Burkina"
                 data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                 data-locale="auto"
                 data-zip-code="true"
-                data-currency="eur">
+                data-currency="eur"
+                data-label="Procéder au paiement">
         </script>
     </form>
 </div>

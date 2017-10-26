@@ -154,3 +154,8 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+
+
+#welp_mailchimp
+welp_mailchimp:
+  api_key: '%mailchimp_api_key%'

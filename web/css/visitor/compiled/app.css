@@ -36,7 +36,7 @@
     background-color: #f7a70f;
 }
 
-.btn-ins:hover, .btn-ins:focus, .btn-brown:hover, .btn-brown:focus{
+.btn-ins:hover, .btn-ins:focus, .btn-ins.active, .btn-brown:hover, .btn-brown:focus, .btn-brown.active{
     background-color: #fabf52 !important;
 }
 

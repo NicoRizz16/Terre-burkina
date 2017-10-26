@@ -103,13 +103,7 @@ class MainController extends Controller
 
             // Enregistrement à la newsletter si case cochée
             if($post['newsletter']){
-                $em = $this->getDoctrine()->getManager();
-                if(!$em->getRepository('AppBundle:Newsletter')->findOneBy(array('email' => $post['email']))){
-                    $newsletter = new Newsletter();
-                    $newsletter->setEmail($post['email']);
-                    $em->persist($newsletter);
-                    $em->flush();
-                }
+                $this->get('app.subscribe_newsletter')->subscribeNewsletter($post['email']);
             }
 
             $this->addFlash('info', 'Votre message a bien été envoyé. Nous vous recontactons au plus vite.');
@@ -149,12 +143,7 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form->handleRequest($request);
         if ($form->isValid()){
-            $newsletterRepository = $em->getRepository('AppBundle:Newsletter');
-            $isNewsletter = $newsletterRepository->findOneBy(array('email' => $newsletter->getEmail()));
-            if(!$isNewsletter){ // Enregistrement de l'email indiqué si il n'est pas déjà enregistré
-                $em->persist($newsletter);
-                $em->flush();
-            }
+            $this->get('app.subscribe_newsletter')->subscribeNewsletter($newsletter->getEmail());
             $title = "Inscription à la newsletter réussie";
             $body = "Vous êtes maintenant inscrit à la newsletter !";
         } else { // Si le formulaire n'est pas valide
@@ -198,7 +187,7 @@ class MainController extends Controller
                     'payment' => 'card',
                     'paymentView' => $this->renderView('visitor/main/_stripe_button.html.twig', array(
                         'publicKey' => $this->getParameter('stripe_public_key'),
-                        'donationAmount' => $request->request->get('amount')
+                        'donationAmount' => $form->get('amount')->getData()
                     ))), 200);
 
             } elseif($request->request->get('submittedBtn') == "donate_cheque"){ // Paiement par chèque
