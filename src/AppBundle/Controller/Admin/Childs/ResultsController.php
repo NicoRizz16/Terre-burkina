@@ -39,6 +39,7 @@ class ResultsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($result);
             $child->setResultsSeen(false); // Notification de résultats
+            $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
             $em->flush();
 

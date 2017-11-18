@@ -83,9 +83,14 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <div class="btn-group">
+                                        <div class="btn-group hidden-xs-down">
                                             <a href="{{ path('fasoma_child_news', {'id': child.id}) }}" class="btn btn-brown btn-sm">Nouvelles</a>
                                             <a href="{{ path('fasoma_child_photos', {'id': child.id}) }}" class="btn btn-brown btn-sm">Photos</a>
+                                            <a href="{{ path('fasoma_child_results', {'id': child.id}) }}" class="btn btn-brown btn-sm">Résultats</a>
+                                        </div>
+                                        <div class="hidden-sm-up">
+                                            <a href="{{ path('fasoma_child_news', {'id': child.id}) }}" class="btn btn-brown btn-sm">Nouvelles</a><br>
+                                            <a href="{{ path('fasoma_child_photos', {'id': child.id}) }}" class="btn btn-brown btn-sm">Photos</a><br>
                                             <a href="{{ path('fasoma_child_results', {'id': child.id}) }}" class="btn btn-brown btn-sm">Résultats</a>
                                         </div>
                                     </div>

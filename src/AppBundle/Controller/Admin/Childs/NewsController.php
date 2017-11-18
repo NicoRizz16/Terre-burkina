@@ -38,6 +38,8 @@ class NewsController extends Controller
             $news->setIsValid(true);
             $news->setChild($child);
             $news->getChild()->setNewsSeen(false); // Notification de nouvelles
+
+            $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
 
             $em = $this->getDoctrine()->getManager();
@@ -264,8 +266,17 @@ class NewsController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $news->setIsValid(true);
-            $news->getChild()->setNewsSeen(false); // Notification de nouvelles
-            $news->getChild()->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
+
+            if($news->getChild() == null){ // La nouvelle est adressée à un groupe
+                $this->notifyChildsOfGroup($news->getGroup()); // Notification de nouvelles
+            }
+
+            if($news->getGroup() == null){ // La nouvelle est adressée à un filleul
+                $news->getChild()->setNewsSeen(false); // Notification de nouvelles
+                $this->get('send.notification')->sendNotification($news->getChild()->getSponsor());
+                $news->getChild()->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
             $em->flush();
@@ -306,6 +317,7 @@ class NewsController extends Controller
     private function notifyChildsOfGroup(ChildGroup $childGroup){
         foreach ($childGroup->getChilds() as $child){
             $child->setNewsSeen(false);
+            $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact de chaque parrain
         }
         $this->getDoctrine()->getManager()->flush();

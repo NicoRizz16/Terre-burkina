@@ -12,8 +12,8 @@
         <div class="alert alert-danger marginTop25 marginBottom30"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
     {% endfor %}
 
+    <div class="col-sm-12" id="messagesContainer">
     {% if messages|length > 0 %}
-        <div class="col-sm-12" id="messagesContainer">
             <div class="row">
                 {% for message in messages|reverse %}
                     <div class="col-xs-12">
@@ -37,12 +37,12 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
     {% else %}
         <div class="text-center">
             <h3 class="marginTop25 emptyInfo">Aucun message</h3>
         </div>
     {% endif %}
+    </div>
     <div class="col-sm-12">
         <button class="form-control btn btn-default btn-md marginBottom30" id="writeMessage">Ecrire un message</button>
         <div id="writeMessageBlock">

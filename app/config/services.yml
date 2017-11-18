@@ -33,6 +33,14 @@ services:
           - "@fos_user.util.token_generator"
           - "@fos_user.user_manager"
 
+  send.notification:
+      class: AppBundle\Utils\sendNotification
+      arguments:
+          - "@mailer"
+          - "@templating"
+          - "%mailer_user%"
+          - "@Router"
+
   send.request_url:
         class: AppBundle\Utils\sendRequestUrl
         arguments:

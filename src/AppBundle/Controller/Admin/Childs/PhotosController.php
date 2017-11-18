@@ -109,6 +109,7 @@ class PhotosController extends Controller
         $em->persist($photo);
 
         $child->setPhotosSeen(false);
+        $this->get('send.notification')->sendNotification($child->getSponsor());
         $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
         $em->flush();
 
@@ -168,6 +169,7 @@ class PhotosController extends Controller
     private function notifyChildsOfGroup(ChildGroup $childGroup){
         foreach ($childGroup->getChilds() as $child){
             $child->setPhotosSeen(false);
+            $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
         }
         $this->getDoctrine()->getManager()->flush();

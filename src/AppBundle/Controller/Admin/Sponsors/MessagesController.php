@@ -49,6 +49,7 @@ class MessagesController extends Controller
             $message->setIsSenderAdmin(true);
             $message->setIsNotificationAdmin(false);
             $user->setMessageConsulted(false); // Notification de message parrain
+            $this->get('send.notification')->sendNotification($user);
             $user->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
             $em->persist($message);
             $em->flush();
@@ -217,6 +218,7 @@ class MessagesController extends Controller
     private function notifyUsersOfGroup(SponsorGroup $group){
         foreach ($group->getUsers() as $user){
             $user->setMessageConsulted(false);
+            $this->get('send.notification')->sendNotification($user);
             $user->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact des parrains du groupe
         }
         $this->getDoctrine()->getManager()->flush();

@@ -29,6 +29,7 @@ class MainController extends Controller
     public function indexAction()
     {
         $user = $this->getUser();
+
         if(!$user->hasRole('ROLE_SPONSOR')){
             throw $this->createAccessDeniedException('Seuls les parrains peuvent accéder à l\'espace Fasoma');
         }

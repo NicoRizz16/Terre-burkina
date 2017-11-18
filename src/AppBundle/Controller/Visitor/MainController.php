@@ -145,7 +145,7 @@ class MainController extends Controller
         if ($form->isValid()){
             $this->get('app.subscribe_newsletter')->subscribeNewsletter($newsletter->getEmail());
             $title = "Inscription à la newsletter réussie";
-            $body = "Vous êtes maintenant inscrit à la newsletter !";
+            $body = "Vous êtes maintenant inscrit(e) à la newsletter !";
         } else { // Si le formulaire n'est pas valide
             $title = "Echec de l'inscription à la newsletter";
             $body = "L'adresse email indiquée n'est pas valide ou fait déjà l'objet d'une inscription à la newsletter.";

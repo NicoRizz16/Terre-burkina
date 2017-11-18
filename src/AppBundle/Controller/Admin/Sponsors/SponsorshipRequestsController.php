@@ -39,6 +39,14 @@ class SponsorshipRequestsController extends Controller
     }
 
     /**
+     * @Route("/exemple-dossier-parrainage", name="admin_sponsors_requests_response_example")
+     */
+    public function responseExampleAction()
+    {
+        return $this->render('admin/sponsors/requests/request_response_example.html.twig', array());
+    }
+
+    /**
      * @Route("/changer-statut/{id}", name="admin_sponsors_requests_toggle_state", requirements={"id": "\d+"})
      */
     public function toggleStateAction(SponsorshipRequest $sponsorshipRequest)

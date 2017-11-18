@@ -1,0 +1,16 @@
+
+<div style="text-align: center">
+    <img src="{{ absolute_url(asset('img/logo.jpg')) }}" style="width: 150px">
+</div>
+
+<div style="text-align: center">
+    <h2  style="margin-top: 30px">Notification Espace Fasoma</h2>
+
+    <p>Bonjour{% if user.fullName is not null %} {{ user.fullName }}{% endif %},</p>
+
+    <p>Vous avez reçu de nouvelles informations dans le cadre de votre parrainage.</p>
+    <p>Nous vous invitons à <a href="{{ url }}">vous connecter</a> à votre espace Fasoma pour les consulter !</p>
+
+    <p>Bien cordialement,<br/>
+        L'association Terre Burkina.</p>
+</div>

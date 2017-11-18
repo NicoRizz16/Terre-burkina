@@ -31,7 +31,7 @@
     <div class="container-fluid">
         <div class="row text-center">
             <div class="col-12">
-                <h1 class="h1-responsive" id="headerTitle"><img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo"/> Fasoma</h1>
+                <h2 class="h2-responsive" id="headerTitle"><img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo"/><br class="hidden-md-up"> Fasoma : votre espace d'échanges et de nouvelles...</h2>
             </div>
         </div>
     </div>
@@ -43,12 +43,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a href="{{ path('fasoma_homepage') }}" class="navbar-brand">
-                Espace Fasoma
+                Accueil
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto ml-auto">
                     <li class="nav-item" id="childs">
-                        <a class="nav-link" href="{{ path('fasoma_homepage') }}">Filleuls</a>
+                        <a class="nav-link" href="{{ path('fasoma_homepage') }}">Filleul(e)</a>
                     </li>
                     <li class="nav-item" id="documents">
                         <a class="nav-link" href="{{ path('fasoma_documents') }}">Documents</a>
@@ -86,34 +86,36 @@
             <div class="row text-center">
 
                 <!--First column-->
-                <div class="col-md-3 offset-md-1">
-                    <h5 class="title">contact</h5>
-                    <ul>
-                        <li>
-                            Adresse
-                        </li>
-                        <li>
-                            Téléphone
-                        </li>
-                        <li>
-                            E-mail
-                        </li>
-                    </ul>
+                <div class="col-md-4">
+                    <img src="{{ absolute_url(asset('img/contour_logo.png')) }}" class="logo" style="margin-bottom: 10px;"/>
                 </div>
                 <!--/.First column-->
 
                 <hr class="hidden-md-up">
 
                 <!--Second column-->
-                <div class="col-md-3 offset-md-1">
-                    <img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo" style="margin-bottom: 10px;"/>
+                <div class="col-md-4 text-center">
+                    <h5 class="title">contact</h5>
+                    <ul>
+                        <li>
+                            Terre Burkina<br>
+                            34, rue Foch<br>
+                            54110 VARANGEVILLE
+                        </li>
+                        <li>
+                            06.14.40.90.71
+                        </li>
+                        <li>
+                            terre.burkina@gmail.com
+                        </li>
+                    </ul>
                 </div>
                 <!--/.Second column-->
 
                 <hr class="hidden-md-up">
 
                 <!--Third column-->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <ul>
                         <li>
                             <a href="{{ path('homepage') }}" class="btn btn-md btn-ins">Retour au site</a>

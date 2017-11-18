@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Validator\SponsorEmailAvailable;
+use Faker\Provider\cs_CZ\DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -111,6 +112,7 @@ class RequestSponsorshipType extends AbstractType
             ))
             ->add('dateOfBirth', BirthdayType::class, array(
                 'label' => 'Date de naissance',
+                'years' => range(((new \DateTime())->format('Y'))-100, ((new \DateTime())->format('Y'))),
                 'constraints' => array(
                     new Date(array(
                         'message' => 'Vous devez entrer une date.'
@@ -127,7 +129,7 @@ class RequestSponsorshipType extends AbstractType
             ->add('paymentChoice', ChoiceType::class, array(
                 'label' => 'Versement',
                 'choices' => array(
-                    'Menusel' => 'mensuel',
+                    'Mensuel' => 'mensuel',
                     'Trimestriel' => 'trimestriel',
                     'Semestriel' => 'semestriel',
                     'Annuel' => 'annuel'
