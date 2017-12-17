@@ -20,7 +20,7 @@
         'css/admin/style.css'
         'css/admin/dropzone.css'
         output='css/admin/compiled/app.css'%}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset_url }}?d={{ "now"|date("dmy") }}" type="text/css" />
         {% endstylesheets %}
     {% endblock %}
 
@@ -84,7 +84,7 @@
         'js/admin/bootstrap-filestyle.js'
         'js/admin/dropzone.js'
         output='js/admin/compiled/app.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}?d={{ "now"|date("dmy") }}"></script>
         {% endjavascripts %}
 
     {% endblock %}

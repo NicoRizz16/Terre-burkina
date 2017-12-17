@@ -84,7 +84,10 @@
                     {{ sponsor.lastName|upper }}
                 </td>
                 <td>
-                    {{ sponsor.adress }}
+                    {{ sponsor.adress }}<br>
+                    {{ sponsor.complementAdress }}{% if (sponsor.codePostal is not null) or (sponsor.ville is not null) %}<br>{% endif %}
+                    {{ sponsor.codePostal }}{% if sponsor.ville is not null %},{% endif %} {{ sponsor.ville }}{% if sponsor.pays is not null %}<br>{% endif %}
+                    {{ sponsor.Pays }}
                 </td>
                 <td>
                     {{ sponsor.phone }}

@@ -179,6 +179,10 @@ class SponsorshipRequestsController extends Controller
         $user->setLastName($sponsorshipRequest->getLastName());
         $user->setPhone($sponsorshipRequest->getPhone());
         $user->setAdress($sponsorshipRequest->getAddress());
+        $user->setComplementAdress($sponsorshipRequest->getComplementAdress());
+        $user->setCodePostal($sponsorshipRequest->getCodePostal());
+        $user->setVille($sponsorshipRequest->getVille());
+        $user->setPays($sponsorshipRequest->getPays());
         $user->setDateOfBirth($sponsorshipRequest->getDateOfBirth());
         $user->setPaymentChoice($sponsorshipRequest->getPaymentChoice());
         $user->addChild($sponsorshipRequest->getChild());

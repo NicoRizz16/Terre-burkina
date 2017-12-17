@@ -378,28 +378,4 @@ class Result
     {
         return $this->child;
     }
-
-    /**
-     * Set maxRank
-     *
-     * @param integer $maxRank
-     *
-     * @return Result
-     */
-    public function setMaxRank($maxRank)
-    {
-        $this->maxRank = $maxRank;
-
-        return $this;
-    }
-
-    /**
-     * Get maxRank
-     *
-     * @return integer
-     */
-    public function getMaxRank()
-    {
-        return $this->maxRank;
-    }
 }

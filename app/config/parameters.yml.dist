@@ -24,3 +24,6 @@ parameters:
      # STRIPE KEYS
     stripe_public_key: fqdsfdsfsdfdsfdsfdsqfs
     stripe_private_key: dsfklsdfdsfqsdfsqdfsqdf
+
+    mailchimp_api_key: dsqfdsqfdsqfdsqfdsqfd
+    mailchimp_list_id: dsqfqsdfdsqf

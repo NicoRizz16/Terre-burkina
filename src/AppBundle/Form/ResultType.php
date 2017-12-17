@@ -20,25 +20,25 @@ class ResultType extends AbstractType
                 'label' => 'Année scolaire (à la rentrée) :'
             ))
             ->add('average1', TextType::class, array(
-                'label' => 'Moyenne 1er trimèstre (/ 20) :'
+                'label' => 'Moyenne 1er trimèstre :'
             ))
             ->add('rank1', TextType::class, array(
                 'label' => 'Rang 1er trimèstre :'
             ))
             ->add('average2', TextType::class, array(
-                'label' => 'Moyenne 2ème trimèstre  (/ 20):'
+                'label' => 'Moyenne 2ème trimèstre :'
             ))
             ->add('rank2', TextType::class, array(
                 'label' => 'Rang 2ème trimèstre :'
             ))
             ->add('average3', TextType::class, array(
-                'label' => 'Moyenne 3ème trimèstre (/ 20) :'
+                'label' => 'Moyenne 3ème trimèstre :'
             ))
             ->add('rank3', TextType::class, array(
                 'label' => 'Rang 3ème trimèstre :'
             ))
             ->add('averageYear', TextType::class, array(
-                'label' => 'Moyenne sur l\'année (/ 20) :'
+                'label' => 'Moyenne sur l\'année :'
             ))
             ->add('rankYear', TextType::class, array(
                 'label' => 'Rang sur l\'année :'

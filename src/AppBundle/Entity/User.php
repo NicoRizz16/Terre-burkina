@@ -67,6 +67,34 @@ class User extends BaseUser
     /**
      * @var string
      *
+     * @ORM\Column(name="complement_adresse", type="text", nullable=true)
+     */
+    private $complementAdress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_postal", type="string", nullable=true)
+     */
+    private $codePostal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", nullable=true)
+     */
+    private $ville;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", nullable=true)
+     */
+    private $pays;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
@@ -627,5 +655,101 @@ class User extends BaseUser
     public function getProfileChanged()
     {
         return $this->profileChanged;
+    }
+
+    /**
+     * Set complementAdress
+     *
+     * @param string $complementAdress
+     *
+     * @return User
+     */
+    public function setComplementAdress($complementAdress)
+    {
+        $this->complementAdress = $complementAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get complementAdress
+     *
+     * @return string
+     */
+    public function getComplementAdress()
+    {
+        return $this->complementAdress;
+    }
+
+    /**
+     * Set codePostal
+     *
+     * @param string $codePostal
+     *
+     * @return User
+     */
+    public function setCodePostal($codePostal)
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    /**
+     * Get codePostal
+     *
+     * @return string
+     */
+    public function getCodePostal()
+    {
+        return $this->codePostal;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     *
+     * @return User
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return User
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

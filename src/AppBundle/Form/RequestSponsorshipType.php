@@ -110,6 +110,57 @@ class RequestSponsorshipType extends AbstractType
                     ))
                 )
             ))
+            ->add('complementAdress', TextareaType::class, array(
+                'label' => 'Complément adresse',
+                'constraints' => array(
+                    new Length(array(
+                        'max' => 100,
+                        'maxMessage' => 'Le complément d\'adresse doit faire moins de {{ limit }} caractères'
+                    ))
+                )
+            ))
+            ->add('codePostal', TextType::class, array(
+                'label' => 'Code postal',
+                'constraints' => array(
+                    new Length(array(
+                        'min' => 2,
+                        'max' => 50,
+                        'minMessage' => 'Le code postal doit faire plus de {{ limit }} caractères',
+                        'maxMessage' => 'Le code postal doit faire moins de {{ limit }} caractères'
+                    )),
+                    new NotBlank(array(
+                        'message' => 'Vous devez indiquer un code postal'
+                    ))
+                )
+            ))
+            ->add('ville', TextType::class, array(
+                'label' => 'Ville',
+                'constraints' => array(
+                    new Length(array(
+                        'min' => 2,
+                        'max' => 100,
+                        'minMessage' => 'La ville doit faire plus de {{ limit }} caractères',
+                        'maxMessage' => 'La ville doit faire moins de {{ limit }} caractères'
+                    )),
+                    new NotBlank(array(
+                        'message' => 'Vous devez indiquer une ville'
+                    ))
+                )
+            ))
+            ->add('pays', TextType::class, array(
+                'label' => 'Pays',
+                'constraints' => array(
+                    new Length(array(
+                        'min' => 2,
+                        'max' => 100,
+                        'minMessage' => 'Le pays doit faire plus de {{ limit }} caractères',
+                        'maxMessage' => 'Le pays doit faire moins de {{ limit }} caractères'
+                    )),
+                    new NotBlank(array(
+                        'message' => 'Vous devez indiquer un pays'
+                    ))
+                )
+            ))
             ->add('dateOfBirth', BirthdayType::class, array(
                 'label' => 'Date de naissance',
                 'years' => range(((new \DateTime())->format('Y'))-100, ((new \DateTime())->format('Y'))),

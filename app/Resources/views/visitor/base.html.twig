@@ -30,7 +30,7 @@
         'css/mdb.min.css'
         'css/visitor/style.css'
         output='css/visitor/compiled/app.css'%}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset_url }}?d={{ "now"|date("dmy") }}" type="text/css" />
         {% endstylesheets %}
     {% endblock %}
 
@@ -232,7 +232,7 @@
         'js/mdb.min.js'
         'js/visitor/main.js'
         output='js/visitor/compiled/app.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}?d={{ "now"|date("dmy") }}"></script>
         {% endjavascripts %}
 
         <script>

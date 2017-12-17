@@ -64,6 +64,34 @@ class SponsorshipRequest
     private $address;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="complement_adresse", type="text", nullable=true)
+     */
+    private $complementAdress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_postal", type="string", nullable=true)
+     */
+    private $codePostal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", nullable=true)
+     */
+    private $ville;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", nullable=true)
+     */
+    private $pays;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
@@ -503,5 +531,101 @@ class SponsorshipRequest
         $this->child = $child;
 
         return $this;
+    }
+
+    /**
+     * Set complementAdress
+     *
+     * @param string $complementAdress
+     *
+     * @return SponsorshipRequest
+     */
+    public function setComplementAdress($complementAdress)
+    {
+        $this->complementAdress = $complementAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get complementAdress
+     *
+     * @return string
+     */
+    public function getComplementAdress()
+    {
+        return $this->complementAdress;
+    }
+
+    /**
+     * Set codePostal
+     *
+     * @param string $codePostal
+     *
+     * @return SponsorshipRequest
+     */
+    public function setCodePostal($codePostal)
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    /**
+     * Get codePostal
+     *
+     * @return string
+     */
+    public function getCodePostal()
+    {
+        return $this->codePostal;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     *
+     * @return SponsorshipRequest
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return SponsorshipRequest
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

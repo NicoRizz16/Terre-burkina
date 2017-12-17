@@ -114,7 +114,7 @@ class ChildsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $resultsList = $em->getRepository('AppBundle:Result')->findBy(array(), array('year' => 'DESC'));
+        $resultsList = $em->getRepository('AppBundle:Result')->findBy(array('child' => $child), array('year' => 'DESC'));
 
         $child->setResultsSeen(true);
         $em->flush();

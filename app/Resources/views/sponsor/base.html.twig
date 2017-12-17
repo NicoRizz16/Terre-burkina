@@ -20,7 +20,7 @@
         'css/mdb.min.css'
         'css/sponsor/style.css'
         output='css/sponsor/compiled/app.css'%}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset_url }}?d={{ "now"|date("dmy") }}" type="text/css" />
         {% endstylesheets %}
     {% endblock %}
 
@@ -162,7 +162,7 @@
         'js/mdb.min.js'
         'js/sponsor/main.js'
         output='js/sponsor/compiled/app.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}?d={{ "now"|date("dmy") }}"></script>
         {% endjavascripts %}
 
         <script>
