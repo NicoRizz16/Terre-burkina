@@ -88,6 +88,13 @@ body{
     background-color: #fabf52 !important;
 }
 
+.btn-ins-original{
+    background-color: #2e5e86;
+}
+
+.btn-ins-original:hover, .btn-ins-original:focus, .btn-ins-original.active{
+    background-color: #2e5e86 !important;
+}
 
 /* =============================================================== */
 /* ============================= FOOTER ========================= */

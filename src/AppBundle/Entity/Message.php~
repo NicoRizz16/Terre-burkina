@@ -1,0 +1,202 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Message
+ *
+ * @ORM\Table(name="message")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
+ */
+class Message
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creationDate", type="datetime")
+     */
+    private $creationDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="object", type="string", length=255)
+     */
+    private $object;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isSenderAdmin", type="boolean")
+     */
+    private $isSenderAdmin;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isNotificationAdmin", type="boolean")
+     */
+    private $isNotificationAdmin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SponsorGroup", inversedBy="messages")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    private $group;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Message
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Set object
+     *
+     * @param string $object
+     *
+     * @return Message
+     */
+    public function setObject($object)
+    {
+        $this->object = $object;
+
+        return $this;
+    }
+
+    /**
+     * Get object
+     *
+     * @return string
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Message
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set isSenderAdmin
+     *
+     * @param boolean $isSenderAdmin
+     *
+     * @return Message
+     */
+    public function setIsSenderAdmin($isSenderAdmin)
+    {
+        $this->isSenderAdmin = $isSenderAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get isSenderAdmin
+     *
+     * @return bool
+     */
+    public function getIsSenderAdmin()
+    {
+        return $this->isSenderAdmin;
+    }
+
+    /**
+     * Set isNotificationAdmin
+     *
+     * @param boolean $isNotificationAdmin
+     *
+     * @return Message
+     */
+    public function setIsNotificationAdmin($isNotificationAdmin)
+    {
+        $this->isNotificationAdmin = $isNotificationAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get isNotificationAdmin
+     *
+     * @return bool
+     */
+    public function getIsNotificationAdmin()
+    {
+        return $this->isNotificationAdmin;
+    }
+}
+

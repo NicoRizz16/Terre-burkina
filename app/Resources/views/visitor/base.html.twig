@@ -50,7 +50,7 @@
                 <img src="{{ absolute_url(asset('img/logo.jpg')) }}" class="logo"/>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav1">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto" style="min-width: 620px; padding-top: 7px;">
                     <li class="nav-item dropdown btn-group" id="association">
                         <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">L'Association</a>
                         <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
@@ -63,14 +63,12 @@
                         <div class="dropdown-menu dropdown-ins" aria-labelledby="sponsorshipDropdown">
                             <a class="dropdown-item" href="{{ path('sponsorship_presentation') }}">Présentation</a>
                             <a class="dropdown-item" href="{{ path('sponsorship_school_system') }}">Système scolaire</a>
+                            <a class="dropdown-item" href="{{ path('maison_de_luc') }}">La Maison de Luc</a>
                             <a class="dropdown-item" href="{{ path('sponsorship_request') }}">Devenir Parrain</a>
                         </div>
                     </li>
                     <li class="nav-item" id="actionsItem">
                         <a class="nav-link" href="{{ path('nos_actions') }}">Nos Actions</a>
-                    </li>
-                    <li class="nav-item" id="maisonDeLuc">
-                        <a class="nav-link" href="{{ path('maison_de_luc') }}">La Maison de Luc</a>
                     </li>
                     <li class="nav-item dropdown btn-group" id="news">
                         <a class="nav-link dropdown-toggle" id="sponsorshipDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actualités</a>
@@ -81,6 +79,23 @@
                     </li>
                     <li class="nav-item" id="donateItem">
                         <a class="nav-link" href="{{ path('donate') }}">Faire un don</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                            {% if is_granted('ROLE_SPONSOR') %}
+                                <a href="{{ path('fasoma_homepage') }}" class="btn btn-sm btn-ins" style="font-size: 0.65em; margin: 0px; margin-bottom: 5px; font-family: Roboto,sans-serif;">Espace parrain</a><br>
+                            {% elseif is_granted('ROLE_COORDINATOR') %}
+                                <a href="{{ path('admin_coordination') }}" class="btn btn-sm btn-ins" style="font-size: 0.65em; margin: 0px; margin-bottom: 5px; font-family: Roboto,sans-serif;">Espace admin</a><br>
+                            {% else %}
+                                <a href="{{ path('admin_board') }}" class="btn btn-sm btn-ins" style="font-size: 0.65em; margin: 0px; margin-bottom: 5px; font-family: Roboto,sans-serif;">Espace admin</a><br>
+                            {% endif %}
+                        {% else %}
+                            <a href="{{ path('fasoma_homepage') }}" class="btn btn-sm btn-ins" style="font-size: 0.65em; margin: 0px; margin-bottom: 5px; font-family: Roboto,sans-serif;">Espace parrain</a><br>
+                        {%endif%}
+
+                        <a href="{{ path('sponsorship_request') }}" class="btn btn-sm btn-ins-original" style="font-size: 0.65em; margin: 0px; font-family: Roboto,sans-serif;">Devenir parrain</a>
                     </li>
                 </ul>
             </div>
@@ -155,11 +170,17 @@
                     <h5 class="title">Connexion</h5>
                     <ul>
                         <li>
-                            {% if is_granted('ROLE_MODERATOR') %}
-                                <a href="{{ path('admin_board') }}" class="btn btn-md btn-ins">Espace admin</a>
+                            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                {% if is_granted('ROLE_SPONSOR') %}
+                                    <a href="{{ path('fasoma_homepage') }}" class="btn btn-md btn-ins">Espace parrain</a>
+                                {% elseif is_granted('ROLE_COORDINATOR') %}
+                                    <a href="{{ path('admin_coordination') }}" class="btn btn-md btn-ins">Espace admin</a>
+                                {% else %}
+                                    <a href="{{ path('admin_board') }}" class="btn btn-md btn-ins">Espace admin</a>
+                                {% endif %}
                             {% else %}
                                 <a href="{{ path('fasoma_homepage') }}" class="btn btn-md btn-ins">Espace parrain</a>
-                            {% endif %}
+                            {%endif%}
                         </li>
                     </ul>
                 </div>

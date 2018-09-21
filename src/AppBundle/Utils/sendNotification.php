@@ -24,10 +24,12 @@ class sendNotification
 
     public function sendNotification(User $user)
     {
-        // ABOLITION DES NOTIFICATIONS TEMPORAIRE
-        return;
+        $secondsSinceLastContact = 1000000000;
 
-        $secondsSinceLastContact = abs(((new \DateTime())->getTimestamp())-($user->getLastContact()->getTimestamp()));
+        if (!empty($user->getLastContact())){
+            $secondsSinceLastContact = abs(((new \DateTime())->getTimestamp())-($user->getLastContact()->getTimestamp()));
+        }
+
         if($secondsSinceLastContact <= 1800){
             return; // Pas de mail si dernier contact dans les 30 dernières minutes (eviter spam)
         }
