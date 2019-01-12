@@ -13,7 +13,9 @@ use AppBundle\Entity\Child;
 use AppBundle\Form\ChildAssignGroupType;
 use AppBundle\Form\ChildType;
 use AppBundle\Form\EditChildInfosType;
+use AppBundle\Form\EditChildLastLetterType;
 use AppBundle\Form\EditChildSponsorshipType;
+use AppBundle\Utils\updateChildFollowUp;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -121,6 +123,7 @@ class ChildsController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($child);
             $em->flush();
 
@@ -130,6 +133,36 @@ class ChildsController extends Controller
         }
 
         return $this->render('admin/childs/childs/view_edit_sponsorship.html.twig', array(
+            'child' => $child,
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/{id}/modifier/derniere/lettre", name="admin_childs_view_last_letter_edit", requirements={"id": "\d+"})
+     */
+    public function editLastLetterAction(Request $request, Child $child)
+    {
+        $form = $this->createForm(EditChildLastLetterType::class, $child);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            // Check if lastLetterDate changed
+            $originalData = $em->getUnitOfWork()->getOriginalEntityData($child);
+            if($originalData['lastLetterDate'] != $child->getLastLetterDate()){
+                $this->get('app.update_child_followup')->updateChildFollowUp($child, updateChildFollowUp::TYPE_LETTER); // Mettre à jour le suivi
+            }
+
+            $em->persist($child);
+            $em->flush();
+
+            $this->addFlash('info', 'Les informations sur le filleul "'.$child->getFullName().'" ont bien été enregistrées.');
+            return $this->redirectToRoute('admin_childs_view_infos', array('id' => $child->getId()));
+        }
+
+        return $this->render('admin/childs/childs/view_edit_last_letter.html.twig', array(
             'child' => $child,
             'form' => $form->createView()
         ));

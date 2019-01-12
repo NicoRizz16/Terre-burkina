@@ -41,6 +41,9 @@ class EditChildInfosType extends AbstractType
             ->add('adress', TextareaType::class, array(
                 'label' => 'Adresse'
             ))
+            ->add('followUpAdress', TextType::class, array(
+                'label' => 'Adresse courte (tableau de suivi)'
+            ))
             ->add('school', TextType::class, array(
                 'label' => 'Ecole'
             ))

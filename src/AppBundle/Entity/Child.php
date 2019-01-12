@@ -23,6 +23,18 @@ class Child
 {
     const NUM_ITEMS = 15;
 
+    //CONST TYPE DE PARRAINAGE
+    const PARRAINAGE_CLASSIQUE = 0;
+    const PARRAINAGE_AUTRE = 1;
+    const PARRAINAGE_MAISON_LUC = 2;
+
+    //CONST STATUT DU PARRAINAGE
+    const STATUT_ATTENTE_PARRAIN = 0;
+    const STATUT_ATTENTE_VIREMENT = 1;
+    const STATUT_ATTENTE_ESPACE_FASOMA = 2;
+    const STATUT_EN_COURS = 3;
+    const STATUT_URGENT = 4;
+
     /**
      * @var int
      *
@@ -31,6 +43,20 @@ class Child
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="type_parrainage", type="integer")
+     */
+    private $sponsorshipType;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="statut_parrainage", type="integer")
+     */
+    private $sponsorshipStatus;
 
     /**
      * @var string
@@ -99,6 +125,30 @@ class Child
     /**
      * @var string
      *
+     * @ORM\Column(name="sponsorship_note", type="text", nullable=true)
+     * @Assert\Length(
+     *      max = 1000,
+     *      maxMessage = "La remarque doit faire moins de {{ limit }} caractères."
+     * )
+     */
+    private $sponsorshipNote;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="followup_adress", type="string", nullable=true)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 250,
+     *      minMessage = "L'adresse doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "L'adresse doit faire moins de {{ limit }} caractères."
+     * )
+     */
+    private $followUpAdress;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="school", type="string", length=255, nullable=true)
      * @Assert\Length(
      *      min = 2,
@@ -159,18 +209,18 @@ class Child
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sponsorship_end", type="datetime", nullable=true)
-     * @Assert\Date()
-     */
-    private $sponsorshipEnd;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="last_letter_date", type="datetime", nullable=true)
      * @Assert\Date()
      */
     private $lastLetterDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="sponsorship_end", type="datetime", nullable=true)
+     * @Assert\Date()
+     */
+    private $sponsorshipEnd;
 
     /**
      * @var bool
@@ -254,6 +304,17 @@ class Child
      */
     private $sponsor;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="coordinatorChilds")
+     * @ORM\JoinColumn(name="coordinator_id", referencedColumnName="id")
+     */
+    private $coordinator;
+
+    /**
+     * @ORM\OneToOne(targetEntity="FollowUp", mappedBy="child", cascade={"persist", "remove"})
+     */
+    private $followUp;
+
 
     public function __construct()
     {
@@ -264,6 +325,8 @@ class Child
         $this->setSponsorshipStart(new \DateTime());
         $this->setSponsorshipEnd(new \DateTime());
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setSponsorshipType(Child::PARRAINAGE_CLASSIQUE);
+        $this->setSponsorshipStatus(Child::STATUT_ATTENTE_PARRAIN);
     }
 
     /**
@@ -996,5 +1059,149 @@ class Child
     public function getSex()
     {
         return $this->sex;
+    }
+
+    /**
+     * Set sponsorshipType
+     *
+     * @param integer $sponsorshipType
+     *
+     * @return Child
+     */
+    public function setSponsorshipType($sponsorshipType)
+    {
+        $this->sponsorshipType = $sponsorshipType;
+
+        return $this;
+    }
+
+    /**
+     * Get sponsorshipType
+     *
+     * @return integer
+     */
+    public function getSponsorshipType()
+    {
+        return $this->sponsorshipType;
+    }
+
+    /**
+     * Set sponsorshipStatus
+     *
+     * @param integer $sponsorshipStatus
+     *
+     * @return Child
+     */
+    public function setSponsorshipStatus($sponsorshipStatus)
+    {
+        $this->sponsorshipStatus = $sponsorshipStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get sponsorshipStatus
+     *
+     * @return integer
+     */
+    public function getSponsorshipStatus()
+    {
+        return $this->sponsorshipStatus;
+    }
+
+    /**
+     * Set followUpAdress
+     *
+     * @param string $followUpAdress
+     *
+     * @return Child
+     */
+    public function setFollowUpAdress($followUpAdress)
+    {
+        $this->followUpAdress = $followUpAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get followUpAdress
+     *
+     * @return string
+     */
+    public function getFollowUpAdress()
+    {
+        return $this->followUpAdress;
+    }
+
+    /**
+     * Set coordinator
+     *
+     * @param \AppBundle\Entity\User $coordinator
+     *
+     * @return Child
+     */
+    public function setCoordinator(\AppBundle\Entity\User $coordinator = null)
+    {
+        $this->coordinator = $coordinator;
+
+        return $this;
+    }
+
+    /**
+     * Get coordinator
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCoordinator()
+    {
+        return $this->coordinator;
+    }
+
+    /**
+     * Set followUp
+     *
+     * @param \AppBundle\Entity\FollowUp $followUp
+     *
+     * @return Child
+     */
+    public function setFollowUp(\AppBundle\Entity\FollowUp $followUp = null)
+    {
+        $this->followUp = $followUp;
+
+        return $this;
+    }
+
+    /**
+     * Get followUp
+     *
+     * @return \AppBundle\Entity\FollowUp
+     */
+    public function getFollowUp()
+    {
+        return $this->followUp;
+    }
+
+    /**
+     * Set sponsorshipNote
+     *
+     * @param string $sponsorshipNote
+     *
+     * @return Child
+     */
+    public function setSponsorshipNote($sponsorshipNote)
+    {
+        $this->sponsorshipNote = $sponsorshipNote;
+
+        return $this;
+    }
+
+    /**
+     * Get sponsorshipNote
+     *
+     * @return string
+     */
+    public function getSponsorshipNote()
+    {
+        return $this->sponsorshipNote;
     }
 }

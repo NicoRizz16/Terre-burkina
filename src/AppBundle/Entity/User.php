@@ -147,6 +147,11 @@ class User extends BaseUser
     private $childs;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Child", mappedBy="coordinator")
+     */
+    private $coordinatorChilds;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Document", mappedBy="user", cascade={"remove"})
      */
     private $documents;
@@ -752,5 +757,39 @@ class User extends BaseUser
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Add coordinatorChild
+     *
+     * @param \AppBundle\Entity\Child $coordinatorChild
+     *
+     * @return User
+     */
+    public function addCoordinatorChild(\AppBundle\Entity\Child $coordinatorChild)
+    {
+        $this->coordinatorChilds[] = $coordinatorChild;
+
+        return $this;
+    }
+
+    /**
+     * Remove coordinatorChild
+     *
+     * @param \AppBundle\Entity\Child $coordinatorChild
+     */
+    public function removeCoordinatorChild(\AppBundle\Entity\Child $coordinatorChild)
+    {
+        $this->coordinatorChilds->removeElement($coordinatorChild);
+    }
+
+    /**
+     * Get coordinatorChilds
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCoordinatorChilds()
+    {
+        return $this->coordinatorChilds;
     }
 }

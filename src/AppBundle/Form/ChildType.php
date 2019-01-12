@@ -2,6 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Child;
+use AppBundle\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -39,7 +42,10 @@ class ChildType extends AbstractType
                 )
             ))
             ->add('adress', TextareaType::class, array(
-                'label' => 'Adresse'
+                'label' => 'Adresse complète'
+            ))
+            ->add('followUpAdress', TextType::class, array(
+                'label' => 'Adresse courte (tableau de suivi)'
             ))
             ->add('school', TextType::class, array(
                 'label' => 'Ecole'
@@ -53,11 +59,29 @@ class ChildType extends AbstractType
             ->add('familySituation', TextType::class, array(
                 'label' => 'Situation familiale'
             ))
+            ->add('sponsorshipType', ChoiceType::class, array(
+                'label' => 'Type de parrainage',
+                'choices' => array(
+                    'Parrainage classique' => Child::PARRAINAGE_CLASSIQUE,
+                    'Parrainage autre' => Child::PARRAINAGE_AUTRE,
+                    'Parrainage maison de Luc' => Child::PARRAINAGE_MAISON_LUC
+                )
+            ))
             ->add('sponsorshipStart', DateType::class, array(
                 'label' => 'Début du parrainage'
             ))
             ->add('sponsorshipEnd', DateType::class, array(
                 'label' => 'Fin du parrainage'
+            ))
+            ->add('coordinator', EntityType::class, array(
+                'class' => 'AppBundle\Entity\User',
+                'choice_label' => 'username',
+                'label' => 'Choix du coordinateur (admin/moderateur)',
+                'placeholder' => 'choisir',
+                'query_builder' => function(UserRepository $repository){
+                    return $repository->getModeratorAndAdminQueryBuilder();
+                },
+                'choice_value' => 'id'
             ))
             ->add('profilePhoto', FileType::class, array(
                 'label' => 'Photo de profil'

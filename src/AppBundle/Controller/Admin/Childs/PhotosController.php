@@ -12,6 +12,7 @@ namespace AppBundle\Controller\Admin\Childs;
 use AppBundle\Entity\Child;
 use AppBundle\Entity\ChildGroup;
 use AppBundle\Entity\Photo;
+use AppBundle\Utils\updateChildFollowUp;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -111,6 +112,7 @@ class PhotosController extends Controller
         $child->setPhotosSeen(false);
         $this->get('send.notification')->sendNotification($child->getSponsor());
         $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
+        $this->get('app.update_child_followup')->updateChildFollowUp($child, updateChildFollowUp::TYPE_PHOTO); // Mettre à jour le suivi
         $em->flush();
 
         //infos sur le document envoyé
@@ -173,6 +175,7 @@ class PhotosController extends Controller
                 $this->get('send.notification')->sendNotification($child->getSponsor());
                 $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
             }
+            $this->get('app.update_child_followup')->updateChildFollowUp($child, updateChildFollowUp::TYPE_PHOTO); // Mettre à jour le suivi
         }
         $this->getDoctrine()->getManager()->flush();
     }

@@ -36,8 +36,12 @@
                 <td>{{ child.getAge }} ans</td>
             </tr>
             <tr>
-                <th>Adresse</th>
+                <th>Adresse complète</th>
                 <td>{{ child.adress }}</td>
+            </tr>
+            <tr>
+                <th>Adresse courte</th>
+                <td>{{ child.followUpAdress }}</td>
             </tr>
             <tr>
                 <th>École</th>
@@ -80,15 +84,72 @@
                 <td>{{ child.sponsorshipEnd|date('d/m/Y') }}</td>
             </tr>
             <tr>
+                <th>Statut parrainage</th>
+                {#CONST STATUT DU PARRAINAGE
+                const STATUT_ATTENTE_PARRAIN = 0;
+                const STATUT_ATTENTE_VIREMENT = 1;
+                const STATUT_ATTENTE_ESPACE_FASOMA = 2;
+                const STATUT_EN_COURS = 3;
+                const STATUT_URGENT = 4;#}
+                <td>
+                    {% if child.sponsorshipStatus == 0 %}
+                        <span style="color: #ffbb33">En attente de parrain</span>
+                    {% elseif child.sponsorshipStatus == 1 %}
+                        <span style="color: #9933CC">En attente de virement</span>
+                    {% elseif child.sponsorshipStatus == 2 %}
+                        <span style="color: #FF8800">En attente d'espace fasoma</span>
+                    {% elseif child.sponsorshipStatus == 3 %}
+                        <span style="color: #00C851">Parrainage en cours</span>
+                    {% elseif child.sponsorshipStatus == 4 %}
+                        <span style="color: #CC0000">Parrainage urgent</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Type de parrainage</th>
+                {#CONST TYPE DE PARRAINAGE
+                const PARRAINAGE_CLASSIQUE = 0;
+                const PARRAINAGE_AUTRE = 1;
+                const PARRAINAGE_MAISON_LUC = 2;#}
+                <td>
+                    {% if child.sponsorshipType == 0 %}
+                       Classique
+                    {% elseif child.sponsorshipType == 1 %}
+                        Autre
+                    {% elseif child.sponsorshipType == 2 %}
+                        Maison de Luc
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Coordinateur</th>
+                <td>
+                    {% if child.coordinator is not null %}
+                        <a href="#" class="btn btn-success btn-sm">{{ child.coordinator.username }}</a>
+                    {% else %}
+                        <a href="#" class="btn btn-warning btn-sm">Pas de coordinateur</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Remarques</th>
+                <td>
+                    {{ child.sponsorshipNote }}
+                </td>
+            </tr>
+        </table>
+
+        <h3>Date de la dernière lettre &nbsp;&nbsp;<a href="{{ path('admin_childs_view_last_letter_edit', {'id': child.id}) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></a></h3>
+        <table class="table table-striped">
+            <tr>
                 <th>Dernière lettre</th>
                 <td>{{ child.lastLetterDate|date('d/m/Y') }}</td>
             </tr>
         </table>
     </div>
 
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center" style="padding-bottom: 50px;">
         <a href="{{ path('admin_childs_delete', {'id': child.id}) }}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer le filleul</a>
     </div>
-
 </div>
 {% endblock %}

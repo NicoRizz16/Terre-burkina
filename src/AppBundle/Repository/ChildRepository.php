@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
@@ -61,5 +62,44 @@ class ChildRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('c')
             ->orderBy('c.fullName', 'ASC')
             ;
+    }
+
+    public function getFollowUpChilds($page, $nbPerPage, $by, $isByAChildParameter, $order, User $coordinator = null)
+    {
+        $by = $this->byFollowUpWhiteList($by);
+        $order = $this->orderWhiteList($order);
+
+        $query = $this->createQueryBuilder('c')
+            ->leftjoin('c.sponsor', 's', 'WITH');
+
+        if($coordinator != null){
+            $query->where('c.coordinator = '.$coordinator->getId());
+        }
+
+        if($isByAChildParameter){
+            $query->orderBy('c.'.$by, $order);
+        } else {
+            $query->orderBy('s.'.$by, $order);
+        }
+
+        $query->getQuery();
+
+        $query
+            // On définit l'annonce à partir de laquelle commencer la liste
+            ->setFirstResult(($page-1)*$nbPerPage)
+            // Ainsi que le nombre d'annonce à afficher sur une page
+            ->setMaxResults($nbPerPage)
+        ;
+
+        // On retourne l'objet Paginator correspondant à la requête construite
+        return new Paginator($query, true);
+    }
+
+    private function byFollowUpWhiteList($order){
+        $whitelist = array('lastName', 'dateOfBirth', 'followUpAdress', 'school', 'class', 'familySituation', 'sponsorshipType', 'sponsorshipStatus', 'adress', 'phone', 'email', 'paymentChoice');
+        if(!in_array($order, $whitelist)){
+            return 'lastName';
+        }
+        return $order;
     }
 }

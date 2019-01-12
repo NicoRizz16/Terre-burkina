@@ -11,6 +11,7 @@ namespace AppBundle\Controller\Admin\Childs;
 use AppBundle\Entity\Child;
 use AppBundle\Entity\Result;
 use AppBundle\Form\ResultType;
+use AppBundle\Utils\updateChildFollowUp;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,7 @@ class ResultsController extends Controller
             $child->setResultsSeen(false); // Notification de résultats
             $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
+            $this->get('app.update_child_followup')->updateChildFollowUp($child, updateChildFollowUp::TYPE_RESULT); // Mettre à jour le suivi
             $em->flush();
 
             $this->addFlash('info', 'Le résultat "'.$result->getYear().'" a bien été ajouté');

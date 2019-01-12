@@ -1,0 +1,1318 @@
+{% extends 'admin/base.html.twig' %}
+{# /{by}/{is_by_a_child_parameter}/{order}/{page}/{coordinator_id} #}
+{#<a href="{{ path('admin_followup', {'by': 'phone', "is_by_a_child_parameter": 0}) }}">PAR téléphone</a>#}
+
+{% block title %}Suivi global{% endblock %}
+
+{% block body %}
+    <i id="menuTopInfo">followUpMenuItem</i>
+
+    <div class="container-fluid" id="boardContainer">
+        <div class="row">
+            <div style="padding-bottom: 10px; display: flex; justify-content: space-between;">
+                <div>
+                    <button id="expandTable" class="btn btn-primary btn-sm">Tout développer</button>
+                    <button id="reduceTable" class="btn btn-primary btn-sm">Tout réduire</button>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-warning dropdown-toggle" type="button" data-toggle="dropdown">{% if coordinator is not null %}{{ coordinator.username }}{% else %}Tout coordinateur{% endif %}
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('admin_followup', {'by': by, "is_by_a_child_parameter": isByAChildParameter, "order": order, "order": order, "page": 1, "coordinator_id": null}) }}">Tout coordinateur</a></li>
+                        {% for coordinator in coordinatorsList %}
+                            <li><a href="{{ path('admin_followup', {'by': by, "is_by_a_child_parameter": isByAChildParameter, "order": order, "order": order, "page": 1, "coordinator_id": coordinator.id}) }}">{{ coordinator.username }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div>
+                    <a href="#" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-download"></span> Télécharger</a>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align:middle; text-align:center">
+                        {% if by == 'sponsorshipStatus' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'sponsorshipStatus', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}"><span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'sponsorshipStatus' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'sponsorshipStatus', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'sponsorshipStatus', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}"><i class="fas fa-arrows-alt-v"></i></a>
+                        {% endif %}
+                    </th>
+                    <th style="vertical-align:middle; text-align:center; background-color: #e6e6e6;">
+                        <div>
+                            <span id="expandChildData"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        {% if by == 'lastName' and order == 'ASC' and isByAChildParameter == 'true' %}
+                            <a href="{{ path('admin_followup', {'by': 'lastName', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">FILLEUL <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'lastName' and order == 'DESC' and isByAChildParameter == 'true' %}
+                            <a href="{{ path('admin_followup', {'by': 'lastName', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">FILLEUL <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'lastName', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">FILLEUL</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        {% if by == 'dateOfBirth' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'dateOfBirth', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Date de naissance <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'dateOfBirth' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'dateOfBirth', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Date de naissance <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'dateOfBirth', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Date de naissance</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        {% if by == 'followUpAdress' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'followUpAdress', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'followUpAdress' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'followUpAdress', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'followUpAdress', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Adresse</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        {% if by == 'school' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'school', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Ecole <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'school' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'school', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Ecole <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'school', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Ecole</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        {% if by == 'class' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'class', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Classe <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'class' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'class', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Classe <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'class', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Classe</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        {% if by == 'familySituation' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Situation familiale <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'familySituation' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Situation familiale <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Situation familiale</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">Coordinateur</th>
+                    <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        {% if by == 'sponsorshipType' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'sponsorshipType', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Type de parrainage <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'sponsorshipType' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'sponsorshipType', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Type de parrainage <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'sponsorshipType', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Type de parrainage</a>
+                        {% endif %}
+                    </th>
+                    <th style="vertical-align:middle; text-align:center; background-color: #e6e6e6;">
+                        <div>
+                            <span id="expandSponsorData"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        {% if by == 'lastName' and order == 'ASC' and isByAChildParameter == 'false' %}
+                            <a href="{{ path('admin_followup', {'by': 'lastName', "is_by_a_child_parameter": 'false', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">PARRAIN <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'lastName' and order == 'DESC' and isByAChildParameter == 'false' %}
+                            <a href="{{ path('admin_followup', {'by': 'lastName', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">PARRAIN <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'lastName', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">PARRAIN</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThSponsor" style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandSponsorAdressTh"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        {% if by == 'adress' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'adress', "is_by_a_child_parameter": 'false', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'adress' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'adress', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'adress', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Adresse</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThSponsor" style="vertical-align:middle; text-align:center">
+                        {% if by == 'phone' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'phone', "is_by_a_child_parameter": 'false', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Téléphone <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'phone' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'phone', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Téléphone <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'phone', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Téléphone</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThSponsor" style="vertical-align:middle; text-align:center">
+                        {% if by == 'email' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'email', "is_by_a_child_parameter": 'false', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Email <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'email' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'email', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Email <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'email', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Email</a>
+                        {% endif %}
+                    </th>
+                    <th class="expandabledThSponsor" style="vertical-align:middle; text-align:center">
+                        {% if by == 'paymentChoice' and order == 'ASC' %}
+                            <a href="{{ path('admin_followup', {'by': 'paymentChoice', "is_by_a_child_parameter": 'false', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Mode de versement <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                        {% elseif by == 'paymentChoice' and order == 'DESC' %}
+                            <a href="{{ path('admin_followup', {'by': 'paymentChoice', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Mode de versement <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                        {% else %}
+                            <a href="{{ path('admin_followup', {'by': 'paymentChoice', "is_by_a_child_parameter": 'false', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Mode de versement</a>
+                        {% endif %}
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData10"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        10
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData11"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        11
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData12"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        12
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData1"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        01
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData2"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        02
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData3"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        03
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData4"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        04
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData5"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        05
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData6"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        06
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData7"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        07
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData8"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        08
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandData9"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        09
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        <div>
+                            <span id="expandSponsorshipNote"><a><i class="fas fa-plus-circle"></i></a></span>
+                        </div>
+                        <div class="reducedThSponsorshipNote">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="expandedThSponsorshipNote">
+                            <i class="fas fa-comment-alt"></i> Remarque
+                        </div>
+                    </th>
+                </tr>
+                {% for child in childsList %}
+                    <tr>
+                        <td class="text-center">
+                            {% if child.sponsorshipStatus == 0 %}
+                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente de parrain" style="color: #ffbb33;"><i class="fas fa-user-times"></i></a>
+                            {% elseif child.sponsorshipStatus == 1 %}
+                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente de virement" style="color: #9933CC;"><i class="fas fa-cash-register"></i></a>
+                            {% elseif child.sponsorshipStatus == 2 %}
+                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente d'espace Fasoma" style="color: #FF8800;"><i class="fas fa-user-circle"></i></a>
+                            {% elseif child.sponsorshipStatus == 3 %}
+                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En cours de parrainage" style="color: #00C851;"><i class="fas fa-check-square"></i></a>
+                            {% elseif child.sponsorshipStatus == 4 %}
+                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="Urgent" style="color: #CC0000;"><i class="fas fa-exclamation-triangle"></i></a>
+                            {% endif %}
+                        </td>
+
+                        <th style="background-color: #e6e6e6;">{{ child.lastName }} {{ child.firstName }} {% if child.sex == 'M' %}<i class="fas fa-mars"></i>{% endif %}{% if child.sex == 'F' %}<i class="fas fa-venus"></i>{% endif %}</th>
+                        <td class="expandabledTdChild">{{ child.dateOfBirth|date('d/m/Y') }}</td>
+                        <td class="expandabledTdChild">{{ child.followUpAdress }}</td>
+                        <td class="expandabledTdChild">{{ child.school }}</td>
+                        <td class="expandabledTdChild">{{ child.class }}</td>
+                        <td class="expandabledTdChild">{{ child.familySituation }}</td>
+                        <td class="expandabledTdChild">
+                            {% if child.coordinator is not null %}
+                                <button class="btn btn-warning btn-sm">{{ child.coordinator.username }}</button>
+                            {% endif %}
+                        </td>
+                        <td class="expandabledTdChild">
+                            {% if child.sponsorshipType == 0 %}
+                                Classique
+                            {% elseif child.sponsorshipType == 1 %}
+                                Autre
+                            {% elseif child.sponsorshipType == 2 %}
+                                Maison de Luc
+                            {% endif %}
+                        </td>
+                        <th style="background-color: #e6e6e6;">
+                            {% if child.sponsor is not null %}
+                                {{ child.sponsor.lastName }} {{ child.sponsor.firstName }}
+                            {% endif %}
+                        </th>
+                        <td class="expandabledTdSponsor">
+                            {% if child.sponsor is not null %}
+                                <div class="expandedSponsorAdressTd">
+                                    {{ child.sponsor.adress }}
+                                </div>
+                                <div class="reducedSponsorAdressTd" style="text-align: center;">
+                                    ...
+                                </div>
+                            {% endif %}</td>
+                        <td class="expandabledTdSponsor">
+                            {% if child.sponsor is not null %}
+                                {{ child.sponsor.phone }}
+                            {% endif %}
+                        </td>
+                        <td class="expandabledTdSponsor">
+                            {% if child.sponsor is not null %}
+                                {{ child.sponsor.email }}
+                            {% endif %}
+                        </td>
+                        <td class="expandabledTdSponsor">
+                            {% if child.sponsor is not null %}
+                                {{ child.sponsor.paymentChoice }}
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp10" style="text-align: center">
+                                        {% if child.followUp.letter10 == true or child.followUp.photo10 == true or child.followUp.news10 == true or child.followUp.result10 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp10" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp10" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp11" style="text-align: center">
+                                        {% if child.followUp.letter11 == true or child.followUp.photo11 == true or child.followUp.news11 == true or child.followUp.result11 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp11" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp11" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp12" style="text-align: center">
+                                        {% if child.followUp.letter12 == true or child.followUp.photo12 == true or child.followUp.news12 == true or child.followUp.result12 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp12" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp12" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp1" style="text-align: center">
+                                        {% if child.followUp.letter1 == true or child.followUp.photo1 == true or child.followUp.news1 == true or child.followUp.result1 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp1" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp1" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp2" style="text-align: center">
+                                        {% if child.followUp.letter2 == true or child.followUp.photo2 == true or child.followUp.news2 == true or child.followUp.result2 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp2" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp2" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp3" style="text-align: center">
+                                        {% if child.followUp.letter3 == true or child.followUp.photo3 == true or child.followUp.news3 == true or child.followUp.result3 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp3" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp3" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp4" style="text-align: center">
+                                        {% if child.followUp.letter4 == true or child.followUp.photo4 == true or child.followUp.news4 == true or child.followUp.result4 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp4" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp4" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp5" style="text-align: center">
+                                        {% if child.followUp.letter5 == true or child.followUp.photo5 == true or child.followUp.news5 == true or child.followUp.result5 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp5" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp5" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp6" style="text-align: center">
+                                        {% if child.followUp.letter6 == true or child.followUp.photo6 == true or child.followUp.news6 == true or child.followUp.result6 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp6" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp6" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp7" style="text-align: center">
+                                        {% if child.followUp.letter7 == true or child.followUp.photo7 == true or child.followUp.news7 == true or child.followUp.result7 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp7" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp7" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp8" style="text-align: center">
+                                        {% if child.followUp.letter8 == true or child.followUp.photo8 == true or child.followUp.news8 == true or child.followUp.result8 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp8" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp8" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            {% if child.followUp is not null %}
+                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                    <div class="reducedFollowUp9" style="text-align: center">
+                                        {% if child.followUp.letter9 == true or child.followUp.photo9 == true or child.followUp.news9 == true or child.followUp.result9 == true %}
+                                            <i class="fas fa-check" style="color: #00C851;"></i>
+                                        {% else %}
+                                            <i class="fas fa-times" style="color: #CC0000;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center;">
+                                                <td>{% if child.followUp.letter9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.photo9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.news9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                <td>{% if child.followUp.result9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
+                                        <table>
+                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="reducedFollowUp9" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
+                                    <table>
+                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                    </table>
+                                </div>
+                                <div class="reducedFollowUp9" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="expandabledTdSponsorshipNote">
+                                {{ child.sponsorshipNote }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {# /{by}/{is_by_a_child_parameter}/{order}/{page}/{coordinator_id} #}
+            {#<a href="{{ path('admin_followup', {'by': 'phone', "is_by_a_child_parameter": false}) }}">PAR téléphone</a>#}
+
+            {% if nbPageTotal > 1 %}
+                <div class="text-center">
+                    <ul class="pagination">
+                        {% for p in range(1, nbPageTotal) %}
+                            <li{% if p == page %} class="active"{% endif %}>
+                                <a href="{{ path('admin_followup', {'by': by, 'is_by_a_child_parameter': isByAChildParameter, 'order': order, 'page': p, 'coordinator_id': coordinator_id}) }}">{{ p }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row" style="padding-bottom: 30px;">
+            <h3 class="text-center">Parrains sans filleuls</h3>
+            <hr>
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align:middle; text-align:center; background-color: #e6e6e6;">
+                        PARRAIN
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        Adresse
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        Téléphone
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        Email
+                    </th>
+                    <th style="vertical-align:middle; text-align:center">
+                        Mode de versement
+                    </th>
+                </tr>
+                {% for sponsor in sponsorsList %}
+                    {% if sponsor.childs|length == 0 %}
+                        <tr>
+                            <th style="background-color: #e6e6e6; text-align: center;">
+                                <a href="{{ path('admin_sponsors_view_infos', {'id': sponsor.id}) }}">{{ sponsor.lastName }} {{ sponsor.firstName }}</a>
+                            </th>
+                            <td>
+                                {{ sponsor.adress }}
+                            </td>
+                            <td>
+                                {{ sponsor.phone }}
+                            </td>
+                            <td>
+                                {{ sponsor.email }}
+                            </td>
+                            <td>
+                                {{ sponsor.paymentChoice }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(function () {
+
+            $('.expandabledThChild').hide();
+            $('.expandabledTdChild').hide();
+            $('.expandabledThSponsor').hide();
+            $('.expandabledTdSponsor').hide();
+            $('.expandedThSponsorshipNote').hide();
+            $('.expandabledTdSponsorshipNote').hide();
+            $('.expandedFollowUp10').hide();
+            $('.expandedFollowUp11').hide();
+            $('.expandedFollowUp12').hide();
+            $('.expandedFollowUp1').hide();
+            $('.expandedFollowUp2').hide();
+            $('.expandedFollowUp3').hide();
+            $('.expandedFollowUp4').hide();
+            $('.expandedFollowUp5').hide();
+            $('.expandedFollowUp6').hide();
+            $('.expandedFollowUp7').hide();
+            $('.expandedFollowUp8').hide();
+            $('.expandedFollowUp9').hide();
+            $('.expandedSponsorAdressTd').hide();
+
+            var isChildDataExpanded = false;
+            var isSponsorDataExpanded = false;
+            var isData1Expanded = false;
+            var isData2Expanded = false;
+            var isData3Expanded = false;
+            var isData4Expanded = false;
+            var isData5Expanded = false;
+            var isData6Expanded = false;
+            var isData7Expanded = false;
+            var isData8Expanded = false;
+            var isData9Expanded = false;
+            var isData10Expanded = false;
+            var isData11Expanded = false;
+            var isData12Expanded = false;
+            var isSponsorAdressExpanded = false;
+            var isSponsorshipNoteExpanded = false;
+
+            var orderBy = "{{ by }}";
+            var isByAChildParameter = "{{ isByAChildParameter }}";
+
+            if(orderBy != "lastName" && isByAChildParameter == "true"){
+                $('.expandabledThChild').show();
+                $('.expandabledTdChild').show();
+            }
+
+            if(orderBy != "lastName" && isByAChildParameter == "false"){
+                $('.expandabledThSponsor').show();
+                $('.expandabledTdSponsor').show();
+            }
+
+            function expandSponsorshipNote(){
+                isSponsorshipNoteExpanded = true;
+                $('.expandabledTdSponsorshipNote').show();
+                $('.expandedThSponsorshipNote').show();
+                $('.reducedThSponsorshipNote').hide();
+                $('#expandSponsorshipNote').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceSponsorshipNote(){
+                isSponsorshipNoteExpanded = false;
+                $('.expandabledTdSponsorshipNote').hide();
+                $('.expandedThSponsorshipNote').hide();
+                $('.reducedThSponsorshipNote').show();
+                $('#expandSponsorshipNote').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandSponsorshipNote').click(function () {
+                if(isSponsorshipNoteExpanded){
+                    reduceSponsorshipNote()
+                } else {
+                    expandSponsorshipNote()
+                }
+            });
+
+            function expandSponsorAdress(){
+                isSponsorAdressExpanded = true;
+                $('.expandedSponsorAdressTd').show();
+                $('.reducedSponsorAdressTd').hide();
+                $('#expandSponsorAdressTh').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceSponsorAdress(){
+                isSponsorAdressExpanded = false;
+                $('.expandedSponsorAdressTd').hide();
+                $('.reducedSponsorAdressTd').show();
+                $('#expandSponsorAdressTh').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandSponsorAdressTh').click(function () {
+                if(isSponsorAdressExpanded){
+                    reduceSponsorAdress()
+                } else {
+                    expandSponsorAdress()
+                }
+            });
+
+            function expandChildData(){
+                isChildDataExpanded = true;
+                $('.expandabledThChild').show();
+                $('.expandabledTdChild').show();
+                $('#expandChildData').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceChildData(){
+                isChildDataExpanded = false;
+                $('.expandabledThChild').hide();
+                $('.expandabledTdChild').hide();
+                $('#expandChildData').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandChildData').click(function () {
+                if(isChildDataExpanded){
+                    reduceChildData();
+                } else {
+                    expandChildData();
+                }
+            });
+
+            function expandSponsorData(){
+                isSponsorDataExpanded = true;
+                $('.expandabledThSponsor').show();
+                $('.expandabledTdSponsor').show();
+                $('#expandSponsorData').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceSponsorData(){
+                isSponsorDataExpanded = false;
+                $('.expandabledThSponsor').hide();
+                $('.expandabledTdSponsor').hide();
+                $('#expandSponsorData').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandSponsorData').click(function () {
+                if(isSponsorDataExpanded){
+                    reduceSponsorData();
+                } else {
+                    expandSponsorData();
+                }
+            });
+
+            function expandData1(){
+                isData1Expanded = true;
+                $('.expandedFollowUp1').show();
+                $('.reducedFollowUp1').hide();
+                $('#expandData1').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData1(){
+                isData1Expanded = false;
+                $('.expandedFollowUp1').hide();
+                $('.reducedFollowUp1').show();
+                $('#expandData1').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData1').click(function () {
+                if(isData1Expanded){
+                    reduceData1();
+                } else {
+                    expandData1();
+                }
+            });
+
+            function expandData2(){
+                isData2Expanded = true;
+                $('.expandedFollowUp2').show();
+                $('.reducedFollowUp2').hide();
+                $('#expandData2').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData2(){
+                isData2Expanded = false;
+                $('.expandedFollowUp2').hide();
+                $('.reducedFollowUp2').show();
+                $('#expandData2').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData2').click(function () {
+                if(isData2Expanded){
+                    reduceData2();
+                } else {
+                    expandData2();
+                }
+            });
+
+            function expandData3(){
+                isData3Expanded = true;
+                $('.expandedFollowUp3').show();
+                $('.reducedFollowUp3').hide();
+                $('#expandData3').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData3(){
+                isData3Expanded = false;
+                $('.expandedFollowUp3').hide();
+                $('.reducedFollowUp3').show();
+                $('#expandData3').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData3').click(function () {
+                if(isData3Expanded){
+                    reduceData3();
+                } else {
+                    expandData3();
+                }
+            });
+
+            function expandData4(){
+                isData4Expanded = true;
+                $('.expandedFollowUp4').show();
+                $('.reducedFollowUp4').hide();
+                $('#expandData4').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData4(){
+                isData4Expanded = false;
+                $('.expandedFollowUp4').hide();
+                $('.reducedFollowUp4').show();
+                $('#expandData4').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData4').click(function () {
+                if(isData4Expanded){
+                    reduceData4();
+                } else {
+                    expandData4();
+                }
+            });
+
+            function expandData5(){
+                isData5Expanded = true;
+                $('.expandedFollowUp5').show();
+                $('.reducedFollowUp5').hide();
+                $('#expandData5').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData5(){
+                isData5Expanded = false;
+                $('.expandedFollowUp5').hide();
+                $('.reducedFollowUp5').show();
+                $('#expandData5').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData5').click(function () {
+                if(isData5Expanded){
+                    reduceData5();
+                } else {
+                    expandData5();
+                }
+            });
+
+            function expandData6(){
+                isData6Expanded = true;
+                $('.expandedFollowUp6').show();
+                $('.reducedFollowUp6').hide();
+                $('#expandData6').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData6(){
+                isData6Expanded = false;
+                $('.expandedFollowUp6').hide();
+                $('.reducedFollowUp6').show();
+                $('#expandData6').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData6').click(function () {
+                if(isData6Expanded){
+                    reduceData6();
+                } else {
+                    expandData6();
+                }
+            });
+
+            function expandData7(){
+                isData7Expanded = true;
+                $('.expandedFollowUp7').show();
+                $('.reducedFollowUp7').hide();
+                $('#expandData7').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData7(){
+                isData7Expanded = false;
+                $('.expandedFollowUp7').hide();
+                $('.reducedFollowUp7').show();
+                $('#expandData7').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData7').click(function () {
+                if(isData7Expanded){
+                    reduceData7();
+                } else {
+                    expandData7();
+                }
+            });
+
+            function expandData8(){
+                isData8Expanded = true;
+                $('.expandedFollowUp8').show();
+                $('.reducedFollowUp8').hide();
+                $('#expandData8').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData8(){
+                isData8Expanded = false;
+                $('.expandedFollowUp8').hide();
+                $('.reducedFollowUp8').show();
+                $('#expandData8').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData8').click(function () {
+                if(isData8Expanded){
+                    reduceData8();
+                } else {
+                    expandData8();
+                }
+            });
+
+            function expandData9(){
+                isData9Expanded = true;
+                $('.expandedFollowUp9').show();
+                $('.reducedFollowUp9').hide();
+                $('#expandData9').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData9(){
+                isData9Expanded = false;
+                $('.expandedFollowUp9').hide();
+                $('.reducedFollowUp9').show();
+                $('#expandData9').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData9').click(function () {
+                if(isData9Expanded){
+                    reduceData9();
+                } else {
+                    expandData9();
+                }
+            });
+
+            function expandData10(){
+                isData10Expanded = true;
+                $('.expandedFollowUp10').show();
+                $('.reducedFollowUp10').hide();
+                $('#expandData10').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData10(){
+                isData10Expanded = false;
+                $('.expandedFollowUp10').hide();
+                $('.reducedFollowUp10').show();
+                $('#expandData10').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData10').click(function () {
+                if(isData10Expanded){
+                    reduceData10();
+                } else {
+                    expandData10();
+                }
+            });
+
+            function expandData11(){
+                isData11Expanded = true;
+                $('.expandedFollowUp11').show();
+                $('.reducedFollowUp11').hide();
+                $('#expandData11').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData11(){
+                isData11Expanded = false;
+                $('.expandedFollowUp11').hide();
+                $('.reducedFollowUp11').show();
+                $('#expandData11').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData11').click(function () {
+                if(isData11Expanded){
+                    reduceData11();
+                } else {
+                    expandData11();
+                }
+            });
+
+            function expandData12(){
+                isData12Expanded = true;
+                $('.expandedFollowUp12').show();
+                $('.reducedFollowUp12').hide();
+                $('#expandData12').html('<a><i class="fas fa-minus-circle"></i></a>');
+            }
+
+            function reduceData12(){
+                isData12Expanded = false;
+                $('.expandedFollowUp12').hide();
+                $('.reducedFollowUp12').show();
+                $('#expandData12').html('<a><i class="fas fa-plus-circle"></i></a>');
+            }
+
+            $('#expandData12').click(function () {
+                if(isData12Expanded){
+                    reduceData12();
+                } else {
+                    expandData12();
+                }
+            });
+
+            $('#expandTable').click(function () {
+                expandSponsorshipNote()
+                expandChildData();
+                expandSponsorData();
+                expandData10();
+                expandData11();
+                expandData12();
+                expandData1();
+                expandData2();
+                expandData3();
+                expandData4();
+                expandData5();
+                expandData6();
+                expandData7();
+                expandData8();
+                expandData9();
+            });
+
+            $('#reduceTable').click(function () {
+                reduceSponsorshipNote()
+                reduceChildData();
+                reduceSponsorData();
+                reduceData10();
+                reduceData11();
+                reduceData12();
+                reduceData1();
+                reduceData2();
+                reduceData3();
+                reduceData4();
+                reduceData5();
+                reduceData6();
+                reduceData7();
+                reduceData8();
+                reduceData9();
+            });
+
+        });
+
+    </script>
+{% endblock %}

@@ -79,6 +79,11 @@ services:
           - "@doctrine.orm.entity_manager"
           - "@security.token_storage"
 
+  app.update_child_followup:
+        class: AppBundle\Utils\updateChildFollowUp
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
   app.subscribe_newsletter:
     class: AppBundle\Utils\subscribeNewsletter
     arguments:

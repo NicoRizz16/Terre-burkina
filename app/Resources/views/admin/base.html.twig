@@ -13,7 +13,7 @@
     {# ============= STYLES ============= #}
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 
         {% stylesheets filter='cssrewrite, ?scssphp'
@@ -51,6 +51,9 @@
                         {% endif %}
                         {% if is_granted('ROLE_COORDINATOR') %}
                             <li><a href="{{ path('admin_coordination') }}" id="coordinationMenuItem">Coordination</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_MODERATOR') %}
+                            <li><a href="{{ path('admin_followup') }}" title="Suivi global" id="followUpMenuItem"><i class="far fa-chart-bar" aria-hidden="true"></i></a></li>
                         {% endif %}
                         <li>
                             <a href="{{ path('fos_user_security_logout') }}" title="Déconnexion" style="color: #cc0000;">

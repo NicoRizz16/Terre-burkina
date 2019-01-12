@@ -32,15 +32,6 @@
                     <a href="{{ path('admin_sponsors', {'by': 'lastName', 'order': 'ASC'}) }}">Nom</a>
                 {% endif %}
             </th>
-            <th>
-                {% if by == 'adress' and order == 'ASC' %}
-                    <a href="{{ path('admin_sponsors', {'by': 'adress', 'order': 'DESC'}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
-                {% elseif by == 'adress' and order == 'DESC' %}
-                    <a href="{{ path('admin_sponsors', {'by': 'adress', 'order': 'ASC'}) }}">Adresse <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
-                {% else %}
-                    <a href="{{ path('admin_sponsors', {'by': 'adress', 'order': 'ASC'}) }}">Adresse</a>
-                {% endif %}
-            </th>
             <th>Téléphone</th>
             <th>
                 {% if by == 'paymentChoice' and order == 'ASC' %}
@@ -49,15 +40,6 @@
                     <a href="{{ path('admin_sponsors', {'by': 'paymentChoice', 'order': 'ASC'}) }}">Mode de versement <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
                 {% else %}
                     <a href="{{ path('admin_sponsors', {'by': 'paymentChoice', 'order': 'ASC'}) }}">Mode de versement</a>
-                {% endif %}
-            </th>
-            <th>
-                {% if by == 'lastPayment' and order == 'ASC' %}
-                    <a href="{{ path('admin_sponsors', {'by': 'lastPayment', 'order': 'DESC'}) }}">Dernier versement <span class="glyphicon glyphicon-sort-by-order"></span></a>
-                {% elseif by == 'lastPayment' and order == 'DESC' %}
-                    <a href="{{ path('admin_sponsors', {'by': 'lastPayment', 'order': 'ASC'}) }}">Dernier versement <span class="glyphicon glyphicon-sort-by-order-alt"></span></a>
-                {% else %}
-                    <a href="{{ path('admin_sponsors', {'by': 'lastPayment', 'order': 'ASC'}) }}">Dernier versement</a>
                 {% endif %}
             </th>
             <th>
@@ -84,19 +66,10 @@
                     {{ sponsor.lastName|upper }}
                 </td>
                 <td>
-                    {{ sponsor.adress }}<br>
-                    {{ sponsor.complementAdress }}{% if (sponsor.codePostal is not null) or (sponsor.ville is not null) %}<br>{% endif %}
-                    {{ sponsor.codePostal }}{% if sponsor.ville is not null %},{% endif %} {{ sponsor.ville }}{% if sponsor.pays is not null %}<br>{% endif %}
-                    {{ sponsor.Pays }}
-                </td>
-                <td>
                     {{ sponsor.phone }}
                 </td>
                 <td>
                     {{ sponsor.paymentChoice|capitalize }}
-                </td>
-                <td>
-                    {{ sponsor.lastPayment|date('d/m/Y') }}
                 </td>
                 <td>
                     {% if sponsor.lastContact is null %}

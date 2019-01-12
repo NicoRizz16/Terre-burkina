@@ -12,6 +12,7 @@ use AppBundle\Entity\Child;
 use AppBundle\Entity\ChildGroup;
 use AppBundle\Entity\News;
 use AppBundle\Form\NewsType;
+use AppBundle\Utils\updateChildFollowUp;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,7 @@ class NewsController extends Controller
 
             $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact du parrain
+            $this->get('app.update_child_followup')->updateChildFollowUp($child, updateChildFollowUp::TYPE_NEWS); // Mettre à jour le suivi
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
@@ -319,6 +321,7 @@ class NewsController extends Controller
             $child->setNewsSeen(false);
             $this->get('send.notification')->sendNotification($child->getSponsor());
             $child->getSponsor()->setLastContact(new \DateTime()); // Mise à jour de la date de dernier contact de chaque parrain
+            $this->get('app.update_child_followup')->updateChildFollowUp($child, updateChildFollowUp::TYPE_LETTER); // Mettre à jour le suivi
         }
         $this->getDoctrine()->getManager()->flush();
     }
