@@ -1,0 +1,573 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * FollowUpExport
+ *
+ * @ORM\Table(name="follow_up_export")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FollowUpExportRepository")
+ */
+class FollowUpExport
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="statut_parrainage", type="string", length=255, nullable=true)
+     */
+    private $statutParrainage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_nom", type="string", length=255, nullable=true)
+     */
+    private $filleulNom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_prenom", type="string", length=255, nullable=true)
+     */
+    private $filleulPrenom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_sexe", type="string", length=255, nullable=true)
+     */
+    private $filleulSexe;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="filleul_date_de_naissance", type="string", length=255, nullable=true)
+     */
+    private $filleulDateDeNaissance;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_adresse", type="text", nullable=true)
+     */
+    private $filleulAdresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_ecole", type="string", length=255, nullable=true)
+     */
+    private $filleulEcole;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_classe", type="string", length=255, nullable=true)
+     */
+    private $filleulClasse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filleul_situation_familiale", type="text", nullable=true)
+     */
+    private $filleulSituationFamiliale;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="coordinateur", type="string", length=255, nullable=true)
+     */
+    private $coordinateur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_parrainage", type="string", length=255, nullable=true)
+     */
+    private $typeParrainage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parrain_nom", type="string", length=255, nullable=true)
+     */
+    private $parrainNom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parrain_prenom", type="string", length=255, nullable=true)
+     */
+    private $parrainPrenom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parrain_adresse", type="text", nullable=true)
+     */
+    private $parrainAdresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parrain_telephone", type="string", length=255, nullable=true)
+     */
+    private $parrainTelephone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parrain_email", type="string", length=255, nullable=true)
+     */
+    private $parrainEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parrain_mode_de_versement", type="string", length=255, nullable=true)
+     */
+    private $parrainModeDeVersement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remarque", type="text", nullable=true)
+     */
+    private $remarque;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_octobre", type="string", length=255, nullable=true)
+     */
+    private $suiviOctobre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_novembre", type="string", length=255, nullable=true)
+     */
+    private $suiviNovembre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_decembre", type="string", length=255, nullable=true)
+     */
+    private $suiviDecembre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_janvier", type="string", length=255, nullable=true)
+     */
+    private $suiviJanvier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_fevrier", type="string", length=255, nullable=true)
+     */
+    private $suiviFevrier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mars", type="string", length=255, nullable=true)
+     */
+    private $suiviMars;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_avril", type="string", length=255, nullable=true)
+     */
+    private $suiviAvril;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mai", type="string", length=255, nullable=true)
+     */
+    private $suiviMai;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juin", type="string", length=255, nullable=true)
+     */
+    private $suiviJuin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juillet", type="string", length=255, nullable=true)
+     */
+    private $suiviJuillet;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_aout", type="string", length=255, nullable=true)
+     */
+    private $suiviAout;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_septembre", type="string", length=255, nullable=true)
+     */
+    private $suiviSeptembre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_octobre_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviOctobreLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_novembre_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviNovembreLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_decembre_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviDecembreLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_janvier_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviJanvierLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_fevrier_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviFevrierLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mars_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviMarsLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_avril_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviAvrilLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mai_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviMaiLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juin_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviJuinLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juillet_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviJuilletLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_aout_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviAoutLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_septembre_lettre", type="string", length=255, nullable=true)
+     */
+    private $suiviSeptembreLettre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_octobre_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviOctobrePhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_novembre_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviNovembrePhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_decembre_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviDecembrePhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_janvier_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviJanvierPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_fevrier_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviFevrierPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mars_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviMarsPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_avril_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviAvrilPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mai_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviMaiPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juin_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviJuinPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juillet_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviJuilletPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_aout_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviAoutPhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_septembre_photo", type="string", length=255, nullable=true)
+     */
+    private $suiviSeptembrePhoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_octobre_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviOctobreNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_novembre_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviNovembreNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_decembre_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviDecembreNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_janvier_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviJanvierNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_fevrier_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviFevrierNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mars_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviMarsNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_avril_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviAvrilNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mai_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviMaiNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juin_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviJuinNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juillet_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviJuilletNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_aout_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviAoutNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_septembre_nouvelle", type="string", length=255, nullable=true)
+     */
+    private $suiviSeptembreNouvelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_octobre_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviOctobreResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_novembre_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviNovembreResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_decembre_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviDecembreResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_janvier_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviJanvierResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_fevrier_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviFevrierResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mars_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviMarsResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_avril_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviAvrilResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_mai_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviMaiResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juin_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviJuinResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_juillet_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviJuilletResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_aout_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviAoutResultat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_septembre_resultat", type="string", length=255, nullable=true)
+     */
+    private $suiviSeptembreResultat;
+
+
+
+}

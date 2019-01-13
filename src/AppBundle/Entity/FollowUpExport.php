@@ -24,6 +24,13 @@ class FollowUpExport
     /**
      * @var string
      *
+     * @ORM\Column(name="statut_parrainage", type="string", length=255, nullable=true)
+     */
+    private $statutParrainage;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="filleul_nom", type="string", length=255, nullable=true)
      */
     private $filleulNom;
@@ -43,16 +50,9 @@ class FollowUpExport
     private $filleulSexe;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="statut_parrainage", type="string", length=255, nullable=true)
-     */
-    private $statutParrainage;
-
-    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="filleul_date_de_naissance", type="datetimetz", nullable=true)
+     * @ORM\Column(name="filleul_date_de_naissance", type="string", length=255, nullable=true)
      */
     private $filleulDateDeNaissance;
 
@@ -147,6 +147,28 @@ class FollowUpExport
      */
     private $remarque;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_octobre", type="string", length=255, nullable=true)
+     */
+    private $suiviOctobre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_novembre", type="string", length=255, nullable=true)
+     */
+    private $suiviNovembre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suivi_decembre", type="string", length=255, nullable=true)
+     */
+    private $suiviDecembre;
+
     /**
      * @var string
      *
@@ -209,27 +231,6 @@ class FollowUpExport
      * @ORM\Column(name="suivi_septembre", type="string", length=255, nullable=true)
      */
     private $suiviSeptembre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="suivi_octobre", type="string", length=255, nullable=true)
-     */
-    private $suiviOctobre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="suivi_novembre", type="string", length=255, nullable=true)
-     */
-    private $suiviNovembre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="suivi_decembre", type="string", length=255, nullable=true)
-     */
-    private $suiviDecembre;
 
     /**
      * @var string
@@ -568,14 +569,106 @@ class FollowUpExport
     private $suiviSeptembreResultat;
 
 
+    public function __construct()
+    {
+        $this->setSuiviJanvier('non');
+        $this->setSuiviFevrier('non');
+        $this->setSuiviMars('non');
+        $this->setSuiviAvril('non');
+        $this->setSuiviMai('non');
+        $this->setSuiviJuin('non');
+        $this->setSuiviJuillet('non');
+        $this->setSuiviAout('non');
+        $this->setSuiviSeptembre('non');
+        $this->setSuiviOctobre('non');
+        $this->setSuiviNovembre('non');
+        $this->setSuiviDecembre('non');
+
+        $this->setSuiviJanvierLettre('non');
+        $this->setSuiviFevrierLettre('non');
+        $this->setSuiviMarsLettre('non');
+        $this->setSuiviAvrilLettre('non');
+        $this->setSuiviMaiLettre('non');
+        $this->setSuiviJuinLettre('non');
+        $this->setSuiviJuilletLettre('non');
+        $this->setSuiviAoutLettre('non');
+        $this->setSuiviSeptembreLettre('non');
+        $this->setSuiviOctobreLettre('non');
+        $this->setSuiviNovembreLettre('non');
+        $this->setSuiviDecembreLettre('non');
+
+        $this->setSuiviJanvierPhoto('non');
+        $this->setSuiviFevrierPhoto('non');
+        $this->setSuiviMarsPhoto('non');
+        $this->setSuiviAvrilPhoto('non');
+        $this->setSuiviMaiPhoto('non');
+        $this->setSuiviJuinPhoto('non');
+        $this->setSuiviJuilletPhoto('non');
+        $this->setSuiviAoutPhoto('non');
+        $this->setSuiviSeptembrePhoto('non');
+        $this->setSuiviOctobrePhoto('non');
+        $this->setSuiviNovembrePhoto('non');
+        $this->setSuiviDecembrePhoto('non');
+
+        $this->setSuiviJanvierNouvelle('non');
+        $this->setSuiviFevrierNouvelle('non');
+        $this->setSuiviMarsNouvelle('non');
+        $this->setSuiviAvrilNouvelle('non');
+        $this->setSuiviMaiNouvelle('non');
+        $this->setSuiviJuinNouvelle('non');
+        $this->setSuiviJuilletNouvelle('non');
+        $this->setSuiviAoutNouvelle('non');
+        $this->setSuiviSeptembreNouvelle('non');
+        $this->setSuiviOctobreNouvelle('non');
+        $this->setSuiviNovembreNouvelle('non');
+        $this->setSuiviDecembreNouvelle('non');
+
+        $this->setSuiviJanvierResultat('non');
+        $this->setSuiviFevrierResultat('non');
+        $this->setSuiviMarsResultat('non');
+        $this->setSuiviAvrilResultat('non');
+        $this->setSuiviMaiResultat('non');
+        $this->setSuiviJuinResultat('non');
+        $this->setSuiviJuilletResultat('non');
+        $this->setSuiviAoutResultat('non');
+        $this->setSuiviSeptembreResultat('non');
+        $this->setSuiviOctobreResultat('non');
+        $this->setSuiviNovembreResultat('non');
+        $this->setSuiviDecembreResultat('non');
+    }
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set statutParrainage
+     *
+     * @param string $statutParrainage
+     *
+     * @return FollowUpExport
+     */
+    public function setStatutParrainage($statutParrainage)
+    {
+        $this->statutParrainage = $statutParrainage;
+
+        return $this;
+    }
+
+    /**
+     * Get statutParrainage
+     *
+     * @return string
+     */
+    public function getStatutParrainage()
+    {
+        return $this->statutParrainage;
     }
 
     /**
@@ -651,33 +744,9 @@ class FollowUpExport
     }
 
     /**
-     * Set statutParrainage
-     *
-     * @param string $statutParrainage
-     *
-     * @return FollowUpExport
-     */
-    public function setStatutParrainage($statutParrainage)
-    {
-        $this->statutParrainage = $statutParrainage;
-
-        return $this;
-    }
-
-    /**
-     * Get statutParrainage
-     *
-     * @return string
-     */
-    public function getStatutParrainage()
-    {
-        return $this->statutParrainage;
-    }
-
-    /**
      * Set filleulDateDeNaissance
      *
-     * @param \DateTime $filleulDateDeNaissance
+     * @param string $filleulDateDeNaissance
      *
      * @return FollowUpExport
      */
@@ -691,7 +760,7 @@ class FollowUpExport
     /**
      * Get filleulDateDeNaissance
      *
-     * @return \DateTime
+     * @return string
      */
     public function getFilleulDateDeNaissance()
     {
@@ -1011,6 +1080,78 @@ class FollowUpExport
     }
 
     /**
+     * Set suiviOctobre
+     *
+     * @param string $suiviOctobre
+     *
+     * @return FollowUpExport
+     */
+    public function setSuiviOctobre($suiviOctobre)
+    {
+        $this->suiviOctobre = $suiviOctobre;
+
+        return $this;
+    }
+
+    /**
+     * Get suiviOctobre
+     *
+     * @return string
+     */
+    public function getSuiviOctobre()
+    {
+        return $this->suiviOctobre;
+    }
+
+    /**
+     * Set suiviNovembre
+     *
+     * @param string $suiviNovembre
+     *
+     * @return FollowUpExport
+     */
+    public function setSuiviNovembre($suiviNovembre)
+    {
+        $this->suiviNovembre = $suiviNovembre;
+
+        return $this;
+    }
+
+    /**
+     * Get suiviNovembre
+     *
+     * @return string
+     */
+    public function getSuiviNovembre()
+    {
+        return $this->suiviNovembre;
+    }
+
+    /**
+     * Set suiviDecembre
+     *
+     * @param string $suiviDecembre
+     *
+     * @return FollowUpExport
+     */
+    public function setSuiviDecembre($suiviDecembre)
+    {
+        $this->suiviDecembre = $suiviDecembre;
+
+        return $this;
+    }
+
+    /**
+     * Get suiviDecembre
+     *
+     * @return string
+     */
+    public function getSuiviDecembre()
+    {
+        return $this->suiviDecembre;
+    }
+
+    /**
      * Set suiviJanvier
      *
      * @param string $suiviJanvier
@@ -1224,78 +1365,6 @@ class FollowUpExport
     public function getSuiviSeptembre()
     {
         return $this->suiviSeptembre;
-    }
-
-    /**
-     * Set suiviOctobre
-     *
-     * @param string $suiviOctobre
-     *
-     * @return FollowUpExport
-     */
-    public function setSuiviOctobre($suiviOctobre)
-    {
-        $this->suiviOctobre = $suiviOctobre;
-
-        return $this;
-    }
-
-    /**
-     * Get suiviOctobre
-     *
-     * @return string
-     */
-    public function getSuiviOctobre()
-    {
-        return $this->suiviOctobre;
-    }
-
-    /**
-     * Set suiviNovembre
-     *
-     * @param string $suiviNovembre
-     *
-     * @return FollowUpExport
-     */
-    public function setSuiviNovembre($suiviNovembre)
-    {
-        $this->suiviNovembre = $suiviNovembre;
-
-        return $this;
-    }
-
-    /**
-     * Get suiviNovembre
-     *
-     * @return string
-     */
-    public function getSuiviNovembre()
-    {
-        return $this->suiviNovembre;
-    }
-
-    /**
-     * Set suiviDecembre
-     *
-     * @param string $suiviDecembre
-     *
-     * @return FollowUpExport
-     */
-    public function setSuiviDecembre($suiviDecembre)
-    {
-        $this->suiviDecembre = $suiviDecembre;
-
-        return $this;
-    }
-
-    /**
-     * Get suiviDecembre
-     *
-     * @return string
-     */
-    public function getSuiviDecembre()
-    {
-        return $this->suiviDecembre;
     }
 
     /**
@@ -2450,4 +2519,3 @@ class FollowUpExport
         return $this->suiviSeptembreResultat;
     }
 }
-
