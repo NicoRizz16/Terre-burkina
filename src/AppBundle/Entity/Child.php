@@ -34,6 +34,7 @@ class Child
     const STATUT_ATTENTE_ESPACE_FASOMA = 2;
     const STATUT_EN_COURS = 3;
     const STATUT_URGENT = 4;
+    const STATUT_TERMINE = 5;
 
     /**
      * @var int
@@ -138,9 +139,7 @@ class Child
      *
      * @ORM\Column(name="followup_adress", type="string", nullable=true)
      * @Assert\Length(
-     *      min = 5,
      *      max = 250,
-     *      minMessage = "L'adresse doit faire au moins {{ limit }} caractères.",
      *      maxMessage = "L'adresse doit faire moins de {{ limit }} caractères."
      * )
      */

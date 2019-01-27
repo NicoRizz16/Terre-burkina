@@ -90,12 +90,15 @@
                         {% endif %}
                     </th>
                     <th class="expandabledThChild" style="vertical-align:middle; text-align:center">
+                        <div id="expandChildSFTh">
+                            <a><i class="fas fa-plus-circle"></i></a>
+                        </div>
                         {% if by == 'familySituation' and order == 'ASC' %}
-                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}">Situation familiale <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
+                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'DESC', "page": 1, "coordinator_id": coordinator_id}) }}" title="Situation familiale">SF <span class="glyphicon glyphicon-sort-by-alphabet"></span></a>
                         {% elseif by == 'familySituation' and order == 'DESC' %}
-                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Situation familiale <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
+                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}" title="Situation familiale">SF <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a>
                         {% else %}
-                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}">Situation familiale</a>
+                            <a href="{{ path('admin_followup', {'by': 'familySituation', "is_by_a_child_parameter": 'true', "order": 'ASC', "page": 1, "coordinator_id": coordinator_id}) }}" title="Situation familiale">SF</a>
                         {% endif %}
                     </th>
                     <th class="expandabledThChild" style="vertical-align:middle; text-align:center">Coordinateur</th>
@@ -244,556 +247,561 @@
                     </th>
                 </tr>
                 {% for child in childsList %}
-                    <tr>
-                        <td class="text-center">
-                            {% if child.sponsorshipStatus == 0 %}
-                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente de parrain" style="color: #ffbb33;"><i class="fas fa-user-times"></i></a>
-                            {% elseif child.sponsorshipStatus == 1 %}
-                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente de virement" style="color: #9933CC;"><i class="fas fa-cash-register"></i></a>
-                            {% elseif child.sponsorshipStatus == 2 %}
-                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente d'espace Fasoma" style="color: #FF8800;"><i class="fas fa-user-circle"></i></a>
-                            {% elseif child.sponsorshipStatus == 3 %}
-                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En cours de parrainage" style="color: #00C851;"><i class="fas fa-check-square"></i></a>
-                            {% elseif child.sponsorshipStatus == 4 %}
-                                <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="Urgent" style="color: #CC0000;"><i class="fas fa-exclamation-triangle"></i></a>
-                            {% endif %}
-                        </td>
+                    {% if child.sponsorshipStatus != 5 %} {# Statut parrainage terminé non affiché dans le tableau #}
+                        <tr>
+                            <td class="text-center">
+                                {% if child.sponsorshipStatus == 0 %}
+                                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente de parrain" style="color: #ffbb33;"><i class="fas fa-user-times"></i></a>
+                                {% elseif child.sponsorshipStatus == 1 %}
+                                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente de virement" style="color: #9933CC;"><i class="fas fa-cash-register"></i></a>
+                                {% elseif child.sponsorshipStatus == 2 %}
+                                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En attente d'espace Fasoma" style="color: #FF8800;"><i class="fas fa-user-circle"></i></a>
+                                {% elseif child.sponsorshipStatus == 3 %}
+                                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="En cours de parrainage" style="color: #00C851;"><i class="fas fa-check-square"></i></a>
+                                {% elseif child.sponsorshipStatus == 4 %}
+                                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}" title="Urgent" style="color: #CC0000;"><i class="fas fa-exclamation-triangle"></i></a>
+                                {% endif %}
+                            </td>
 
-                        <th style="background-color: #e6e6e6;">{{ child.lastName }} {{ child.firstName }} {% if child.sex == 'M' %}<i class="fas fa-mars"></i>{% endif %}{% if child.sex == 'F' %}<i class="fas fa-venus"></i>{% endif %}</th>
-                        <td class="expandabledTdChild">{{ child.dateOfBirth|date('d/m/Y') }}</td>
-                        <td class="expandabledTdChild">{{ child.followUpAdress }}</td>
-                        <td class="expandabledTdChild">{{ child.school }}</td>
-                        <td class="expandabledTdChild">{{ child.class }}</td>
-                        <td class="expandabledTdChild">{{ child.familySituation }}</td>
-                        <td class="expandabledTdChild">
-                            {% if child.coordinator is not null %}
-                                <button class="btn btn-warning btn-sm">{{ child.coordinator.username }}</button>
-                            {% endif %}
-                        </td>
-                        <td class="expandabledTdChild">
-                            {% if child.sponsorshipType == 0 %}
-                                Classique
-                            {% elseif child.sponsorshipType == 1 %}
-                                Autre
-                            {% elseif child.sponsorshipType == 2 %}
-                                Maison de Luc
-                            {% endif %}
-                        </td>
-                        <th style="background-color: #e6e6e6;">
-                            {% if child.sponsor is not null %}
-                                {{ child.sponsor.lastName }} {{ child.sponsor.firstName }}
-                            {% endif %}
-                        </th>
-                        <td class="expandabledTdSponsor">
-                            {% if child.sponsor is not null %}
-                                <div class="expandedSponsorAdressTd">
-                                    {{ child.sponsor.adress }}
-                                </div>
-                                <div class="reducedSponsorAdressTd" style="text-align: center;">
-                                    ...
-                                </div>
-                            {% endif %}</td>
-                        <td class="expandabledTdSponsor">
-                            {% if child.sponsor is not null %}
-                                {{ child.sponsor.phone }}
-                            {% endif %}
-                        </td>
-                        <td class="expandabledTdSponsor">
-                            {% if child.sponsor is not null %}
-                                {{ child.sponsor.email }}
-                            {% endif %}
-                        </td>
-                        <td class="expandabledTdSponsor">
-                            {% if child.sponsor is not null %}
-                                {{ child.sponsor.paymentChoice }}
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp10" style="text-align: center">
-                                        {% if child.followUp.letter10 == true or child.followUp.photo10 == true or child.followUp.news10 == true or child.followUp.result10 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
+                            <th style="background-color: #e6e6e6;">{{ child.lastName }} {{ child.firstName }} {% if child.sex == 'M' %}<i class="fas fa-mars"></i>{% endif %}{% if child.sex == 'F' %}<i class="fas fa-venus"></i>{% endif %}</th>
+                            <td class="expandabledTdChild">{{ child.dateOfBirth|date('d/m/Y') }}</td>
+                            <td class="expandabledTdChild">{{ child.followUpAdress }}</td>
+                            <td class="expandabledTdChild">{{ child.school }}</td>
+                            <td class="expandabledTdChild">{{ child.class }}</td>
+                            <td class="expandabledTdChild">
+                                <div class="expandedChildSFTd">{{ child.familySituation }}</div>
+                                <div class="reducedChildSFTd">...</div>
+                            </td>
+                            <td class="expandabledTdChild">
+                                {% if child.coordinator is not null %}
+                                    <button class="btn btn-warning btn-sm">{{ child.coordinator.username }}</button>
+                                {% endif %}
+                            </td>
+                            <td class="expandabledTdChild">
+                                {% if child.sponsorshipType == 0 %}
+                                    Classique
+                                {% elseif child.sponsorshipType == 1 %}
+                                    Autre
+                                {% elseif child.sponsorshipType == 2 %}
+                                    Maison de Luc
+                                {% endif %}
+                            </td>
+                            <th style="background-color: #e6e6e6;">
+                                {% if child.sponsor is not null %}
+                                    {{ child.sponsor.lastName }} {{ child.sponsor.firstName }}
+                                {% endif %}
+                            </th>
+                            <td class="expandabledTdSponsor">
+                                {% if child.sponsor is not null %}
+                                    <div class="expandedSponsorAdressTd">
+                                        {{ child.sponsor.adress }}
                                     </div>
-                                    <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
+                                    <div class="reducedSponsorAdressTd" style="text-align: center;">
+                                        ...
                                     </div>
+                                {% endif %}</td>
+                            <td class="expandabledTdSponsor">
+                                {% if child.sponsor is not null %}
+                                    {{ child.sponsor.phone }}
+                                {% endif %}
+                            </td>
+                            <td class="expandabledTdSponsor">
+                                {% if child.sponsor is not null %}
+                                    {{ child.sponsor.email }}
+                                {% endif %}
+                            </td>
+                            <td class="expandabledTdSponsor">
+                                {% if child.sponsor is not null %}
+                                    {{ child.sponsor.paymentChoice }}
+                                {% endif %}
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp10" style="text-align: center">
+                                            {% if child.followUp.letter10 == true or child.followUp.photo10 == true or child.followUp.news10 == true or child.followUp.result10 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter10StateTd">{% if child.followUp.letter10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result10 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter10StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp10" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter10StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp10" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp10" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp10" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp11" style="text-align: center">
-                                        {% if child.followUp.letter11 == true or child.followUp.photo11 == true or child.followUp.news11 == true or child.followUp.result11 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp11" style="text-align: center">
+                                            {% if child.followUp.letter11 == true or child.followUp.photo11 == true or child.followUp.news11 == true or child.followUp.result11 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter11StateTd">{% if child.followUp.letter11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result11 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter11StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp11" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter11StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp11" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp11" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp11" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp12" style="text-align: center">
-                                        {% if child.followUp.letter12 == true or child.followUp.photo12 == true or child.followUp.news12 == true or child.followUp.result12 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp12" style="text-align: center">
+                                            {% if child.followUp.letter12 == true or child.followUp.photo12 == true or child.followUp.news12 == true or child.followUp.result12 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter12StateTd">{% if child.followUp.letter12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result12 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter12StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp12" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter12StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp12" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp12" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp12" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp1" style="text-align: center">
-                                        {% if child.followUp.letter1 == true or child.followUp.photo1 == true or child.followUp.news1 == true or child.followUp.result1 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp1" style="text-align: center">
+                                            {% if child.followUp.letter1 == true or child.followUp.photo1 == true or child.followUp.news1 == true or child.followUp.result1 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter1StateTd">{% if child.followUp.letter1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result1 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter1StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp1" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter1StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp1" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp1" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp1" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp2" style="text-align: center">
-                                        {% if child.followUp.letter2 == true or child.followUp.photo2 == true or child.followUp.news2 == true or child.followUp.result2 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp2" style="text-align: center">
+                                            {% if child.followUp.letter2 == true or child.followUp.photo2 == true or child.followUp.news2 == true or child.followUp.result2 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter2StateTd">{% if child.followUp.letter2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result2 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter2StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp2" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter2StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp2" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp2" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp2" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp3" style="text-align: center">
-                                        {% if child.followUp.letter3 == true or child.followUp.photo3 == true or child.followUp.news3 == true or child.followUp.result3 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp3" style="text-align: center">
+                                            {% if child.followUp.letter3 == true or child.followUp.photo3 == true or child.followUp.news3 == true or child.followUp.result3 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter3StateTd">{% if child.followUp.letter3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result3 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter3StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp3" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter3StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp3" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp3" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp3" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp4" style="text-align: center">
-                                        {% if child.followUp.letter4 == true or child.followUp.photo4 == true or child.followUp.news4 == true or child.followUp.result4 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp4" style="text-align: center">
+                                            {% if child.followUp.letter4 == true or child.followUp.photo4 == true or child.followUp.news4 == true or child.followUp.result4 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter4StateTd">{% if child.followUp.letter4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result4 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter4StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp4" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter4StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp4" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp4" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp4" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp5" style="text-align: center">
-                                        {% if child.followUp.letter5 == true or child.followUp.photo5 == true or child.followUp.news5 == true or child.followUp.result5 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp5" style="text-align: center">
+                                            {% if child.followUp.letter5 == true or child.followUp.photo5 == true or child.followUp.news5 == true or child.followUp.result5 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter5StateTd">{% if child.followUp.letter5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result5 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter5StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp5" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter5StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp5" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp5" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp5" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp6" style="text-align: center">
-                                        {% if child.followUp.letter6 == true or child.followUp.photo6 == true or child.followUp.news6 == true or child.followUp.result6 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp6" style="text-align: center">
+                                            {% if child.followUp.letter6 == true or child.followUp.photo6 == true or child.followUp.news6 == true or child.followUp.result6 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter6StateTd">{% if child.followUp.letter6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result6 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter6StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp6" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter6StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp6" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp6" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp6" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp7" style="text-align: center">
-                                        {% if child.followUp.letter7 == true or child.followUp.photo7 == true or child.followUp.news7 == true or child.followUp.result7 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp7" style="text-align: center">
+                                            {% if child.followUp.letter7 == true or child.followUp.photo7 == true or child.followUp.news7 == true or child.followUp.result7 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter7StateTd">{% if child.followUp.letter7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result7 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter7StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp7" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter7StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp7" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp7" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp7" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp8" style="text-align: center">
-                                        {% if child.followUp.letter8 == true or child.followUp.photo8 == true or child.followUp.news8 == true or child.followUp.result8 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp8" style="text-align: center">
+                                            {% if child.followUp.letter8 == true or child.followUp.photo8 == true or child.followUp.news8 == true or child.followUp.result8 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter8StateTd">{% if child.followUp.letter8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result8 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter8StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp8" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter8StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp8" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp8" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
-                                </div>
-                                <div class="reducedFollowUp8" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td style="text-align: center">
-                            {% if child.followUp is not null %}
-                                {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
-                                    <div class="reducedFollowUp9" style="text-align: center">
-                                        {% if child.followUp.letter9 == true or child.followUp.photo9 == true or child.followUp.news9 == true or child.followUp.result9 == true %}
-                                            <i class="fas fa-check" style="color: #00C851;"></i>
-                                        {% else %}
-                                            <i class="fas fa-times" style="color: #CC0000;"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
-                                        <table>
-                                            <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center;">
-                                                <td>{% if child.followUp.letter9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.photo9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.news9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                                <td>{% if child.followUp.result9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </td>
+                            <td style="text-align: center">
+                                {% if child.followUp is not null %}
+                                    {% if child.followUp.endYearDate|date("Y-m-d") > "now"|date("Y-m-d") %}
+                                        <div class="reducedFollowUp9" style="text-align: center">
+                                            {% if child.followUp.letter9 == true or child.followUp.photo9 == true or child.followUp.news9 == true or child.followUp.result9 == true %}
+                                                <i class="fas fa-check" style="color: #00C851;"></i>
+                                            {% else %}
+                                                <i class="fas fa-times" style="color: #CC0000;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center;" id="{{ child.id }}">
+                                                    <td class="letter9StateTd">{% if child.followUp.letter9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.photo9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.news9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                    <td>{% if child.followUp.result9 == true %}<i class="fas fa-check" style="color: #00C851;"></i>{% else %}<i class="fas fa-times" style="color: #CC0000;"></i>{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
+                                            <table>
+                                                <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
+                                                <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter9StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="reducedFollowUp9" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
+                                    {% endif %}
                                 {% else %}
                                     <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
                                         <table>
                                             <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                            <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
+                                            <tr style="text-align: center; color: #CC0000;" id="{{ child.id }}"><td class="letter9StateTd"><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
                                         </table>
                                     </div>
                                     <div class="reducedFollowUp9" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
                                 {% endif %}
-                            {% else %}
-                                <div class="expandedFollowUp9" style="text-align: center; display: flex; justify-content: center;">
-                                    <table>
-                                        <tr><th><i class="far fa-envelope" style="padding-right:2px;"></i></th><th><i class="fas fa-camera-retro" style="padding-right:2px;"></i></th><th><i class="far fa-newspaper" style="padding-right:2px;"></i></th><th><i class="fas fa-graduation-cap"></i></th></tr>
-                                        <tr style="text-align: center; color: #CC0000;"><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td><td><i class="fas fa-times"></i></td></tr>
-                                    </table>
+                            </td>
+                            <td>
+                                <div class="expandabledTdSponsorshipNote">
+                                    {{ child.sponsorshipNote }}
                                 </div>
-                                <div class="reducedFollowUp9" style="text-align: center"><i class="fas fa-times" style="color: #CC0000;"></i></div>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="expandabledTdSponsorshipNote">
-                                {{ child.sponsorshipNote }}
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </table>
 
@@ -857,6 +865,33 @@
             </table>
 
         </div>
+
+        <div class="row" style="padding-bottom: 30px;">
+                <h3 class="text-center">Parrainages terminés</h3>
+                <hr>
+                <table class="table table-bordered" style="margin-left: 25%; width: 50%;">
+                    <tr>
+                        <th style="vertical-align:middle; text-align:center; background-color: #e6e6e6;">
+                            FILLEUL
+                        </th>
+                        <th style="vertical-align:middle; text-align:center; background-color: #e6e6e6;">
+                            PARRAIN
+                        </th>
+                    </tr>
+                    {% for child in sponsorshipEndList %}
+                            <tr>
+                                <td style=" text-align: center;">
+                                    <a href="{{ path('admin_childs_view_infos', {'id': child.id}) }}">{{ child.lastName }} {{ child.firstName }}</a>
+                                </td>
+                                <td style=" text-align: center;">
+                                    {% if child.sponsor is not null %}
+                                        <a href="{{ path('admin_sponsors_view_infos', {'id': child.sponsor.id}) }}">{{ child.sponsor.lastName }} {{ child.sponsor.firstName }}</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </table>
+            </div>
     </div>
 {% endblock %}
 
@@ -891,7 +926,9 @@
             $('.expandedFollowUp8').hide();
             $('.expandedFollowUp9').hide();
             $('.expandedSponsorAdressTd').hide();
+            $('.expandedChildSFTd').hide();
 
+            var isChildSFExpanded = false;
             var isChildDataExpanded = false;
             var isSponsorDataExpanded = false;
             var isData1Expanded = false;
@@ -912,7 +949,7 @@
             var orderBy = "{{ by }}";
             var isByAChildParameter = "{{ isByAChildParameter }}";
 
-            if(orderBy != "lastName" && isByAChildParameter == "true"){
+            if(orderBy != "lastName" && orderBy != "sponsorshipStatus" && isByAChildParameter == "true"){
                 $('.expandabledThChild').show();
                 $('.expandabledTdChild').show();
             }
@@ -937,6 +974,20 @@
                 $('.reducedThSponsorshipNote').show();
                 $('#expandSponsorshipNote').html('<a><i class="fas fa-plus-circle"></i></a>');
             }
+
+            $('#expandChildSFTh').click(function () {
+                if(isChildSFExpanded){
+                    $('.expandedChildSFTd').hide();
+                    $('.reducedChildSFTd').show();
+                    $('#expandChildSFTh').html('<a><i class="fas fa-plus-circle"></i></a>');
+                    isChildSFExpanded = false;
+                } else {
+                    $('.expandedChildSFTd').show();
+                    $('.reducedChildSFTd').hide();
+                    $('#expandChildSFTh').html('<a><i class="fas fa-minus-circle"></i></a>');
+                    isChildSFExpanded = true;
+                }
+            });
 
             $('#expandSponsorshipNote').click(function () {
                 if(isSponsorshipNoteExpanded){
@@ -1311,6 +1362,331 @@
                 reduceData8();
                 reduceData9();
             });
+
+            $('.letter10StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 10;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter11StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 11;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter12StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 12;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter1StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 1;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter2StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 2;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter3StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 3;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter4StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 4;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter5StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 5;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter6StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 6;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter7StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 7;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter8StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 8;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
+            $('.letter9StateTd').click(function (event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var elementToEdit = $(this);
+
+                var letterToChangeChildId = Number($(this).parent().attr("id"));
+                var letterToChangeMonth = 9;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_switch_letter_state') }}',
+                    data: 'childId=' + letterToChangeChildId + '&month=' + letterToChangeMonth
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        if(jqXHR.responseJSON.response == 'true'){
+                            elementToEdit.html('<i class="fas fa-check" style="color: #00C851;"></i>');
+                        } else {
+                            elementToEdit.html('<i class="fas fa-times" style="color: #CC0000;"></i>');
+                        }
+                    })
+                    .fail(function () {
+                        alert('Erreur');
+                    });
+
+            });
+
 
         });
 

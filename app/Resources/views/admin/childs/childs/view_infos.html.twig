@@ -69,7 +69,7 @@
                 <th>Parrain</th>
                 <td>
                     {% if child.sponsor is not null %}
-                        <a href="#" class="btn btn-success btn-sm">{{ child.sponsor.fullName }}</a>
+                        <a href="{{ path('admin_sponsors_view_infos', {'id': child.sponsor.id}) }}" class="btn btn-success btn-sm">{{ child.sponsor.fullName }}</a>
                     {% else %}
                         <a href="#" class="btn btn-warning btn-sm">Non parrainé</a>
                     {% endif %}
@@ -102,6 +102,8 @@
                         <span style="color: #00C851">Parrainage en cours</span>
                     {% elseif child.sponsorshipStatus == 4 %}
                         <span style="color: #CC0000">Parrainage urgent</span>
+                    {% elseif child.sponsorshipStatus == 5 %}
+                        <span style="color: black">Parrainage terminé</span>
                     {% endif %}
                 </td>
             </tr>

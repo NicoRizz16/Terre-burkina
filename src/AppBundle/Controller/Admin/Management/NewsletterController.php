@@ -104,7 +104,7 @@ class NewsletterController extends Controller
      */
     public function exportCsvAction()
     {
-        $encoders = array(new CsvEncoder());
+        $encoders = array(new CsvEncoder($delimiter = ';'));
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 

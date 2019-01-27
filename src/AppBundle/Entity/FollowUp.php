@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FollowUp
 {
-    const NUM_ITEMS = 30;
+    const NUM_ITEMS = 20;
 
     /**
      * @var int

@@ -46,7 +46,8 @@ class EditChildSponsorshipType extends AbstractType
                     'En attente de virement' => Child::STATUT_ATTENTE_VIREMENT,
                     'En attente d\'espace fasoma' => Child::STATUT_ATTENTE_ESPACE_FASOMA,
                     'En cours de parrainage' => Child::STATUT_EN_COURS,
-                    'Parrainage urgent' => Child::STATUT_URGENT
+                    'Parrainage urgent' => Child::STATUT_URGENT,
+                    'Parrainage terminé' => Child::STATUT_TERMINE
                 )
             ))
             ->add('sponsorshipType', ChoiceType::class, array(

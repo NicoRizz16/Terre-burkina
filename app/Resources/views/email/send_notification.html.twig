@@ -8,9 +8,23 @@
 
     <p>Bonjour{% if user.fullName is not null %} {{ user.fullName }}{% endif %},</p>
 
-    <p>Vous avez reçu de nouvelles informations dans le cadre de votre parrainage.</p>
-    <p>Nous vous invitons à <a href="{{ url }}">vous connecter</a> à votre espace Fasoma pour les consulter !</p>
+    <p>Il y a des nouveautés concernant votre parrainage sur votre espace Fasoma !</p>
+    <br>
+    <p><a href="{{ url }}"
+          style="border: 1px solid #f7a70f;
+                 padding: 10px;
+                 color: white;
+                 background-color: #f7a70f;
+                 font-size: 1.2em;
+                 text-decoration: none;
+                 -webkit-border-radius: 100px;
+                -moz-border-radius: 100px;
+                border-radius: 100px;
+                margin: 20px;
+                ">Cliquez ici pour y accéder</a>
+    </p>
+    <br><br>
 
-    <p>Bien cordialement,<br/>
-        L'association Terre Burkina.</p>
+    <p>Terre Burkina vous remercie,<br/>
+        A très bientôt !</p>
 </div>

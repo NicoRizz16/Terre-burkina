@@ -14,9 +14,11 @@ use AppBundle\Entity\FollowUp;
 use AppBundle\Entity\FollowUpExport;
 use AppBundle\Entity\User;
 use AppBundle\Utils\updateChildFollowUp;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
@@ -34,7 +36,7 @@ class FollowUpController extends Controller
      */
     public function exportCsvAction()
     {
-        $encoders = array(new CsvEncoder());
+        $encoders = array(new CsvEncoder($delimiter = ';'));
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 
@@ -70,6 +72,9 @@ class FollowUpController extends Controller
                     break;
                 case 4:
                     $followUpExport->setStatutParrainage('URGENT');
+                    break;
+                case 5:
+                    $followUpExport->setStatutParrainage('Terminé');
                     break;
             }
 
@@ -301,6 +306,9 @@ class FollowUpController extends Controller
         // Récupération de la liste des sponsors
         $sponsorsList = $this->getDoctrine()->getRepository('AppBundle:User')->getSponsorsList();
 
+        // Récupération de la liste des parrainages terminés
+        $sponsorshipEndList = $this->getDoctrine()->getRepository('AppBundle:Child')->findBy(array('sponsorshipStatus' => 5), array('lastName' => 'ASC'));
+
         return $this->render('admin/followup/index.html.twig', array(
             'childsList' => $childsList,
             'nbPageTotal' => $nbPageTotal,
@@ -311,7 +319,103 @@ class FollowUpController extends Controller
             'isByAChildParameter'=> $isByAChildParameter,
             'coordinatorsList' => $coordinatorsList,
             'coordinator' => $coordinator,
-            'sponsorsList' => $sponsorsList
+            'sponsorsList' => $sponsorsList,
+            'sponsorshipEndList' => $sponsorshipEndList
         ));
+    }
+
+    /**
+     * @Route("/ajax/switch/letter/state", name="ajax_switch_letter_state")
+     * @Method("POST")
+     */
+    public function switchLetterStateAjaxAction(Request $request){
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(array('message' => 'You can access this only using AJAX !'), 400);
+        }
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            return new JsonResponse(array('message' => 'Requiert le role administrateur'), 400);
+        }
+        
+        $childId = (int) $request->request->get('childId'); // Récupération de l'id du filleul envoyé par AJAX en POST
+        $month = (int) $request->request->get('month'); // Récupération du mois envoyé par AJAX en POST
+
+        $child = $this->getDoctrine()->getRepository(Child::class)->find($childId); // Le filleul existe-il ?
+        if(!$child){return new JsonResponse(array('message' => 'Erreur de récupération du filleul'), 400);}
+
+        if($child->getFollowUp() == null) // Si aucun suivi existant
+        {
+            $followUp = new FollowUp();
+            $child->setFollowUp($followUp);
+            $followUp->setChild($child);
+        }
+
+        if( (new \DateTime()) > ($child->getFollowUp()->getEndYearDate()) ){
+            // SI la date de suivi est dépassée -> réinitialisation du followup
+            $child->getFollowUp()->resetFollowUp();
+        }
+
+        $isLetterForSelectedMonth = false;
+
+        // Traitement de la requete
+        switch($month){
+            case 1:
+                $child->getFollowUp()->getLetter1() ? $child->getFollowUp()->setLetter1(false) : $child->getFollowUp()->setLetter1(true);
+                $child->getFollowUp()->getLetter1() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 2:
+                $child->getFollowUp()->getLetter2() ? $child->getFollowUp()->setLetter2(false) : $child->getFollowUp()->setLetter2(true);
+                $child->getFollowUp()->getLetter2() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 3:
+                $child->getFollowUp()->getLetter3() ? $child->getFollowUp()->setLetter3(false) : $child->getFollowUp()->setLetter3(true);
+                $child->getFollowUp()->getLetter3() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 4:
+                $child->getFollowUp()->getLetter4() ? $child->getFollowUp()->setLetter4(false) : $child->getFollowUp()->setLetter4(true);
+                $child->getFollowUp()->getLetter4() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 5:
+                $child->getFollowUp()->getLetter5() ? $child->getFollowUp()->setLetter5(false) : $child->getFollowUp()->setLetter5(true);
+                $child->getFollowUp()->getLetter5() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 6:
+                $child->getFollowUp()->getLetter6() ? $child->getFollowUp()->setLetter6(false) : $child->getFollowUp()->setLetter6(true);
+                $child->getFollowUp()->getLetter6() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 7:
+                $child->getFollowUp()->getLetter7() ? $child->getFollowUp()->setLetter7(false) : $child->getFollowUp()->setLetter7(true);
+                $child->getFollowUp()->getLetter7() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 8:
+                $child->getFollowUp()->getLetter8() ? $child->getFollowUp()->setLetter8(false) : $child->getFollowUp()->setLetter8(true);
+                $child->getFollowUp()->getLetter8() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 9:
+                $child->getFollowUp()->getLetter9() ? $child->getFollowUp()->setLetter9(false) : $child->getFollowUp()->setLetter9(true);
+                $child->getFollowUp()->getLetter9() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 10:
+                $child->getFollowUp()->getLetter10() ? $child->getFollowUp()->setLetter10(false) : $child->getFollowUp()->setLetter10(true);
+                $child->getFollowUp()->getLetter10() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 11:
+                $child->getFollowUp()->getLetter11() ? $child->getFollowUp()->setLetter11(false) : $child->getFollowUp()->setLetter11(true);
+                $child->getFollowUp()->getLetter11() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+            case 12:
+                $child->getFollowUp()->getLetter12() ? $child->getFollowUp()->setLetter12(false) : $child->getFollowUp()->setLetter12(true);
+                $child->getFollowUp()->getLetter12() ? $isLetterForSelectedMonth = true : $isLetterForSelectedMonth = false;
+                break;
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+
+        if($isLetterForSelectedMonth){
+            return new JsonResponse(array('response' => 'true'), 200);
+        } else {
+            return new JsonResponse(array('response' => 'false'), 200);
+        }
     }
 }
